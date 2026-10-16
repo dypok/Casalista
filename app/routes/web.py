@@ -73,13 +73,25 @@ def view_home(request: Request, user: Dict[str, Any] = Depends(require_auth_web)
         "active_nav": "inicio"
     })
 
-# 2. Bienvenida pública
+# 2. Landing Page & Bienvenida pública
+@router.get("/landing", response_class=HTMLResponse)
 @router.get("/bienvenida", response_class=HTMLResponse)
-def view_welcome(request: Request):
+def view_landing(request: Request):
     user = get_current_user(request)
-    if user:
-        return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
-    return render_template(request, "views/bienvenida.html")
+    conn = get_db_connection()
+    categories = dicts_from_rows(conn.execute("""
+        SELECT c.*, COUNT(t.id) as task_count
+        FROM categories c
+        LEFT JOIN tasks t ON c.id = t.category_id
+        GROUP BY c.id
+        ORDER BY c.order_num ASC
+    """).fetchall())
+    conn.close()
+
+    return render_template(request, "views/landing.html", {
+        "user": user,
+        "categories": categories
+    })
 
 # 3. Autenticación: Login
 @router.get("/login", response_class=HTMLResponse)

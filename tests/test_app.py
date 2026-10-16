@@ -65,10 +65,17 @@ def test_public_routes_accessible_without_auth():
     """Verifica que las rutas públicas sí sean accesibles para visitantes."""
     unauthed_client = TestClient(app)
 
-    # Bienvenida pública
+    # Bienvenida pública y Landing page
     r_welcome = unauthed_client.get("/bienvenida")
     assert r_welcome.status_code == 200
     assert "Tu hogar, tus proyectos" in r_welcome.text
+
+    r_landing = unauthed_client.get("/landing")
+    assert r_landing.status_code == 200
+    assert "Tu hogar, tus proyectos" in r_landing.text
+    assert "Semáforo de Seguridad" in r_landing.text
+    assert "Calculadora Paramétrica en Vivo" in r_landing.text
+
 
     # Login público
     r_login = unauthed_client.get("/login")

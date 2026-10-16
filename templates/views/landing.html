@@ -1,0 +1,842 @@
+{% extends "base.html" %}
+
+{% block title %}CasaLista — Planificación Inteligente de Reparaciones del Hogar (Colombia COP){% endblock %}
+
+{% block bottom_nav %}
+  <!-- No mostrar bottom_nav de app interna en la landing page -->
+{% endblock %}
+
+{% block content %}
+<div class="flex-1 flex flex-col w-full bg-surface text-on-surface antialiased overflow-x-hidden">
+
+  <!-- 1. Top Announcement Bar -->
+  <aside class="bg-primary text-on-primary py-2 px-4 text-center text-[12px] font-label-md flex items-center justify-center gap-2 border-b border-primary-container">
+    <span class="inline-flex items-center justify-center w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+    <span>Precios de referencia y rendimiento en Pesos Colombianos (COP) • Actualizado para ferreterías de Colombia 🇨🇴</span>
+  </aside>
+
+  <!-- 2. Sticky Glassmorphic Navbar -->
+  <header class="sticky top-0 z-40 w-full backdrop-blur-md bg-surface/90 border-b border-outline-variant/30 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="/landing" class="flex items-center gap-2.5 group">
+        <div class="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-on-secondary shadow-md shadow-secondary/20 group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">home_repair_service</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-headline-md text-headline-md text-primary font-bold tracking-tight">CasaLista</span>
+          <span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider -mt-1 font-semibold">Hogar & Bricolaje</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-6 font-label-lg text-label-lg font-medium text-on-surface-variant">
+        <a href="#como-funciona" class="hover:text-primary transition-colors">¿Cómo funciona?</a>
+        <a href="#semaforo" class="hover:text-primary transition-colors">Semáforo de Seguridad</a>
+        <a href="#calculadora" class="hover:text-primary transition-colors">Calculadora en vivo</a>
+        <a href="#catalogo" class="hover:text-primary transition-colors">Catálogo</a>
+        <a href="#faq" class="hover:text-primary transition-colors">Preguntas</a>
+      </nav>
+
+      <!-- User Auth CTAs -->
+      <div class="flex items-center gap-2.5">
+        {% if user %}
+          <a href="/" class="h-10 px-4 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold flex items-center gap-2 hover:bg-primary-container transition-all shadow-sm">
+            <span class="material-symbols-outlined text-[18px]">dashboard</span>
+            <span>Mi Panel</span>
+          </a>
+        {% else %}
+          <a href="/login" class="h-10 px-4 rounded-xl text-primary font-label-md text-label-md font-semibold flex items-center hover:bg-surface-container transition-all">
+            Iniciar sesión
+          </a>
+          <a href="/registro" class="h-10 px-4 rounded-xl bg-secondary text-on-secondary font-label-md text-label-md font-semibold flex items-center gap-1.5 hover:bg-primary transition-all shadow-sm shadow-secondary/20">
+            <span>Comenzar gratis</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        {% endif %}
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 3. Hero Section (Responsive Bento Grid) -->
+  <section class="relative pt-12 pb-16 md:pt-20 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      
+      <!-- Left Column: Copy & Value Proposition -->
+      <div class="lg:col-span-7 flex flex-col items-start space-y-6">
+        
+        <!-- Pill Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-secondary-fixed text-primary font-label-sm text-label-sm font-bold tracking-wide uppercase shadow-xs">
+          <span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+          <span>Modelo de Seguridad Doméstica & Presupuesto COP</span>
+        </div>
+
+        <h1 class="font-headline-lg text-[32px] sm:text-[42px] lg:text-[48px] leading-[1.15] text-primary tracking-tight font-extrabold">
+          Tu hogar, tus proyectos, <span class="text-secondary">con la precisión de un experto.</span>
+        </h1>
+
+        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed max-w-2xl">
+          Planifica pequeñas reparaciones y acabados domésticos, calcula cantidades exactas de insumos comerciales en pesos colombianos y descubre con el <strong>Semáforo de Seguridad</strong> cuándo puedes hacerlo tú mismo y cuándo debes recurrir a un profesional calificado.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto pt-2">
+          <a href="#calculadora" class="h-13 px-6 rounded-xl bg-secondary text-on-secondary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 hover:bg-primary-container active:scale-95 transition-all shadow-md shadow-secondary/25">
+            <span class="material-symbols-outlined text-[20px]">calculate</span>
+            <span>Probar calculadora en vivo</span>
+          </a>
+          <a href="/explorar" class="h-13 px-6 rounded-xl bg-surface-container-lowest text-primary border border-outline-variant/40 font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 hover:bg-surface-container active:scale-95 transition-all shadow-xs">
+            <span class="material-symbols-outlined text-[20px] text-secondary">explore</span>
+            <span>Explorar catálogo seguro</span>
+          </a>
+        </div>
+
+        <!-- Trust Badges Metrics -->
+        <div class="pt-6 border-t border-outline-variant/30 grid grid-cols-3 gap-4 w-full max-w-xl">
+          <div class="flex flex-col">
+            <span class="font-headline-lg text-headline-lg text-primary font-bold">8</span>
+            <span class="font-body-sm text-body-sm text-on-surface-variant">Categorías del hogar</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline-lg text-headline-lg text-secondary font-bold">~60%</span>
+            <span class="font-body-sm text-body-sm text-on-surface-variant">Ahorro promedio DIY</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline-lg text-headline-lg text-emerald-700 font-bold">100%</span>
+            <span class="font-body-sm text-body-sm text-on-surface-variant">Precios en Pesos COP</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Interactive Visual Showcase Card -->
+      <div class="lg:col-span-5 relative">
+        <div class="absolute -top-6 -right-6 w-72 h-72 rounded-full bg-secondary-fixed/40 blur-3xl pointer-events-none"></div>
+        
+        <div class="relative bg-surface-container-lowest rounded-3xl p-5 sm:p-6 shadow-xl border border-outline-variant/30 flex flex-col gap-4">
+          
+          <!-- Mockup Header -->
+          <div class="flex items-center justify-between pb-3 border-b border-outline-variant/20">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-secondary-fixed text-primary flex items-center justify-center font-bold">
+                <span class="material-symbols-outlined text-[22px]">format_paint</span>
+              </div>
+              <div>
+                <span class="font-label-sm text-label-sm text-on-surface-variant block uppercase font-semibold">Ejemplo de Reparación</span>
+                <h2 class="font-headline-sm text-headline-sm text-primary font-bold">Pintar pared interior</h2>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-label-sm text-label-sm font-bold flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+              Semáforo Verde
+            </span>
+          </div>
+
+          <!-- Quick Parameters Preview -->
+          <div class="grid grid-cols-2 gap-2 text-center">
+            <div class="p-2.5 rounded-xl bg-surface-container-low">
+              <span class="font-label-sm text-label-sm text-on-surface-variant block">Superficie estimada</span>
+              <span class="font-headline-sm text-headline-sm text-primary font-bold">12.0 m² (2 manos)</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-surface-container-low">
+              <span class="font-label-sm text-label-sm text-on-surface-variant block">Gama sugerida</span>
+              <span class="font-headline-sm text-headline-sm text-secondary font-bold">Recomendada</span>
+            </div>
+          </div>
+
+          <!-- Items list simulation -->
+          <div class="space-y-2">
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">Insumos comerciales calculados</span>
+            <div class="space-y-1.5 text-body-sm">
+              <div class="flex items-center justify-between p-2 rounded-lg bg-surface-container/50">
+                <span class="text-on-surface font-medium">Vinilo Tipo 1 Blanco (1 Galón)</span>
+                <span class="font-semibold text-primary">$68.000 COP</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-lg bg-surface-container/50">
+                <span class="text-on-surface font-medium">Kit Rodillo felpa 9" + Bandeja</span>
+                <span class="font-semibold text-primary">$26.500 COP</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-lg bg-surface-container/50">
+                <span class="text-on-surface font-medium">Cinta azul de enmascarar 1" (24mm)</span>
+                <span class="font-semibold text-primary">$12.000 COP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Block -->
+          <div class="p-3.5 rounded-2xl bg-primary text-on-primary flex items-center justify-between shadow-md">
+            <div>
+              <span class="font-label-sm text-label-sm opacity-80 block uppercase">Inversión Estimada COP</span>
+              <span class="font-headline-lg text-headline-lg font-extrabold tracking-tight">$148.500 COP</span>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-label-sm text-label-sm font-semibold border border-emerald-500/30">
+              Ahorro ~65%
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. Interactive Live Calculator Widget Section (#calculadora) -->
+  <section id="calculadora" class="py-16 bg-surface-container-low/70 border-y border-outline-variant/30 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Herramienta Reactiva</span>
+        <h2 class="font-headline-lg text-[28px] sm:text-[36px] text-primary font-extrabold tracking-tight mt-1">
+          Prueba la Calculadora Paramétrica en Vivo
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-2 leading-relaxed">
+          Selecciona una labor cotidiana de reparación, ajusta la superficie y observa cómo CasaLista recalcula en tiempo real los insumos y la inversión estimada en pesos colombianos.
+        </p>
+      </div>
+
+      <!-- Live Widget Card -->
+      <div class="bg-surface-container-lowest rounded-3xl shadow-xl border border-outline-variant/30 p-6 sm:p-8 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+          
+          <!-- Controls Column -->
+          <div class="md:col-span-7 flex flex-col space-y-5">
+            
+            <!-- Select Task -->
+            <div>
+              <label for="demo-task-select" class="font-label-md text-label-md text-primary font-bold block mb-1.5">
+                Selecciona la tarea a presupuestar:
+              </label>
+              <select id="demo-task-select" class="w-full h-12 px-3.5 rounded-xl bg-surface-container-low border border-outline-variant/40 font-body-md text-body-md text-primary font-medium focus:outline-none focus:border-secondary transition-colors" onchange="runDemoCalculation()">
+                <option value="task_pintar_pared" selected>🎨 Pintar una pared interior (m²)</option>
+                <option value="task_resanar_agujeros">🔨 Tapar huecos de puntilla o chazo</option>
+                <option value="task_instalar_repisa">📐 Instalar repisa flotante con taladro</option>
+                <option value="task_reparar_grieta_superficial">🧱 Reparar fisura superficial en estuco</option>
+              </select>
+            </div>
+
+            <!-- Area Slider -->
+            <div id="demo-area-container">
+              <div class="flex items-center justify-between mb-1.5">
+                <label for="demo-area-slider" class="font-label-md text-label-md text-primary font-bold">
+                  Superficie a intervenir:
+                </label>
+                <span class="font-headline-sm text-headline-sm text-secondary font-bold" id="demo-area-display">12.0 m²</span>
+              </div>
+              <input type="range" id="demo-area-slider" min="2" max="60" step="1" value="12" class="w-full h-2 bg-surface-container rounded-lg appearance-none cursor-pointer accent-secondary" oninput="updateDemoArea(this.value)"/>
+              <div class="flex justify-between text-on-surface-variant font-label-sm text-[11px] mt-1">
+                <span>2 m² (habitación pequeña)</span>
+                <span>30 m²</span>
+                <span>60 m² (apartamento completo)</span>
+              </div>
+            </div>
+
+            <!-- Tier Selector Buttons -->
+            <div>
+              <label class="font-label-md text-label-md text-primary font-bold block mb-1.5">
+                Gama de materiales:
+              </label>
+              <div class="grid grid-cols-3 gap-2" id="demo-tier-buttons">
+                <button type="button" onclick="setDemoTier('eco', this)" class="demo-tier-btn p-2.5 rounded-xl border border-outline-variant/40 text-center font-label-md text-label-md font-semibold text-on-surface-variant hover:bg-surface-container transition-all">
+                  Económica
+                </button>
+                <button type="button" onclick="setDemoTier('recom', this)" class="demo-tier-btn p-2.5 rounded-xl border-2 border-secondary bg-secondary-fixed text-primary text-center font-label-md text-label-md font-bold transition-all shadow-xs">
+                  Recomendada ⭐
+                </button>
+                <button type="button" onclick="setDemoTier('prem', this)" class="demo-tier-btn p-2.5 rounded-xl border border-outline-variant/40 text-center font-label-md text-label-md font-semibold text-on-surface-variant hover:bg-surface-container transition-all">
+                  Prémium
+                </button>
+              </div>
+            </div>
+
+            <!-- Contextual Tip -->
+            <div class="p-3 rounded-xl bg-tertiary-fixed/60 border border-tertiary-fixed text-body-sm font-body-sm text-on-tertiary-fixed-variant flex items-start gap-2">
+              <span class="material-symbols-outlined text-[18px] text-secondary shrink-0 mt-0.5">lightbulb</span>
+              <span id="demo-tip">El rendimiento se calcula con 2 manos de acabado más un 10% adicional de merma técnica para evitar compras incompletas.</span>
+            </div>
+
+          </div>
+
+          <!-- Results Column -->
+          <div class="md:col-span-5 bg-surface-container-low/70 rounded-2xl p-5 border border-outline-variant/30 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-2 border-b border-outline-variant/20 mb-3">
+                <span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant">Inversión Aproximada</span>
+                <span class="font-label-sm text-label-sm text-secondary font-semibold" id="demo-items-count">3 insumos</span>
+              </div>
+
+              <!-- Main Amount -->
+              <div class="mb-4">
+                <span class="font-display-currency text-[32px] font-extrabold text-primary block tracking-tight" id="demo-total-amount">
+                  $148.500
+                </span>
+                <span class="font-label-sm text-label-sm text-on-surface-variant">Pesos Colombianos (COP)</span>
+              </div>
+
+              <!-- Itemized List -->
+              <div class="space-y-2 text-body-sm" id="demo-items-list">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+
+            <div class="pt-5 mt-4 border-t border-outline-variant/20">
+              <a href="/registro" class="w-full h-11 bg-secondary text-on-secondary rounded-xl font-label-md text-label-md font-bold flex items-center justify-center gap-2 hover:bg-primary transition-all shadow-sm">
+                <span>Guardar este presupuesto gratis</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. The Safety Traffic Light (#semaforo) -->
+  <section id="semaforo" class="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full scroll-mt-20">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Innovación Pedagógica</span>
+      <h2 class="font-headline-lg text-[28px] sm:text-[36px] text-primary font-extrabold tracking-tight mt-1">
+        El Semáforo de Seguridad CasaLista
+      </h2>
+      <p class="font-body-md text-body-md text-on-surface-variant mt-2 leading-relaxed">
+        El bricolaje en el hogar no debe poner en riesgo tu bienestar. CasaLista evalúa cada tarea según normas técnicas colombianas para que tomes decisiones conscientes y seguras.
+      </p>
+    </div>
+
+    <!-- 3 Traffic Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Green Card -->
+      <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border-2 border-emerald-300/80 flex flex-col justify-between transition-transform hover:-translate-y-1 duration-200">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center mb-4 shadow-xs">
+            <span class="material-symbols-outlined text-[28px]">verified_user</span>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 font-label-sm text-label-sm font-bold uppercase tracking-wider">
+            Nivel Verde • Seguro DIY
+          </span>
+          <h3 class="font-headline-sm text-headline-sm text-primary font-bold mt-2.5 mb-1.5">
+            Reparación sencilla y autónoma
+          </h3>
+          <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Labores que se realizan a nivel del suelo, con herramientas manuales estándar y sin exposición a voltajes, gas o daño estructural.
+          </p>
+          <ul class="mt-4 space-y-1.5 text-body-sm text-on-surface">
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-emerald-600 text-[18px]">check</span>
+              <span>Pintura de paredes y techos bajos</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-emerald-600 text-[18px]">check</span>
+              <span>Resane de huecos de puntilla</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-emerald-600 text-[18px]">check</span>
+              <span>Ajuste de bisagras y lubricación</span>
+            </li>
+          </ul>
+        </div>
+        <div class="pt-5 mt-4 border-t border-outline-variant/20">
+          <span class="font-label-sm text-label-sm text-emerald-800 font-bold block">100% Apta para principiantes</span>
+        </div>
+      </div>
+
+      <!-- Yellow Card -->
+      <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border-2 border-amber-300/80 flex flex-col justify-between transition-transform hover:-translate-y-1 duration-200">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center mb-4 shadow-xs">
+            <span class="material-symbols-outlined text-[28px]">warning</span>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-label-sm text-label-sm font-bold uppercase tracking-wider">
+            Nivel Amarillo • Precaución
+          </span>
+          <h3 class="font-headline-sm text-headline-sm text-primary font-bold mt-2.5 mb-1.5">
+            Requiere medidas preventivas
+          </h3>
+          <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Labores que exigen suspender suministros generales (agua o breaker eléctrico), uso de taladro percutor o equipo de protección (gafas, guantes).
+          </p>
+          <ul class="mt-4 space-y-1.5 text-body-sm text-on-surface">
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-amber-600 text-[18px]">check</span>
+              <span>Instalación de repisas con chazos</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-amber-600 text-[18px]">check</span>
+              <span>Cambio de empaque o sifón de lavamanos</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-amber-600 text-[18px]">check</span>
+              <span>Reemplazo de interruptor sencillo (sin tensión)</span>
+            </li>
+          </ul>
+        </div>
+        <div class="pt-5 mt-4 border-t border-outline-variant/20">
+          <span class="font-label-sm text-label-sm text-amber-800 font-bold block">Con advertencias previas obligatorias</span>
+        </div>
+      </div>
+
+      <!-- Red Card -->
+      <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border-2 border-rose-300/80 flex flex-col justify-between transition-transform hover:-translate-y-1 duration-200">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center mb-4 shadow-xs">
+            <span class="material-symbols-outlined text-[28px]">gpp_bad</span>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-900 font-label-sm text-label-sm font-bold uppercase tracking-wider">
+            Nivel Rojo • Alto Riesgo
+          </span>
+          <h3 class="font-headline-sm text-headline-sm text-primary font-bold mt-2.5 mb-1.5">
+            Bloqueo y asistencia profesional
+          </h3>
+          <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            CasaLista no ofrece guías de ejecución autónoma para estas tareas. Se activan protocolos de contingencia y líneas oficiales de emergencia en Colombia.
+          </p>
+          <ul class="mt-4 space-y-1.5 text-body-sm text-on-surface">
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-rose-600 text-[18px]">close</span>
+              <span>Manipulación de caja de distribución eléctrica</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-rose-600 text-[18px]">close</span>
+              <span>Fuga interna de agua en muro empotrado</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-rose-600 text-[18px]">close</span>
+              <span>Válvulas y conexiones de red de gas domiciliario</span>
+            </li>
+          </ul>
+        </div>
+        <div class="pt-5 mt-4 border-t border-outline-variant/20">
+          <span class="font-label-sm text-label-sm text-rose-800 font-bold block">Protección de integridad y póliza de hogar</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6. The 8 Categories Bento Grid (#catalogo) -->
+  <section id="catalogo" class="py-16 bg-surface-container-low/50 border-t border-outline-variant/30 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div>
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Catálogo Cerrado Especializado</span>
+          <h2 class="font-headline-lg text-[28px] sm:text-[36px] text-primary font-extrabold tracking-tight mt-1">
+            8 Categorías Cubiertas en el Hogar
+          </h2>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            Diseñadas bajo los estándares de vivienda urbana en Colombia.
+          </p>
+        </div>
+
+        <a href="/explorar" class="h-11 px-5 rounded-xl bg-secondary text-on-secondary font-label-md text-label-md font-semibold inline-flex items-center gap-2 hover:bg-primary transition-all self-start md:self-auto shadow-sm">
+          <span>Ver catálogo completo</span>
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+      </div>
+
+      <!-- Categories Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {% for cat in categories %}
+          <a href="/explorar?q={{ cat.name }}" class="p-5 rounded-2xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm hover:shadow-md hover:border-secondary transition-all group flex flex-col justify-between">
+            <div class="flex items-start gap-3.5 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-secondary-fixed text-primary flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[26px]">{{ cat.icon }}</span>
+              </div>
+              <div>
+                <h3 class="font-headline-sm text-headline-sm text-primary font-bold leading-snug group-hover:text-secondary transition-colors">{{ cat.name }}</h3>
+                <span class="font-body-sm text-body-sm text-on-surface-variant block mt-0.5">{{ cat.subtitle }}</span>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-outline-variant/20 flex items-center justify-between">
+              <span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">{{ cat.badge_text }}</span>
+              <span class="material-symbols-outlined text-outline group-hover:text-secondary transition-colors text-[18px]">chevron_right</span>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. Workflow Step-by-Step ("¿Cómo funciona?") -->
+  <section id="como-funciona" class="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full scroll-mt-20">
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Simplicidad & Metodología</span>
+      <h2 class="font-headline-lg text-[28px] sm:text-[36px] text-primary font-extrabold tracking-tight mt-1">
+        Cómo Funciona CasaLista en 4 Pasos
+      </h2>
+      <p class="font-body-md text-body-md text-on-surface-variant mt-2 leading-relaxed">
+        Olvídate de comprar rollos de cinta sobrantes, pinturas a medio gastar o no saber qué tornillo utilizar.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <div class="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex flex-col">
+        <span class="w-10 h-10 rounded-xl bg-primary text-on-primary font-headline-sm text-headline-sm font-bold flex items-center justify-center mb-4">1</span>
+        <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-2">Elige la reparación</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Explora las 8 categorías o usa el buscador para identificar exactamente el arreglo que necesitas en tu hogar.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex flex-col">
+        <span class="w-10 h-10 rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm font-bold flex items-center justify-center mb-4">2</span>
+        <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-2">Verifica la seguridad</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Consulta el diagnóstico del Semáforo de Seguridad para saber si requieres cortar fluidos o si debes acudir a un técnico matriculado.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex flex-col">
+        <span class="w-10 h-10 rounded-xl bg-primary-container text-on-primary font-headline-sm text-headline-sm font-bold flex items-center justify-center mb-4">3</span>
+        <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-2">Calcula tus insumos</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Ingresa los metros cuadrados y elige entre gama Económica, Recomendada o Prémium con precios reales en COP.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex flex-col">
+        <span class="w-10 h-10 rounded-xl bg-emerald-600 text-white font-headline-sm text-headline-sm font-bold flex items-center justify-center mb-4">4</span>
+        <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-2">Sigue la guía guiada</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Ejecuta la labor paso a paso marcando casillas interactivas, con consejos preventivos y registro en tu historial.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 8. Comparison Table -->
+  <section class="py-16 bg-surface-container-low/60 border-t border-outline-variant/30">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-10">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Comparativa de Eficiencia</span>
+        <h2 class="font-headline-lg text-[28px] sm:text-[34px] text-primary font-extrabold tracking-tight mt-1">
+          Hacerlo a ciegas vs Planificar con CasaLista
+        </h2>
+      </div>
+
+      <div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/30 overflow-hidden">
+        <div class="grid grid-cols-12 bg-surface-container p-4 font-label-md text-label-md font-bold text-primary border-b border-outline-variant/30">
+          <div class="col-span-5 sm:col-span-4">Criterio</div>
+          <div class="col-span-3 sm:col-span-4 text-center text-rose-800">Método Tradicional</div>
+          <div class="col-span-4 sm:col-span-4 text-center text-secondary">Con CasaLista</div>
+        </div>
+
+        <div class="divide-y divide-outline-variant/20 font-body-sm text-body-sm">
+          <div class="grid grid-cols-12 p-4 items-center">
+            <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Cálculo de pintura / masilla</div>
+            <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Al tanteo, sobra o falta</div>
+            <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">check_circle</span> Cantidad exacta por m²
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 p-4 items-center bg-surface-container-low/30">
+            <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Precios y presupuesto</div>
+            <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Sorpresas en caja de ferretería</div>
+            <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">check_circle</span> Precios COP por 3 gamas
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 p-4 items-center">
+            <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Seguridad y riesgos</div>
+            <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Ignorar cortes de agua/luz</div>
+            <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">check_circle</span> Semáforo de 3 niveles
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 p-4 items-center bg-surface-container-low/30">
+            <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Pasos e instrucciones</div>
+            <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Tutoriales de video confusos</div>
+            <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">check_circle</span> Lista interactiva y avance
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 9. Frequently Asked Questions (FAQ Accordion) (#faq) -->
+  <section id="faq" class="py-16 md:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full scroll-mt-20">
+    <div class="text-center mb-12">
+      <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Resolvemos tus dudas</span>
+      <h2 class="font-headline-lg text-[28px] sm:text-[34px] text-primary font-extrabold tracking-tight mt-1">
+        Preguntas Frecuentes
+      </h2>
+    </div>
+
+    <div class="space-y-3" id="faq-accordion">
+      
+      <!-- FAQ 1 -->
+      <div class="rounded-2xl bg-surface-container-lowest border border-outline-variant/30 overflow-hidden shadow-xs">
+        <button type="button" class="w-full p-5 text-left flex items-center justify-between font-headline-sm text-headline-sm text-primary font-bold hover:bg-surface-container-low/50 transition-colors" onclick="toggleFaq(this)">
+          <span>¿Los precios de los insumos están en Pesos Colombianos (COP)?</span>
+          <span class="material-symbols-outlined text-[22px] text-secondary transition-transform duration-200">expand_more</span>
+        </button>
+        <div class="px-5 pb-5 font-body-md text-body-md text-on-surface-variant hidden">
+          Sí. Todos los insumos (galones de vinilo, cuñetes, tubos de masilla, espátulas, chazos y rodillos) se encuentran valorados en pesos colombianos con base en catálogos y referencias comerciales de ferreterías colombianas.
+        </div>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="rounded-2xl bg-surface-container-lowest border border-outline-variant/30 overflow-hidden shadow-xs">
+        <button type="button" class="w-full p-5 text-left flex items-center justify-between font-headline-sm text-headline-sm text-primary font-bold hover:bg-surface-container-low/50 transition-colors" onclick="toggleFaq(this)">
+          <span>¿Qué ocurre si selecciono una tarea clasificada en Semáforo Rojo?</span>
+          <span class="material-symbols-outlined text-[22px] text-secondary transition-transform duration-200">expand_more</span>
+        </button>
+        <div class="px-5 pb-5 font-body-md text-body-md text-on-surface-variant hidden">
+          Por protocolo de seguridad y normatividad técnica, CasaLista bloquea las instrucciones de bricolaje autónomo para tareas de Semáforo Rojo (ej. manipular tableros principales de breakers o fugas en tuberías internas). En su lugar, te muestra los pasos de contingencia inmediata y las líneas de emergencia oficiales en Colombia (116, 164, 119).
+        </div>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="rounded-2xl bg-surface-container-lowest border border-outline-variant/30 overflow-hidden shadow-xs">
+        <button type="button" class="w-full p-5 text-left flex items-center justify-between font-headline-sm text-headline-sm text-primary font-bold hover:bg-surface-container-low/50 transition-colors" onclick="toggleFaq(this)">
+          <span>¿La calculadora incluye merma y número de capas?</span>
+          <span class="material-symbols-outlined text-[22px] text-secondary transition-transform duration-200">expand_more</span>
+        </button>
+        <div class="px-5 pb-5 font-body-md text-body-md text-on-surface-variant hidden">
+          Totalmente. En labores como pintura o resanes, el algoritmo calcula dos manos de aplicación estándar más una merma técnica preventiva del 10% para garantizar que no te quedes corto en medio del trabajo.
+        </div>
+      </div>
+
+      <!-- FAQ 4 -->
+      <div class="rounded-2xl bg-surface-container-lowest border border-outline-variant/30 overflow-hidden shadow-xs">
+        <button type="button" class="w-full p-5 text-left flex items-center justify-between font-headline-sm text-headline-sm text-primary font-bold hover:bg-surface-container-low/50 transition-colors" onclick="toggleFaq(this)">
+          <span>¿Funciona en teléfonos móviles y computadores?</span>
+          <span class="material-symbols-outlined text-[22px] text-secondary transition-transform duration-200">expand_more</span>
+        </button>
+        <div class="px-5 pb-5 font-body-md text-body-md text-on-surface-variant hidden">
+          Sí. CasaLista está desarrollada bajo un diseño mobile-first totalmente responsivo que se adapta con fluidez desde cualquier smartphone en la ferretería hasta una tableta o computador de escritorio en el hogar.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 10. Final CTA Banner -->
+  <section class="py-16 md:py-20 bg-primary text-on-primary">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-bold uppercase tracking-wider">
+        <span class="material-symbols-outlined text-[16px]">rocket_launch</span>
+        Empieza hoy mismo
+      </span>
+      <h2 class="font-headline-lg text-[32px] sm:text-[42px] font-extrabold tracking-tight">
+        Toma el control de las reparaciones de tu hogar.
+      </h2>
+      <p class="font-body-lg text-body-lg text-primary-fixed max-w-2xl mx-auto leading-relaxed">
+        Calcula insumos sin costo, sigue guías paso a paso y ten la tranquilidad de cuidar tu patrimonio con el respaldo del Semáforo de Seguridad.
+      </p>
+      
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+        <a href="/registro" class="w-full sm:w-auto h-13 px-8 rounded-xl bg-secondary text-on-secondary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 hover:bg-secondary-container transition-all shadow-lg active:scale-95">
+          <span>Crear cuenta gratuita</span>
+          <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+        </a>
+        <a href="/login" class="w-full sm:w-auto h-13 px-8 rounded-xl bg-primary-container text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center hover:bg-primary-container/80 transition-all border border-on-primary/20">
+          <span>Iniciar sesión</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Footer -->
+  <footer class="bg-surface-container-highest/60 border-t border-outline-variant/30 py-12 text-on-surface-variant font-body-sm text-body-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-xs">
+          <span class="material-symbols-outlined text-[20px]">home_repair_service</span>
+        </div>
+        <div>
+          <span class="font-headline-sm text-headline-sm text-primary font-bold block">CasaLista</span>
+          <span class="text-[12px]">Control de Obra & Bricolaje Doméstico • Colombia</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-6 font-label-md text-label-md">
+        <a href="/explorar" class="hover:text-primary transition-colors">Catálogo</a>
+        <a href="/login" class="hover:text-primary transition-colors">Ingresar</a>
+        <a href="/registro" class="hover:text-primary transition-colors">Registrarse</a>
+        <a href="#semaforo" class="hover:text-primary transition-colors">Seguridad</a>
+      </div>
+
+      <div class="text-[12px] text-center md:text-right">
+        <p>© 2026 CasaLista. Prototipo de Arquitectura y Bricolaje Paramétrico.</p>
+        <p class="text-outline mt-0.5">Desarrollado para Colombia (COP) • Versión 1.0.0</p>
+      </div>
+
+    </div>
+  </footer>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // FAQ Accordion Toggle
+  function toggleFaq(btn) {
+    const content = btn.nextElementSibling;
+    const icon = btn.querySelector('.material-symbols-outlined');
+    const isHidden = content.classList.contains('hidden');
+
+    // Cerrar otros
+    document.querySelectorAll('#faq-accordion .material-symbols-outlined').forEach(i => i.classList.remove('rotate-180'));
+    document.querySelectorAll('#faq-accordion > div > div').forEach(c => c.classList.add('hidden'));
+
+    if (isHidden) {
+      content.classList.remove('hidden');
+      icon.classList.add('rotate-180');
+    }
+  }
+
+  // Interactive Live Calculator Demo Engine
+  let demoCurrentTier = 'recom';
+  let demoCurrentArea = 12.0;
+
+  const demoPresets = {
+    task_pintar_pared: {
+      name: "Pintar una pared interior",
+      hasArea: true,
+      unit: "m²",
+      tip: "Rendimiento calculado con 2 manos de acabado más un 10% adicional de merma técnica.",
+      calc(area, tier) {
+        const factor = area / 12.0;
+        let total = 0;
+        let items = [];
+        if (tier === 'eco') {
+          total = Math.round(98000 * factor);
+          items = [
+            { name: "Vinilo Tipo 2 Interior", price: `$${Math.round(48000 * factor).toLocaleString('es-CO')} COP` },
+            { name: "Rodillo estándar con felpa", price: "$18.000 COP" },
+            { name: "Cinta de enmascarar económica", price: "$6.500 COP" }
+          ];
+        } else if (tier === 'prem') {
+          total = Math.round(215000 * factor);
+          items = [
+            { name: "Esmalte acrílico lavable Prémium", price: `$${Math.round(115000 * factor).toLocaleString('es-CO')} COP` },
+            { name: "Rodillo microfibra antigota pro", price: "$32.000 COP" },
+            { name: "Cinta de precisión azul 3M", price: "$16.000 COP" },
+            { name: "Bandeja plástica reforzada", price: "$14.000 COP" }
+          ];
+        } else {
+          total = Math.round(148500 * factor);
+          items = [
+            { name: "Vinilo Tipo 1 Satinado (1 Gal)", price: `$${Math.round(68000 * factor).toLocaleString('es-CO')} COP` },
+            { name: "Kit Rodillo felpa 9\" + Bandeja", price: "$26.500 COP" },
+            { name: "Cinta azul de enmascarar 1\"", price: "$12.000 COP" }
+          ];
+        }
+        return { total, items };
+      }
+    },
+    task_resanar_agujeros: {
+      name: "Tapar huecos de puntilla o chazo",
+      hasArea: false,
+      unit: "huecos",
+      tip: "El tubo de estuco plástico rinde hasta 25 orificios pequeños con espátula de 2 pulgadas.",
+      calc(area, tier) {
+        const total = tier === 'prem' ? 32000 : (tier === 'eco' ? 14000 : 18000);
+        return {
+          total,
+          items: [
+            { name: "Tubo estuco acrílico interior", price: tier === 'prem' ? "$19.000 COP" : "$11.000 COP" },
+            { name: "Espátula metálica flexible 2\"", price: "$7.000 COP" },
+            { name: "Lija de agua grano fino #220", price: "$2.500 COP" }
+          ]
+        };
+      }
+    },
+    task_instalar_repisa: {
+      name: "Instalar repisa flotante con taladro",
+      hasArea: false,
+      unit: "repisas",
+      tip: "Requiere broca para mampostería de 5/16\" y chazos plásticos de expansión.",
+      calc(area, tier) {
+        const total = tier === 'prem' ? 68000 : (tier === 'eco' ? 35000 : 48000);
+        return {
+          total,
+          items: [
+            { name: "Soportes invisibles de acero (par)", price: "$28.000 COP" },
+            { name: "Chazos de expansión 5/16 (x4)", price: "$4.000 COP" },
+            { name: "Tornillos cabeza avellanada", price: "$3.500 COP" }
+          ]
+        };
+      }
+    },
+    task_reparar_grieta_superficial: {
+      name: "Reparar fisura superficial en estuco",
+      hasArea: true,
+      unit: "metros lineales",
+      tip: "Usa cinta de malla de fibra de vidrio para evitar que la dilatación reabra la grieta.",
+      calc(area, tier) {
+        const factor = Math.max(1, area / 5.0);
+        const total = Math.round(32000 * factor);
+        return {
+          total,
+          items: [
+            { name: "Masilla elastomérica antifisuras", price: `$${Math.round(18000 * factor).toLocaleString('es-CO')} COP` },
+            { name: "Cinta malla de fibra 5cm x 10m", price: "$9.500 COP" },
+            { name: "Espátula plástica para estuco", price: "$4.500 COP" }
+          ]
+        };
+      }
+    }
+  };
+
+  function updateDemoArea(val) {
+    demoCurrentArea = parseFloat(val);
+    document.getElementById('demo-area-display').innerText = val + " m²";
+    runDemoCalculation();
+  }
+
+  function setDemoTier(tier, btn) {
+    demoCurrentTier = tier;
+    document.querySelectorAll('.demo-tier-btn').forEach(b => {
+      b.className = "demo-tier-btn p-2.5 rounded-xl border border-outline-variant/40 text-center font-label-md text-label-md font-semibold text-on-surface-variant hover:bg-surface-container transition-all";
+    });
+    btn.className = "demo-tier-btn p-2.5 rounded-xl border-2 border-secondary bg-secondary-fixed text-primary text-center font-label-md text-label-md font-bold transition-all shadow-xs";
+    runDemoCalculation();
+  }
+
+  function runDemoCalculation() {
+    const taskId = document.getElementById('demo-task-select').value;
+    const preset = demoPresets[taskId] || demoPresets.task_pintar_pared;
+    const areaContainer = document.getElementById('demo-area-container');
+
+    if (preset.hasArea) {
+      areaContainer.classList.remove('hidden');
+    } else {
+      areaContainer.classList.add('hidden');
+    }
+
+    document.getElementById('demo-tip').innerText = preset.tip;
+
+    const result = preset.calc(demoCurrentArea, demoCurrentTier);
+    document.getElementById('demo-total-amount').innerText = "$" + result.total.toLocaleString('es-CO');
+    document.getElementById('demo-items-count').innerText = `${result.items.length} insumos`;
+
+    const listEl = document.getElementById('demo-items-list');
+    listEl.innerHTML = result.items.map(item => `
+      <div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-lowest border border-outline-variant/15 shadow-2xs">
+        <span class="text-on-surface font-medium">${item.name}</span>
+        <span class="font-bold text-primary">${item.price}</span>
+      </div>
+    `).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', runDemoCalculation);
+</script>
+{% endblock %}
