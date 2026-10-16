@@ -12,3 +12,4 @@
 - [Friday]-[16/10/2026]-[07:25]-[Dylan Gamero] : Implemented authentication, sessions, and REST API in app/auth.py and app/routes/api.py.
 - [Friday]-[16/10/2026]-[07:30]-[Dylan Gamero] : Created modular Jinja2 templates adapting stitch_casalista_app_prototype into dynamic views (base, header, bottom_nav, traffic_badge, bienvenida, login, register, home, explore, task_detail, budget_detail, guide, red_warning, projects, profile).
 - [Friday]-[16/10/2026]-[07:33]-[Dylan Gamero] : Implemented automated test suite in tests/test_app.py with 12 passing integration tests.
+- [Friday]-[16/10/2026]-[07:42]-[Dylan Gamero] : Implemented strict route protection with require_auth_web and require_auth_api, eliminating insecure fallbacks and enforcing HTTP 401 and redirect to login.

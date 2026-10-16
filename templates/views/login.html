@@ -63,6 +63,7 @@
 
     <!-- Main Login Form -->
     <form class="flex flex-col w-full gap-space-md" method="POST" action="/login">
+      <input type="hidden" name="next" value="{{ next_url | default('/') }}"/>
       <!-- Email Field -->
       <div class="flex flex-col gap-space-xs">
         <label class="font-label-lg text-label-lg text-on-surface flex items-center justify-between" for="email">

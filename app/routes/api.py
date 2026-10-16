@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 from app.database import get_db_connection, dict_from_row, dicts_from_rows
-from app.auth import get_current_user
+from app.auth import require_auth_api, get_current_user
 
 router = APIRouter(prefix="/api", tags=["API CasaLista"])
 
@@ -29,7 +29,13 @@ class ProgressUpdateRequest(BaseModel):
     progress_percent: int
     status: Optional[str] = None
 
-# 1. Categorías
+# 1. Usuario actual
+@router.get("/user/me")
+def get_me(user: Dict[str, Any] = Depends(require_auth_api)):
+    """Retorna la información del usuario autenticado."""
+    return {"user": user}
+
+# 2. Categorías (Público)
 @router.get("/categories")
 def get_categories():
     """Retorna las 8 categorías del catálogo con el conteo de tareas activas."""
@@ -44,7 +50,7 @@ def get_categories():
     conn.close()
     return {"categories": dicts_from_rows(categories)}
 
-# 2. Tareas por categoría o generales
+# 3. Tareas por categoría o generales (Público)
 @router.get("/tasks")
 def get_tasks(category_id: Optional[str] = None, difficulty: Optional[str] = None, search: Optional[str] = None):
     """Retorna listado de tareas con filtros opcionales."""
@@ -68,7 +74,7 @@ def get_tasks(category_id: Optional[str] = None, difficulty: Optional[str] = Non
     conn.close()
     return {"tasks": dicts_from_rows(rows)}
 
-# 3. Detalle de tarea con insumos, herramientas y pasos
+# 4. Detalle de tarea con insumos, herramientas y pasos (Público)
 @router.get("/tasks/{task_id}")
 def get_task_detail(task_id: str):
     """Retorna la ficha técnica completa de una tarea con semáforo y desglose."""
@@ -106,7 +112,6 @@ def get_task_detail(task_id: str):
 
     conn.close()
 
-    # Clasificar materiales por gama
     tiers = {
         "base": [m for m in materials if m["tier"] == "base"],
         "eco": [m for m in materials if m["tier"] == "eco"],
@@ -122,7 +127,7 @@ def get_task_detail(task_id: str):
         "steps": steps
     }
 
-# 4. Motor de cálculo paramétrico en COP
+# 5. Motor de cálculo paramétrico en COP (Público)
 @router.post("/calculate")
 def calculate_budget(req: CalculateRequest):
     """Calcula el presupuesto paramétrico en COP según medidas y nivel seleccionado."""
@@ -139,7 +144,6 @@ def calculate_budget(req: CalculateRequest):
     ).fetchall())
     conn.close()
 
-    # Factor de escala según área o unidades respecto a base estándar (12m²)
     area = req.area_m2 if req.area_m2 and req.area_m2 > 0 else 12.0
     scale_factor = max(0.5, area / 12.0)
 
@@ -148,7 +152,6 @@ def calculate_budget(req: CalculateRequest):
 
     if materials:
         for m in materials:
-            # Los insumos fijos como rodillos o bandejas no se multiplican linealmente si es un cuarto pequeño
             if "galón" in m["name"].lower() or "vinilo" in m["name"].lower():
                 item_price = int(round(m["unit_price_cop"] * scale_factor))
             else:
@@ -163,7 +166,6 @@ def calculate_budget(req: CalculateRequest):
                 "icon": m["icon"]
             })
     else:
-        # Tasa estándar para tareas sin tiers específicos
         total_cop = int(round(task["base_cost_cop"] * scale_factor))
         calculated_items.append({
             "name": f"Insumos estándar para {task['title']}",
@@ -186,13 +188,10 @@ def calculate_budget(req: CalculateRequest):
         "items": calculated_items
     }
 
-# 5. Gestión de Proyectos Guardados del Usuario
+# 6. Gestión de Proyectos Guardados (Protegido por require_auth_api)
 @router.get("/projects")
-def get_user_projects(request: Request):
-    """Retorna los proyectos guardados y favoritos del usuario en sesión."""
-    user = get_current_user(request)
-    user_id = user["id"] if user else 1 # Fallback al usuario demo si no hay sesión
-
+def get_user_projects(user: Dict[str, Any] = Depends(require_auth_api)):
+    """Retorna los proyectos guardados y favoritos del usuario autenticado."""
     conn = get_db_connection()
     projects = conn.execute("""
         SELECT p.*, t.title as task_title, t.difficulty, t.estimated_time, t.image_url, t.security_level,
@@ -202,17 +201,14 @@ def get_user_projects(request: Request):
         JOIN categories c ON t.category_id = c.id
         WHERE p.user_id = ?
         ORDER BY p.updated_at DESC
-    """, (user_id,)).fetchall()
+    """, (user["id"],)).fetchall()
     conn.close()
 
     return {"projects": dicts_from_rows(projects)}
 
 @router.post("/projects")
-def save_or_update_project(req: ProjectCreateRequest, request: Request):
-    """Crea o actualiza un proyecto en la cuenta del usuario."""
-    user = get_current_user(request)
-    user_id = user["id"] if user else 1
-
+def save_or_update_project(req: ProjectCreateRequest, user: Dict[str, Any] = Depends(require_auth_api)):
+    """Crea o actualiza un proyecto en la cuenta del usuario autenticado."""
     conn = get_db_connection()
     task = conn.execute("SELECT title FROM tasks WHERE id = ?", (req.task_id,)).fetchone()
     if not task:
@@ -221,10 +217,9 @@ def save_or_update_project(req: ProjectCreateRequest, request: Request):
 
     project_name = req.project_name or task["title"]
 
-    # Verificar si ya existe un proyecto no completado para esta tarea
     existing = conn.execute("""
         SELECT id FROM user_projects WHERE user_id = ? AND task_id = ?
-    """, (user_id, req.task_id)).fetchone()
+    """, (user["id"], req.task_id)).fetchone()
 
     if existing:
         conn.execute("""
@@ -254,7 +249,7 @@ def save_or_update_project(req: ProjectCreateRequest, request: Request):
                 notes, is_favorite
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
-            user_id, req.task_id, project_name, req.phase_name, req.status,
+            user["id"], req.task_id, project_name, req.phase_name, req.status,
             req.progress_percent, req.area_m2, req.tier_selected, req.calculated_cost_cop,
             req.notes, 1 if req.is_favorite else 0
         ))
@@ -266,13 +261,10 @@ def save_or_update_project(req: ProjectCreateRequest, request: Request):
     return {"status": "success", "project_id": project_id, "message": "Proyecto guardado exitosamente"}
 
 @router.post("/projects/{project_id}/favorite")
-def toggle_project_favorite(project_id: int, request: Request):
-    """Alterna el estado de favorito de un proyecto o tarea."""
-    user = get_current_user(request)
-    user_id = user["id"] if user else 1
-
+def toggle_project_favorite(project_id: int, user: Dict[str, Any] = Depends(require_auth_api)):
+    """Alterna el estado de favorito de un proyecto del usuario autenticado."""
     conn = get_db_connection()
-    proj = conn.execute("SELECT is_favorite FROM user_projects WHERE id = ? AND user_id = ?", (project_id, user_id)).fetchone()
+    proj = conn.execute("SELECT is_favorite FROM user_projects WHERE id = ? AND user_id = ?", (project_id, user["id"])).fetchone()
     if not proj:
         conn.close()
         raise HTTPException(status_code=404, detail="Proyecto no encontrado")
@@ -285,32 +277,34 @@ def toggle_project_favorite(project_id: int, request: Request):
     return {"is_favorite": bool(new_fav)}
 
 @router.post("/projects/{project_id}/progress")
-def update_project_progress(project_id: int, req: ProgressUpdateRequest, request: Request):
-    """Actualiza el porcentaje de avance y estado de un proyecto."""
-    user = get_current_user(request)
-    user_id = user["id"] if user else 1
-
-    status = req.status or ("completado" if req.progress_percent >= 100 else "en_progreso")
+def update_project_progress(project_id: int, req: ProgressUpdateRequest, user: Dict[str, Any] = Depends(require_auth_api)):
+    """Actualiza el porcentaje de avance y estado de un proyecto del usuario."""
+    status_val = req.status or ("completado" if req.progress_percent >= 100 else "en_progreso")
 
     conn = get_db_connection()
-    conn.execute("""
+    res = conn.execute("""
         UPDATE user_projects
         SET progress_percent = ?, status = ?, updated_at = CURRENT_TIMESTAMP
         WHERE id = ? AND user_id = ?
-    """, (req.progress_percent, status, project_id, user_id))
+    """, (req.progress_percent, status_val, project_id, user["id"]))
+    
+    if res.rowcount == 0:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Proyecto no encontrado")
+        
     conn.commit()
     conn.close()
 
-    return {"status": status, "progress_percent": req.progress_percent}
+    return {"status": status_val, "progress_percent": req.progress_percent}
 
 @router.delete("/projects/{project_id}")
-def delete_project(project_id: int, request: Request):
-    """Elimina un proyecto de la cuenta del usuario."""
-    user = get_current_user(request)
-    user_id = user["id"] if user else 1
-
+def delete_project(project_id: int, user: Dict[str, Any] = Depends(require_auth_api)):
+    """Elimina un proyecto de la cuenta del usuario autenticado."""
     conn = get_db_connection()
-    conn.execute("DELETE FROM user_projects WHERE id = ? AND user_id = ?", (project_id, user_id))
+    res = conn.execute("DELETE FROM user_projects WHERE id = ? AND user_id = ?", (project_id, user["id"]))
+    if res.rowcount == 0:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Proyecto no encontrado")
     conn.commit()
     conn.close()
 

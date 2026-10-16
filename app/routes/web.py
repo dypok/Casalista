@@ -1,9 +1,13 @@
+from typing import Optional, Dict, Any
 from fastapi import APIRouter, Request, Form, Depends, HTTPException, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from app.config import TEMPLATES_DIR, SESSION_COOKIE_NAME
 from app.database import get_db_connection, dict_from_row, dicts_from_rows
-from app.auth import hash_password, verify_password, create_session_token, get_current_user
+from app.auth import (
+    hash_password, verify_password, create_session_token,
+    get_current_user, require_auth_web
+)
 
 router = APIRouter(tags=["Vistas Web CasaLista"])
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
@@ -13,21 +17,9 @@ def render_template(request: Request, name: str, context: dict = None, status_co
     ctx = context or {}
     return templates.TemplateResponse(request=request, name=name, context=ctx, status_code=status_code)
 
-# Helper para inyectar usuario por defecto a todas las vistas
-def get_user_context(request: Request):
-    user = get_current_user(request)
-    if not user:
-        # En el contexto del prototipo académico, si no hay sesión activa obtenemos al usuario seed
-        conn = get_db_connection()
-        seed_user = conn.execute("SELECT id, name, email, city, created_at FROM users WHERE email = 'prueba@casalista.co'").fetchone()
-        conn.close()
-        user = dict_from_row(seed_user)
-    return user
-
-# 1. Inicio
+# 1. Inicio (Ruta protegida por autenticación)
 @router.get("/", response_class=HTMLResponse)
-def view_home(request: Request):
-    user = get_user_context(request)
+def view_home(request: Request, user: Dict[str, Any] = Depends(require_auth_web)):
     conn = get_db_connection()
 
     # 8 Categorías
@@ -84,28 +76,45 @@ def view_home(request: Request):
 # 2. Bienvenida pública
 @router.get("/bienvenida", response_class=HTMLResponse)
 def view_welcome(request: Request):
+    user = get_current_user(request)
+    if user:
+        return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
     return render_template(request, "views/bienvenida.html")
 
 # 3. Autenticación: Login
 @router.get("/login", response_class=HTMLResponse)
-def view_login(request: Request, error: str = None):
+def view_login(request: Request, error: str = None, next: Optional[str] = "/"):
+    # Si ya tiene sesión activa, redirigir a inicio o a next
+    user = get_current_user(request)
+    if user:
+        return RedirectResponse(url=next or "/", status_code=status.HTTP_303_SEE_OTHER)
+
     return render_template(request, "views/login.html", {
-        "error": error
+        "error": error,
+        "next_url": next or "/"
     })
 
 @router.post("/login")
-def action_login(request: Request, email: str = Form(...), password: str = Form(...)):
+def action_login(
+    request: Request,
+    email: str = Form(...),
+    password: str = Form(...),
+    next: Optional[str] = Form("/")
+):
     conn = get_db_connection()
     user_row = conn.execute("SELECT * FROM users WHERE email = ?", (email.strip().lower(),)).fetchone()
     conn.close()
 
+    target_next = next if (next and next.startswith("/")) else "/"
+
     if not user_row or not verify_password(password, user_row["password_hash"]):
         return render_template(request, "views/login.html", {
             "error": "Credenciales inválidas. Verifica tu correo o usa el botón de cuenta de prueba.",
-            "email": email
+            "email": email,
+            "next_url": target_next
         }, status_code=status.HTTP_401_UNAUTHORIZED)
 
-    response = RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
+    response = RedirectResponse(url=target_next, status_code=status.HTTP_303_SEE_OTHER)
     token = create_session_token(user_row["id"])
     response.set_cookie(
         key=SESSION_COOKIE_NAME,
@@ -119,6 +128,9 @@ def action_login(request: Request, email: str = Form(...), password: str = Form(
 # 4. Autenticación: Registro
 @router.get("/registro", response_class=HTMLResponse)
 def view_register(request: Request, error: str = None):
+    user = get_current_user(request)
+    if user:
+        return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
     return render_template(request, "views/register.html", {
         "error": error
     })
@@ -182,10 +194,14 @@ def action_logout():
     response.delete_cookie(SESSION_COOKIE_NAME)
     return response
 
-# 6. Explorar Catálogo
+# 6. Explorar Catálogo (Ruta protegida)
 @router.get("/explorar", response_class=HTMLResponse)
-def view_explore(request: Request, dificultad: str = None, q: str = None):
-    user = get_user_context(request)
+def view_explore(
+    request: Request,
+    dificultad: str = None,
+    q: str = None,
+    user: Dict[str, Any] = Depends(require_auth_web)
+):
     conn = get_db_connection()
 
     categories = dicts_from_rows(conn.execute("""
@@ -225,10 +241,13 @@ def view_explore(request: Request, dificultad: str = None, q: str = None):
         "active_nav": "explorar"
     })
 
-# 7. Detalle de Reparación
+# 7. Detalle de Reparación (Ruta protegida)
 @router.get("/tarea/{task_id}", response_class=HTMLResponse)
-def view_task_detail(task_id: str, request: Request):
-    user = get_user_context(request)
+def view_task_detail(
+    task_id: str,
+    request: Request,
+    user: Dict[str, Any] = Depends(require_auth_web)
+):
     conn = get_db_connection()
 
     task_row = conn.execute("""
@@ -280,10 +299,14 @@ def view_task_detail(task_id: str, request: Request):
         "active_nav": "explorar"
     })
 
-# 8. Presupuesto Dinámico en COP
+# 8. Presupuesto Dinámico en COP (Ruta protegida)
 @router.get("/tarea/{task_id}/presupuesto", response_class=HTMLResponse)
-def view_task_budget(task_id: str, request: Request, area: float = 12.0):
-    user = get_user_context(request)
+def view_task_budget(
+    task_id: str,
+    request: Request,
+    area: float = 12.0,
+    user: Dict[str, Any] = Depends(require_auth_web)
+):
     conn = get_db_connection()
 
     task_row = conn.execute("""
@@ -315,10 +338,13 @@ def view_task_budget(task_id: str, request: Request, area: float = 12.0):
         "active_nav": "explorar"
     })
 
-# 9. Guía Interactiva Paso a Paso
+# 9. Guía Interactiva Paso a Paso (Ruta protegida)
 @router.get("/tarea/{task_id}/guia", response_class=HTMLResponse)
-def view_task_guide(task_id: str, request: Request):
-    user = get_user_context(request)
+def view_task_guide(
+    task_id: str,
+    request: Request,
+    user: Dict[str, Any] = Depends(require_auth_web)
+):
     conn = get_db_connection()
 
     task_row = conn.execute("SELECT * FROM tasks WHERE id = ?", (task_id,)).fetchone()
@@ -344,10 +370,13 @@ def view_task_guide(task_id: str, request: Request):
         "active_nav": "explorar"
     })
 
-# 10. Alerta Roja / Detención Segura
+# 10. Alerta Roja / Detención Segura (Ruta protegida)
 @router.get("/tarea/{task_id}/alerta-riesgo", response_class=HTMLResponse)
-def view_red_warning(task_id: str, request: Request):
-    user = get_user_context(request)
+def view_red_warning(
+    task_id: str,
+    request: Request,
+    user: Dict[str, Any] = Depends(require_auth_web)
+):
     conn = get_db_connection()
     task_row = conn.execute("SELECT * FROM tasks WHERE id = ?", (task_id,)).fetchone()
     conn.close()
@@ -361,10 +390,13 @@ def view_red_warning(task_id: str, request: Request):
         "active_nav": "explorar"
     })
 
-# 11. Mis Proyectos
+# 11. Mis Proyectos (Ruta protegida)
 @router.get("/mis-proyectos", response_class=HTMLResponse)
-def view_projects(request: Request, filtro: str = "todos"):
-    user = get_user_context(request)
+def view_projects(
+    request: Request,
+    filtro: str = "todos",
+    user: Dict[str, Any] = Depends(require_auth_web)
+):
     conn = get_db_connection()
 
     query = """
@@ -395,10 +427,12 @@ def view_projects(request: Request, filtro: str = "todos"):
         "active_nav": "mis-proyectos"
     })
 
-# 12. Perfil de Usuario
+# 12. Perfil de Usuario (Ruta protegida)
 @router.get("/perfil", response_class=HTMLResponse)
-def view_profile(request: Request):
-    user = get_user_context(request)
+def view_profile(
+    request: Request,
+    user: Dict[str, Any] = Depends(require_auth_web)
+):
     conn = get_db_connection()
 
     stats = conn.execute("""

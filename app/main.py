@@ -1,10 +1,12 @@
 import os
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, status
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 from app.config import STATIC_DIR
 from app.database import init_db
 from app.seed_data import seed_database
+from app.auth import AuthRequiredException
 from app.routes.api import router as api_router
 from app.routes.web import router as web_router, render_template
 
@@ -29,6 +31,14 @@ app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 # Registrar routers
 app.include_router(api_router)
 app.include_router(web_router)
+
+# Manejador de protección de rutas web (redirecciona a login con next)
+@app.exception_handler(AuthRequiredException)
+async def auth_required_handler(request: Request, exc: AuthRequiredException):
+    return RedirectResponse(
+        url=f"/login?next={exc.next_url}",
+        status_code=status.HTTP_303_SEE_OTHER
+    )
 
 # Manejador de error 404 amigable
 @app.exception_handler(404)
