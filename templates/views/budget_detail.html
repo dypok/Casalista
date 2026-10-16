@@ -295,20 +295,35 @@
           is_favorite: true
         })
       });
-      const data = await res.json();
 
-      const toast = document.getElementById('save-toast');
-      toast.classList.remove('opacity-0', 'pointer-events-none');
-      setTimeout(() => {
-        toast.classList.add('opacity-0', 'pointer-events-none');
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-      }, 2500);
+      btn.innerHTML = originalText;
+      btn.disabled = false;
 
+      if (res.ok) {
+        const data = await res.json();
+        CasaModal.success({
+          title: "¡Presupuesto Guardado!",
+          message: `Se ha guardado "${data.project_name || '{{ task.title }}'}" con un valor estimado de $${currentTotalCop.toLocaleString('es-CO')} COP en tu cuenta.`,
+          buttonText: "Ir a Mis Proyectos",
+          badge: "Proyecto Guardado",
+          onConfirm: () => {
+            window.location.href = "/mis-proyectos";
+          }
+        });
+      } else {
+        CasaModal.deny({
+          title: "No se pudo guardar",
+          message: "Ocurrió un error en el servidor al intentar guardar tu presupuesto."
+        });
+      }
     } catch (err) {
       console.error("Error guardando proyecto", err);
       btn.innerHTML = originalText;
       btn.disabled = false;
+      CasaModal.deny({
+        title: "Error de red",
+        message: "No se pudo conectar con el servidor para guardar el proyecto."
+      });
     }
   }
 

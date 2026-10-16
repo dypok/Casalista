@@ -109,6 +109,23 @@
   }
 
   async function completeProject() {
+    let checkedCount = 0;
+    for (let i = 1; i <= totalSteps; i++) {
+      const chk = document.getElementById(`step-check-${i}`);
+      if (chk && chk.checked) checkedCount++;
+    }
+
+    if (checkedCount < totalSteps) {
+      const proceed = await CasaModal.confirm({
+        title: "¿Completar reparación?",
+        message: `Has marcado ${checkedCount} de ${totalSteps} pasos. Al confirmar, se marcarán todos los pasos como completados y se registrará al 100% en tu historial.`,
+        confirmText: "Sí, completar todo",
+        cancelText: "Revisar pasos",
+        type: "info"
+      });
+      if (!proceed) return;
+    }
+
     // Marcar todos los pasos
     for (let i = 1; i <= totalSteps; i++) {
       const chk = document.getElementById(`step-check-${i}`);
@@ -118,7 +135,7 @@
 
     // Guardar en la base de datos como completado
     try {
-      await fetch('/api/projects', {
+      const res = await fetch('/api/projects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -130,10 +147,26 @@
           calculated_cost_cop: {{ task.base_cost_cop }}
         })
       });
-      alert("¡Felicitaciones! Has completado esta reparación con éxito.");
-      window.location.href = "/mis-proyectos?filtro=completados";
+
+      if (res.ok) {
+        await CasaModal.success({
+          title: "¡Felicitaciones!",
+          message: "Has completado esta labor paso a paso con éxito. El proyecto ha quedado registrado en tu lista.",
+          buttonText: "Ver mis proyectos"
+        });
+        window.location.href = "/mis-proyectos?filtro=completados";
+      } else {
+        CasaModal.deny({
+          title: "Error al registrar",
+          message: "No se pudo actualizar el estado del proyecto en el servidor."
+        });
+      }
     } catch (err) {
       console.error(err);
+      CasaModal.deny({
+        title: "Error de red",
+        message: "No se pudo conectar con el servidor para guardar el proyecto completado."
+      });
     }
   }
 </script>

@@ -171,3 +171,41 @@ def test_red_task_safety_stop_authenticated():
     assert r_alert.status_code == 200
     assert "Esta tarea requiere un profesional calificado" in r_alert.text
     assert "Medidas de contingencia inmediata" in r_alert.text
+
+
+def test_modal_components_and_interactions():
+    """Verifica que el componente modal universal CasaModal esté integrado con confirmación, eliminación y negación."""
+    auth_client = TestClient(app)
+    auth_client.post("/login", data={
+        "email": "prueba@casalista.co",
+        "password": "casalista123"
+    })
+
+    # 1. Base template renderiza el componente universal de modal
+    res_home = auth_client.get("/")
+    assert res_home.status_code == 200
+    assert "casa-modal-backdrop" in res_home.text
+    assert "window.CasaModal" in res_home.text
+
+    # 2. Vista de proyectos integra CasaModal.delete
+    res_proj = auth_client.get("/mis-proyectos")
+    assert res_proj.status_code == 200
+    assert "CasaModal.delete" in res_proj.text
+
+    # 3. Vista de perfil integra confirmación de cierre de sesión
+    res_perf = auth_client.get("/perfil")
+    assert res_perf.status_code == 200
+    assert "confirmLogout" in res_perf.text
+    assert "CasaModal.confirm" in res_perf.text
+
+    # 4. Vista de alerta de riesgo roja integra modal de negación
+    res_red = auth_client.get("/tarea/task_caja_distribucion_rojo/alerta-riesgo")
+    assert res_red.status_code == 200
+    assert "showDenialModal" in res_red.text
+    assert "CasaModal.deny" in res_red.text
+
+    # 5. Vista de detalle de tarea integra advertencia para amarillo
+    res_task = auth_client.get("/tarea/task_reparar_grieta_superficial")
+    assert res_task.status_code == 200
+    assert "CasaModal.warn" in res_task.text
+

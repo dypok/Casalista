@@ -181,10 +181,10 @@
       </a>
 
       <!-- Secondary CTA: Step-by-Step Guide -->
-      <a href="/tarea/{{ task.id }}/guia" class="flex-1 h-12 bg-surface-container-lowest text-primary hover:bg-surface-container-low active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm border border-outline-variant/30">
+      <button type="button" onclick="goToGuide('/tarea/{{ task.id }}/guia')" class="flex-1 h-12 bg-surface-container-lowest text-primary hover:bg-surface-container-low active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm border border-outline-variant/30 cursor-pointer">
         <span class="material-symbols-outlined text-[20px] text-secondary">checklist</span>
         <span>Ver guía paso a paso ({{ steps|length }} pasos)</span>
-      </a>
+      </button>
     </div>
 
     <!-- Feedback Toast Notification -->
@@ -200,6 +200,24 @@
 {% block scripts %}
 <script>
   let isFavorite = {{ 'true' if is_favorite else 'false' }};
+  const securityLevel = "{{ task.security_level }}";
+
+  async function goToGuide(guideUrl) {
+    if (securityLevel === 'yellow') {
+      const proceed = await CasaModal.warn({
+        title: "Precaución: Semáforo Amarillo",
+        message: "Esta labor requiere precauciones preventivas importantes (como cortar el suministro principal de agua o energía antes de iniciar y utilizar guantes o protección ocular).\n\n¿Deseas continuar a la guía de ejecución?",
+        confirmText: "Entendido, ver guía",
+        cancelText: "Revisar detalles",
+        badge: "Semáforo Amarillo • Precaución"
+      });
+      if (proceed) {
+        window.location.href = guideUrl;
+      }
+    } else {
+      window.location.href = guideUrl;
+    }
+  }
 
   async function toggleFavorite(taskId) {
     const favIcon = document.getElementById('favIcon');

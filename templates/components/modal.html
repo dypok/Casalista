@@ -1,0 +1,287 @@
+<!-- Modal Universal CasaLista (Diseño Architectural Precision) -->
+<div id="casa-modal-backdrop" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-200">
+  <div id="casa-modal-card" class="relative w-full max-w-md bg-surface-container-lowest rounded-2xl shadow-2xl border border-outline-variant/30 p-6 flex flex-col items-center text-center transform scale-95 transition-all duration-200">
+    
+    <!-- Botón X para cerrar rápido -->
+    <button type="button" onclick="CasaModal.close()" aria-label="Cerrar modal" class="absolute top-4 right-4 text-outline hover:text-on-surface p-1 rounded-lg transition-colors">
+      <span class="material-symbols-outlined text-[20px]">close</span>
+    </button>
+
+    <!-- Icon Container Dinámico -->
+    <div id="casa-modal-icon-container" class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-sm transition-colors">
+      <span id="casa-modal-icon" class="material-symbols-outlined text-[34px]">info</span>
+    </div>
+
+    <!-- Badge Opcional de Categoría de Riesgo / Estado -->
+    <span id="casa-modal-badge" class="hidden font-label-sm text-label-sm uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full mb-2"></span>
+
+    <!-- Título y Mensaje -->
+    <h3 id="casa-modal-title" class="font-headline-md text-headline-md text-primary font-bold tracking-tight mb-2">
+      Confirmación
+    </h3>
+    <p id="casa-modal-message" class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6 whitespace-pre-line">
+      ¿Estás seguro de continuar con esta acción?
+    </p>
+
+    <!-- Botones de Acción -->
+    <div class="flex items-center gap-3 w-full">
+      <button id="casa-modal-btn-cancel" type="button" class="flex-1 h-11 px-4 rounded-xl bg-surface-container text-on-surface hover:bg-surface-container-high font-label-lg text-label-lg font-semibold active:scale-95 transition-all">
+        Cancelar
+      </button>
+      <button id="casa-modal-btn-confirm" type="button" class="flex-1 h-11 px-4 rounded-xl font-label-lg text-label-lg font-semibold shadow-sm active:scale-95 transition-all">
+        Confirmar
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  window.CasaModal = (() => {
+    const backdrop = document.getElementById('casa-modal-backdrop');
+    const card = document.getElementById('casa-modal-card');
+    const iconContainer = document.getElementById('casa-modal-icon-container');
+    const iconEl = document.getElementById('casa-modal-icon');
+    const badgeEl = document.getElementById('casa-modal-badge');
+    const titleEl = document.getElementById('casa-modal-title');
+    const msgEl = document.getElementById('casa-modal-message');
+    const btnCancel = document.getElementById('casa-modal-btn-cancel');
+    const btnConfirm = document.getElementById('casa-modal-btn-confirm');
+
+    let currentOnConfirm = null;
+    let currentOnCancel = null;
+
+    const stylesByType = {
+      danger: {
+        bg: 'bg-rose-100 ring-4 ring-rose-50',
+        text: 'text-rose-700',
+        icon: 'delete_forever',
+        badgeBg: 'bg-rose-100 text-rose-800',
+        btnBg: 'bg-rose-600 hover:bg-rose-700 text-white'
+      },
+      warning: {
+        bg: 'bg-amber-100 ring-4 ring-amber-50',
+        text: 'text-amber-800',
+        icon: 'warning',
+        badgeBg: 'bg-amber-100 text-amber-900',
+        btnBg: 'bg-amber-600 hover:bg-amber-700 text-white'
+      },
+      denied: {
+        bg: 'bg-red-100 ring-4 ring-red-50',
+        text: 'text-red-700',
+        icon: 'block',
+        badgeBg: 'bg-red-100 text-red-800',
+        btnBg: 'bg-slate-900 hover:bg-black text-white'
+      },
+      success: {
+        bg: 'bg-emerald-100 ring-4 ring-emerald-50',
+        text: 'text-emerald-700',
+        icon: 'check_circle',
+        badgeBg: 'bg-emerald-100 text-emerald-800',
+        btnBg: 'bg-emerald-600 hover:bg-emerald-700 text-white'
+      },
+      info: {
+        bg: 'bg-secondary-fixed ring-4 ring-secondary-fixed/30',
+        text: 'text-primary',
+        icon: 'info',
+        badgeBg: 'bg-secondary-fixed text-primary',
+        btnBg: 'bg-secondary hover:bg-primary-container text-white'
+      }
+    };
+
+    function show(options = {}) {
+      const type = options.type || 'info';
+      const config = stylesByType[type] || stylesByType.info;
+
+      titleEl.innerText = options.title || 'Atención';
+      msgEl.innerText = options.message || '';
+      btnConfirm.innerText = options.confirmText || 'Aceptar';
+      btnCancel.innerText = options.cancelText || 'Cancelar';
+
+      // Badge opcional
+      if (options.badge) {
+        badgeEl.innerText = options.badge;
+        badgeEl.className = `font-label-sm text-label-sm uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full mb-2 ${config.badgeBg}`;
+        badgeEl.classList.remove('hidden');
+      } else {
+        badgeEl.classList.add('hidden');
+      }
+
+      // Aplicar estilos del icono
+      iconContainer.className = `w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-sm transition-colors ${config.bg} ${config.text}`;
+      iconEl.innerText = options.icon || config.icon;
+
+      // Aplicar estilos del botón de confirmación
+      btnConfirm.className = `flex-1 h-11 px-4 rounded-xl font-label-lg text-label-lg font-semibold shadow-sm active:scale-95 transition-all ${config.btnBg}`;
+
+      // Mostrar u ocultar botón cancelar
+      if (options.showCancel === false) {
+        btnCancel.classList.add('hidden');
+      } else {
+        btnCancel.classList.remove('hidden');
+      }
+
+      currentOnConfirm = options.onConfirm || null;
+      currentOnCancel = options.onCancel || null;
+
+      // Animación de entrada
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-95');
+      card.classList.add('scale-100');
+    }
+
+    function close() {
+      card.classList.remove('scale-100');
+      card.classList.add('scale-95');
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    btnConfirm.addEventListener('click', () => {
+      close();
+      if (typeof currentOnConfirm === 'function') currentOnConfirm();
+    });
+
+    btnCancel.addEventListener('click', () => {
+      close();
+      if (typeof currentOnCancel === 'function') currentOnCancel();
+    });
+
+    // Cerrar al hacer clic en el backdrop
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) {
+        close();
+        if (typeof currentOnCancel === 'function') currentOnCancel();
+      }
+    });
+
+    // Cerrar con tecla Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !backdrop.classList.contains('pointer-events-none')) {
+        close();
+        if (typeof currentOnCancel === 'function') currentOnCancel();
+      }
+    });
+
+    return {
+      show,
+      close,
+      confirm(opts = {}) {
+        return new Promise((resolve) => {
+          show({
+            type: opts.type || 'info',
+            title: opts.title || 'Confirmación',
+            message: opts.message || '¿Deseas continuar con esta acción?',
+            confirmText: opts.confirmText || 'Confirmar',
+            cancelText: opts.cancelText || 'Cancelar',
+            showCancel: true,
+            icon: opts.icon,
+            badge: opts.badge,
+            onConfirm: () => {
+              if (opts.onConfirm) opts.onConfirm();
+              resolve(true);
+            },
+            onCancel: () => {
+              if (opts.onCancel) opts.onCancel();
+              resolve(false);
+            }
+          });
+        });
+      },
+      delete(opts = {}) {
+        return new Promise((resolve) => {
+          show({
+            type: 'danger',
+            title: opts.title || '¿Eliminar elemento?',
+            message: opts.message || 'Esta acción no se puede deshacer y se borrará de forma permanente.',
+            confirmText: opts.confirmText || 'Sí, eliminar',
+            cancelText: opts.cancelText || 'Cancelar',
+            showCancel: true,
+            icon: opts.icon || 'delete_forever',
+            badge: opts.badge || 'Acción destructiva',
+            onConfirm: () => {
+              if (opts.onConfirm) opts.onConfirm();
+              resolve(true);
+            },
+            onCancel: () => {
+              if (opts.onCancel) opts.onCancel();
+              resolve(false);
+            }
+          });
+        });
+      },
+      deny(opts = {}) {
+        return new Promise((resolve) => {
+          show({
+            type: 'denied',
+            title: opts.title || 'Acceso restringido',
+            message: opts.message || 'Esta labor no puede realizarse de forma autónoma por motivos de seguridad.',
+            confirmText: opts.confirmText || opts.buttonText || 'Entendido',
+            showCancel: false,
+            icon: opts.icon || 'gpp_bad',
+            badge: opts.badge || 'Semáforo Rojo • Alto Riesgo',
+            onConfirm: () => {
+              if (opts.onConfirm) opts.onConfirm();
+              resolve(true);
+            }
+          });
+        });
+      },
+      warn(opts = {}) {
+        return new Promise((resolve) => {
+          show({
+            type: 'warning',
+            title: opts.title || 'Precaución de seguridad',
+            message: opts.message || 'Esta tarea requiere especial cuidado y equipo de protección personal.',
+            confirmText: opts.confirmText || 'Continuar con precaución',
+            cancelText: opts.cancelText || 'Revisar detalles',
+            showCancel: true,
+            icon: opts.icon || 'warning',
+            badge: opts.badge || 'Semáforo Amarillo',
+            onConfirm: () => {
+              if (opts.onConfirm) opts.onConfirm();
+              resolve(true);
+            },
+            onCancel: () => {
+              if (opts.onCancel) opts.onCancel();
+              resolve(false);
+            }
+          });
+        });
+      },
+      success(opts = {}) {
+        return new Promise((resolve) => {
+          show({
+            type: 'success',
+            title: opts.title || '¡Operación exitosa!',
+            message: opts.message || 'La acción se completó correctamente.',
+            confirmText: opts.confirmText || opts.buttonText || 'Aceptar',
+            showCancel: false,
+            icon: opts.icon || 'check_circle',
+            badge: opts.badge,
+            onConfirm: () => {
+              if (opts.onConfirm) opts.onConfirm();
+              resolve(true);
+            }
+          });
+        });
+      },
+      alert(opts = {}) {
+        return new Promise((resolve) => {
+          show({
+            type: opts.type || 'info',
+            title: opts.title || 'Notificación',
+            message: opts.message || '',
+            confirmText: opts.confirmText || 'Entendido',
+            showCancel: false,
+            icon: opts.icon,
+            badge: opts.badge,
+            onConfirm: () => {
+              if (opts.onConfirm) opts.onConfirm();
+              resolve(true);
+            }
+          });
+        });
+      }
+    };
+  })();
+</script>

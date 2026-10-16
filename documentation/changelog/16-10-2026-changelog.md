@@ -14,3 +14,5 @@
 - [Friday]-[16/10/2026]-[07:33]-[Dylan Gamero] : Implemented automated test suite in tests/test_app.py with 12 passing integration tests.
 - [Friday]-[16/10/2026]-[07:42]-[Dylan Gamero] : Implemented strict route protection with require_auth_web and require_auth_api, eliminating insecure fallbacks and enforcing HTTP 401 and redirect to login.
 - [Friday]-[16/10/2026]-[07:46]-[Dylan Gamero] : Removed academic project description section from templates/views/profile.html.
+- [Friday]-[16/10/2026]-[07:55]-[Dylan Gamero] : Implemented universal modal system CasaModal in templates/components/modal.html with confirmation, deletion, negation, warning, and success states; integrated across projects, guide, profile, red_warning, and task_detail views.
+

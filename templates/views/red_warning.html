@@ -107,17 +107,38 @@
     </div>
 
     <!-- Botones de Acción -->
-    <div class="pt-2 flex flex-col sm:flex-row gap-3">
-      <a href="/explorar" class="flex-1 h-12 bg-primary text-on-primary hover:bg-primary-container active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm">
-        <span class="material-symbols-outlined text-[20px]">explore</span>
-        <span>Volver al catálogo seguro</span>
-      </a>
+    <div class="pt-2 flex flex-col gap-2.5">
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="/explorar" class="flex-1 h-12 bg-primary text-on-primary hover:bg-primary-container active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">explore</span>
+          <span>Volver al catálogo seguro</span>
+        </a>
 
-      <a href="/" class="h-12 px-6 bg-surface-container-lowest text-primary hover:bg-surface-container-low active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm border border-outline-variant/30">
-        <span>Ir al inicio</span>
-      </a>
+        <a href="/" class="h-12 px-6 bg-surface-container-lowest text-primary hover:bg-surface-container-low active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm border border-outline-variant/30">
+          <span>Ir al inicio</span>
+        </a>
+      </div>
+
+      <button type="button" onclick="showDenialModal()" class="w-full py-2.5 text-center text-error hover:text-rose-700 font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+        <span class="material-symbols-outlined text-[16px]">lock</span>
+        <span>¿Por qué CasaLista bloquea la ejecución autónoma de esta tarea?</span>
+      </button>
     </div>
 
   </div>
 </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function showDenialModal() {
+    CasaModal.deny({
+      title: "Ejecución Denegada por Seguridad",
+      message: "El Semáforo de Seguridad de CasaLista ha clasificado esta tarea en NIVEL ROJO.\n\nIntentar realizar esta reparación sin certificación técnica profesional (ej. técnico electricista matriculado en CONTE o técnico certificado de red de gas) pone en riesgo inminente la integridad física y la póliza estructural de la vivienda.",
+      confirmText: "Comprendo el riesgo",
+      icon: "gpp_bad",
+      badge: "Semáforo Rojo • Bloqueo Estricto"
+    });
+  }
+</script>
 {% endblock %}

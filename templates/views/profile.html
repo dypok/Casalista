@@ -48,12 +48,32 @@
 
     <!-- Acciones de Cuenta -->
     <div class="pt-2 flex flex-col gap-2.5">
-      <a href="/logout" class="w-full h-12 bg-surface-container-lowest text-error border border-error/30 hover:bg-error-container/40 active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm">
+      <button type="button" onclick="confirmLogout()" class="w-full h-12 bg-surface-container-lowest text-error border border-error/30 hover:bg-error-container/40 active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm cursor-pointer">
         <span class="material-symbols-outlined text-[20px]">logout</span>
         <span>Cerrar sesión</span>
-      </a>
+      </button>
     </div>
 
   </div>
 </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  async function confirmLogout() {
+    const proceed = await CasaModal.confirm({
+      type: 'warning',
+      title: "¿Cerrar sesión?",
+      message: "Tendrás que volver a ingresar tus credenciales para acceder a tus proyectos y presupuestos guardados.",
+      confirmText: "Cerrar sesión",
+      cancelText: "Permanecer aquí",
+      icon: "logout",
+      badge: "Sesión activa"
+    });
+
+    if (proceed) {
+      window.location.href = "/logout";
+    }
+  }
+</script>
 {% endblock %}

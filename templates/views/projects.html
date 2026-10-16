@@ -110,15 +110,35 @@
 {% block scripts %}
 <script>
   async function deleteProject(id) {
-    if (!confirm("¿Deseas eliminar este proyecto de tu lista?")) return;
+    const confirmed = await CasaModal.delete({
+      title: "¿Eliminar proyecto?",
+      message: "Esta acción borrará el proyecto y su presupuesto calculado de tu cuenta de forma permanente.",
+      confirmText: "Sí, eliminar",
+      cancelText: "Cancelar"
+    });
+
+    if (!confirmed) return;
+
     try {
       const res = await fetch(`/api/projects/${id}`, { method: 'DELETE' });
       if (res.ok) {
         const card = document.getElementById(`project-card-${id}`);
-        if (card) card.remove();
+        if (card) {
+          card.classList.add('transition-all', 'duration-300', 'opacity-0', 'scale-95');
+          setTimeout(() => card.remove(), 300);
+        }
+      } else {
+        CasaModal.deny({
+          title: "No se pudo eliminar",
+          message: "Ocurrió un error en el servidor al intentar borrar el proyecto."
+        });
       }
     } catch (err) {
       console.error("Error al eliminar", err);
+      CasaModal.deny({
+        title: "Error de conexión",
+        message: "No se pudo conectar con el servidor para eliminar el proyecto."
+      });
     }
   }
 </script>
