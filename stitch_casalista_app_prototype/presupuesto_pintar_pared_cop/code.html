@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf8ff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-error": "#ffffff", "surface-tint": "#4059aa", "tertiary-fixed-dim": "#b9c8db", "on-primary-container": "#90a8ff", "on-primary": "#ffffff", "outline-variant": "#c5c5d3", "tertiary-fixed": "#d5e4f8", "surface-container": "#eaedff", "secondary-container": "#316bf3", "primary-fixed": "#dce1ff", "on-secondary-fixed-variant": "#003ea8", "secondary": "#0051d5", "on-tertiary": "#ffffff", "surface-variant": "#dae2fd", "error-container": "#ffdad6", "primary": "#00236f", "secondary-fixed": "#dbe1ff", "on-error-container": "#93000a", "inverse-on-surface": "#eef0ff", "inverse-primary": "#b6c4ff", "error": "#ba1a1a", "on-primary-fixed-variant": "#264191", "secondary-fixed-dim": "#b4c5ff", "on-tertiary-container": "#9eadc0", "surface-dim": "#d2d9f4", "on-surface-variant": "#444651", "primary-fixed-dim": "#b6c4ff", "surface-container-lowest": "#ffffff", "on-secondary-container": "#fefcff", "on-secondary": "#ffffff", "primary-container": "#1e3a8a", "outline": "#757682", "surface": "#faf8ff", "on-primary-fixed": "#00164e", "surface-container-highest": "#dae2fd", "tertiary": "#1d2b3a", "surface-bright": "#faf8ff", "tertiary-container": "#334151", "surface-container-high": "#e2e7ff", "background": "#faf8ff", "surface-container-low": "#f2f3ff", "on-background": "#131b2e", "inverse-surface": "#283044", "on-secondary-fixed": "#00174b", "on-surface": "#131b2e", "on-tertiary-fixed": "#0e1d2b", "on-tertiary-fixed-variant": "#3a4858" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xl": "2rem", "space-sm": "0.5rem", "gutter": "1rem", "margin": "1rem" }, "fontFamily": { "label-sm": ["Hanken Grotesk"], "body-md": ["Hanken Grotesk"], "headline-sm": ["Manrope"], "body-lg": ["Hanken Grotesk"], "body-sm": ["Hanken Grotesk"], "display-currency": ["Manrope"], "label-lg": ["Hanken Grotesk"], "headline-lg": ["Manrope"], "label-md": ["Hanken Grotesk"], "headline-md": ["Manrope"] }, "fontSize": { "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-sm": ["16px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-currency": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-lg": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between max-w-[390px] mx-auto w-full"><div class="flex items-center gap-space-xs"><button aria-label="Volver" class="w-11 h-11 -ml-2 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="CasaLista Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XfYM6CQ4Jf6gMoOTKR0dk3z8_gLqdo7xLQiC-CNY3q_xWZYxApUQVL5hhV8YdzM6hhHHvrrk1DtsuiH2LYhp1x-7thQt2WnrtTMMBzovpyuKudDRGXe7-Dn8ypq0JCm2pD5yC2-7fHxbfoUxkWroGz-cd0dKZuq8zNFjX_W7LM4piF5WTZQsM5DffZC_OgKcQCFNvMK4lKx4cVtQgBdIsoPx3KOQJSzA7gIK6m9tIuFYocgc6iC399cg"/><h1 class="font-headline-sm text-headline-sm text-primary tracking-tight truncate max-w-[170px]">Detalle De Presupuesto</h1></div><div class="flex items-center"><div class="w-11 h-11 flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClYi0NQH2G26PtXrCTqby292pL0nJcm48-F_C2BQuVOih7yU9GtjKtnhgSOucRL2kF-4LV72gXFaxu41j7Z3svskrYQ46bvyCk0VeJqXapWfN39296cCu5G61wVx0G5yjO8I6cyPQR8UMIH4W-8NlVGNBR-zoJGgpu8rd_E6oE7zV1Uc1L82BgM9PE9OnIPmZOuOA8xJVGjw1TXk3lb9MXe4z3N6jHkNYbyWjPDUKnqWYkLyWQBe0B"/></div></div></div></header><main class="flex-1 flex flex-col relative w-full max-w-[390px] mx-auto pt-16 pb-safe px-margin bg-surface"><div class="flex flex-col w-full pb-8 space-y-4">
+<!-- Encabezado contextual con micro-badge -->
+<div class="flex flex-col pt-2">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm tracking-wide uppercase">
+        Cálculo completado
+      </span>
+<span class="inline-flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+        Precios vigentes COP
+      </span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Presupuesto Estimado</h2>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">format_paint</span>
+      Pintar pared de 12.0 m² (2 manos)
+    </p>
+</div>
+<!-- Hero Visual Ilustrado de Obra / Acabado -->
+<div class="relative w-full h-32 rounded-xl overflow-hidden bg-surface-container-high shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Modern bright living room interior renovation in Colombia with freshly painted clean wall in warm ivory, paint tray, smooth roller, masking tape, and precise architectural lighting, captured in a clean photorealistic minimal style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEsLDHiCC2pQBGdntWJa5ePKOOAeppP1EDpxsAw2cL-R2uZktrA41ido2kmWfsSNTB57EL8k6QlOokM_isrZzn5wej7LfRG1fg36RF4mj9ai2A02J7Jwo2ULVJfp7bhOSfUTy5cBL6sc2V-ciHhdhNOxoPCk4SwppHOcCRs_6SeAJ1WGGDoPXPg_FvnrImDltH1MF-UOywZ0ufIiP6mh-zHmBTvy7xyk3-7b7opBEG28t179_xIboM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent flex items-end p-3">
+<div class="flex items-center justify-between w-full text-on-primary">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">square_foot</span>
+<span class="font-label-md text-label-md">Área calculada: 3.0 m × 2.4 m</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface/20 backdrop-blur-md px-2 py-0.5 rounded-full">
+          2 capas previstas
+        </span>
+</div>
+</div>
+</div>
+<!-- Selector de Nivel de Presupuesto (3 Tabs / Cards dinámicas) -->
+<div class="flex flex-col space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+      Selecciona tu gama de materiales
+    </label>
+<div class="grid grid-cols-1 gap-2.5" id="tier-selector-group">
+<!-- Opción 1: Económica -->
+<button class="tier-btn w-full text-left p-3.5 rounded-xl bg-surface-container-low transition-all duration-200 active:scale-[0.99] flex items-center justify-between shadow-sm" data-tier="eco" onclick="selectTier('eco', 98000, this)" type="button">
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container-highest text-tertiary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]">savings</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">Económica</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1">
+              Vinilo Tipo 2, herramientas estándar
+            </p>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-headline-sm text-headline-sm text-on-surface block">$98.000</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+</div>
+</button>
+<!-- Opción 2: Recomendada (Seleccionada por defecto) -->
+<button class="tier-btn active-tier w-full text-left p-3.5 rounded-xl bg-secondary-fixed text-on-secondary-fixed shadow-md relative overflow-hidden transition-all duration-200 active:scale-[0.99]" data-tier="recom" onclick="selectTier('recom', 148500, this)" type="button">
+<div class="absolute top-0 right-0 bg-secondary text-on-secondary px-2.5 py-0.5 rounded-bl-lg font-label-sm text-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+          Mejor relación calidad/precio
+        </div>
+<div class="flex items-start gap-3 mt-1">
+<div class="w-9 h-9 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">thumb_up</span>
+</div>
+<div class="pr-2">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-primary">Recomendada</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant line-clamp-2 mt-0.5">
+              Vinilo acrílico Tipo 1 lavable, rodillo antigota, cinta profesional
+            </p>
+</div>
+</div>
+<div class="flex items-baseline justify-between mt-3 pt-2 bg-on-secondary-fixed/5 rounded-lg px-2.5 py-1">
+<span class="font-label-md text-label-md text-primary">Inversión calculada</span>
+<div class="text-right">
+<span class="font-headline-md text-headline-md text-primary font-bold">$148.500</span>
+<span class="font-label-sm text-label-sm text-primary/80 ml-0.5">COP</span>
+</div>
+</div>
+</button>
+<!-- Opción 3: Prémium -->
+<button class="tier-btn w-full text-left p-3.5 rounded-xl bg-surface-container-low transition-all duration-200 active:scale-[0.99] flex items-center justify-between shadow-sm" data-tier="prem" onclick="selectTier('prem', 215000, this)" type="button">
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container-highest text-tertiary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]">workspace_premium</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">Prémium</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1">
+              Esmalte al agua antimicrobial, kit ergonómico
+            </p>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-headline-sm text-headline-sm text-on-surface block">$215.000</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+</div>
+</button>
+</div>
+</div>
+<!-- Contenedor Desglose de Insumos -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col space-y-3">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">receipt_long</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface" id="breakdown-title">
+          Desglose Opción Recomendada
+        </h3>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant" id="item-count">
+        5 ítems
+      </span>
+</div>
+<!-- Lista Desglosada -->
+<div class="flex flex-col space-y-2.5" id="breakdown-list">
+<!-- Ítem 1 -->
+<div class="flex items-start justify-between py-1.5 bg-surface-container-low/50 px-2.5 rounded-lg">
+<div class="flex items-start gap-2.5 pr-2">
+<div class="w-7 h-7 rounded-md bg-secondary-container/15 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">colors</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Galón de vinilo acrílico Tipo 1</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">1 galón / 3.78 L • Rendimiento 25-30 m²</p>
+</div>
+</div>
+<div class="text-right shrink-0">
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">$82.000</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+</div>
+</div>
+<!-- Ítem 2 -->
+<div class="flex items-start justify-between py-1.5 bg-surface-container-low/50 px-2.5 rounded-lg">
+<div class="flex items-start gap-2.5 pr-2">
+<div class="w-7 h-7 rounded-md bg-secondary-container/15 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">brush</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Rodillo felpa 9" antigota + bandeja</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mango ergonómico con rosca para extensión</p>
+</div>
+</div>
+<div class="text-right shrink-0">
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">$24.500</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+</div>
+</div>
+<!-- Ítem 3 -->
+<div class="flex items-start justify-between py-1.5 bg-surface-container-low/50 px-2.5 rounded-lg">
+<div class="flex items-start gap-2.5 pr-2">
+<div class="w-7 h-7 rounded-md bg-secondary-container/15 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">straighten</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Cinta de enmascarar azul profesional</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">24 mm × 50 m • Remoción limpia sin daño</p>
+</div>
+</div>
+<div class="text-right shrink-0">
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">$12.000</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+</div>
+</div>
+<!-- Ítem 4 -->
+<div class="flex items-start justify-between py-1.5 bg-surface-container-low/50 px-2.5 rounded-lg">
+<div class="flex items-start gap-2.5 pr-2">
+<div class="w-7 h-7 rounded-md bg-secondary-container/15 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">hardware</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Masilla resane acrílica 500g + 2 lijas #180</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Corrección de grietas y nivelación suave</p>
+</div>
+</div>
+<div class="text-right shrink-0">
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">$16.000</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+</div>
+</div>
+<!-- Ítem 5 -->
+<div class="flex items-start justify-between py-1.5 bg-surface-container-low/50 px-2.5 rounded-lg">
+<div class="flex items-start gap-2.5 pr-2">
+<div class="w-7 h-7 rounded-md bg-secondary-container/15 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">layers</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Plástico protector de pisos 4 × 5 m</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Calibre medio para zócalos y baldosas</p>
+</div>
+</div>
+<div class="text-right shrink-0">
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">$14.000</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+</div>
+</div>
+</div>
+<!-- Mini Banner de Insumo Extra / Tips -->
+<div class="mt-2 p-2.5 rounded-lg bg-surface-container flex items-center gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">tips_and_updates</span>
+<p class="font-body-sm text-body-sm text-on-surface">
+<strong class="font-label-md">Tip de ahorro:</strong> Te quedará un 35% de pintura de reserva para futuros retoques de manchas.
+      </p>
+</div>
+</div>
+<!-- Tarjeta de Resumen Total -->
+<div class="bg-primary text-on-primary rounded-xl p-4 shadow-md flex items-center justify-between relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[100px]">payments</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-primary-container uppercase tracking-wider block">Total estimado</span>
+<span class="font-body-sm text-body-sm text-inverse-on-surface opacity-90">12.0 m² mano de obra propia</span>
+</div>
+<div class="text-right z-10">
+<div class="flex items-baseline justify-end gap-1">
+<span class="font-display-currency text-display-currency tracking-tight" id="display-grand-total">$148.500</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-primary-container uppercase">COP Final</span>
+</div>
+</div>
+<!-- Nota Legal y Alcance Geográfico -->
+<div class="rounded-xl bg-surface-container-low p-3.5 flex items-start gap-2.5 text-on-surface-variant shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm leading-relaxed">
+      Valores orientativos en pesos colombianos para ciudades principales de Colombia (Bogotá, Medellín, Cali). Los precios pueden variar según ferretería o almacén de cadena.
+    </p>
+</div>
+<!-- Enlace Evaluación de Seguridad -->
+<div class="flex justify-center pt-1 pb-1">
+<a class="inline-flex items-center gap-1.5 font-label-md text-label-md text-secondary hover:text-primary transition-colors py-1 px-3 rounded-lg hover:bg-surface-container active:scale-95" href="#seguridad">
+<span class="material-symbols-outlined text-[18px]">health_and_safety</span>
+      Ver evaluación de seguridad
+      <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+<!-- Botones de Acción de Pie -->
+<div class="flex flex-col space-y-2.5 pt-1">
+<!-- Botón Primario -->
+<button class="w-full py-3.5 px-4 rounded-xl bg-secondary hover:bg-primary-container text-on-secondary font-label-lg text-label-lg shadow-md flex items-center justify-center gap-2 transition-all active:scale-[0.98]" onclick="saveProjectFeedback(this)" type="button">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+      Guardar en Mis Proyectos
+    </button>
+<!-- Botón Secundario -->
+<button class="w-full py-3 px-4 rounded-xl bg-surface-container-lowest text-primary hover:bg-surface-container font-label-lg text-label-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98]" onclick="openMeasureModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">straighten</span>
+      Modificar medidas (3.0 × 2.4 m)
+    </button>
+</div>
+<!-- Micro-interacción Toast Feedback (Oculto inicialmente) -->
+<div class="hidden transition-all duration-300 transform translate-y-2 p-3 rounded-xl bg-primary text-on-primary flex items-center justify-between shadow-lg" id="save-toast">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary-fixed">check_circle</span>
+<span class="font-label-md text-label-md">¡Proyecto guardado con éxito!</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-primary-container">En "Mis Proyectos"</span>
+</div>
+</div>
+<script>
+  // Datos interactivos para cada gama presupuestal
+  const tierData = {
+    eco: {
+      name: "Económica",
+      totalFormatted: "$98.000",
+      items: [
+        { name: "Galón de vinilo Tipo 2 estándar", desc: "1 galón / 3.78 L • Cobertura básica para interiores", price: "$52.000" },
+        { name: "Rodillo estándar básico 9\" con bandeja", desc: "Felpa acrílica para pinturas al agua", price: "$15.000" },
+        { name: "Cinta de enmascarar estándar 18mm", desc: "Rollo de 40 metros para bordes", price: "$7.000" },
+        { name: "Lijas grano #150 (2 pliegos)", desc: "Acondicionamiento manual de muro", price: "$6.000" },
+        { name: "Plástico cubre-polvo liviano 3x4m", desc: "Protección ligera contra salpicaduras", price: "$18.000" }
+      ]
+    },
+    recom: {
+      name: "Recomendada",
+      totalFormatted: "$148.500",
+      items: [
+        { name: "Galón de vinilo acrílico Tipo 1", desc: "1 galón / 3.78 L • Rendimiento 25-30 m²", price: "$82.000" },
+        { name: "Rodillo felpa 9\" antigota + bandeja", desc: "Mango ergonómico con rosca para extensión", price: "$24.500" },
+        { name: "Cinta de enmascarar azul profesional", desc: "24 mm × 50 m • Remoción limpia sin daño", price: "$12.000" },
+        { name: "Masilla resane acrílica 500g + 2 lijas #180", desc: "Corrección de grietas y nivelación suave", price: "$16.000" },
+        { name: "Plástico protector de pisos 4 × 5 m", desc: "Calibre medio para zócalos y baldosas", price: "$14.000" }
+      ]
+    },
+    prem: {
+      name: "Prémium",
+      totalFormatted: "$215.000",
+      items: [
+        { name: "Galón esmalte al agua antibacterial", desc: "1 galón • Máxima lavabilidad y protección anti-hongos", price: "$128.000" },
+        { name: "Kit rodillo microfibra pro + extensión 1.2m", desc: "Acabado ultra sedoso sin salpicaduras", price: "$38.000" },
+        { name: "Cinta precisión bordes nítidos 24mm", desc: "Tecnología Bloqueador de Pintura (PaintBlock)", price: "$19.000" },
+        { name: "Pasta resanadora ultra-rápida + espátula inox", desc: "Acabado espejo en 15 minutos", price: "$18.000" },
+        { name: "Manta textil absorbente plastificada 4x4m", desc: "Reutilizable y anti-deslizante", price: "$12.000" }
+      ]
+    }
+  };
+
+  function selectTier(tierKey, amount, clickedBtn) {
+    // Actualizar estilos de los botones
+    document.querySelectorAll('.tier-btn').forEach(btn => {
+      btn.className = "tier-btn w-full text-left p-3.5 rounded-xl bg-surface-container-low transition-all duration-200 active:scale-[0.99] flex items-center justify-between shadow-sm";
+    });
+
+    clickedBtn.className = "tier-btn active-tier w-full text-left p-3.5 rounded-xl bg-secondary-fixed text-on-secondary-fixed shadow-md relative overflow-hidden transition-all duration-200 active:scale-[0.99]";
+
+    const data = tierData[tierKey];
+    if (!data) return;
+
+    // Actualizar display de total
+    const totalEl = document.getElementById('display-grand-total');
+    if (totalEl) totalEl.innerText = data.totalFormatted;
+
+    // Actualizar título del desglose
+    const titleEl = document.getElementById('breakdown-title');
+    if (titleEl) titleEl.innerText = "Desglose Opción " + data.name;
+
+    // Actualizar lista de insumos con transición suave
+    const listEl = document.getElementById('breakdown-list');
+    if (listEl) {
+      listEl.innerHTML = data.items.map(item => `
+        <div class="flex items-start justify-between py-1.5 bg-surface-container-low/50 px-2.5 rounded-lg animate-fadeIn">
+          <div class="flex items-start gap-2.5 pr-2">
+            <div class="w-7 h-7 rounded-md bg-secondary-container/15 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">check_circle</span>
+            </div>
+            <div>
+              <p class="font-label-lg text-label-lg text-on-surface">${item.name}</p>
+              <p class="font-body-sm text-body-sm text-on-surface-variant">${item.desc}</p>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <p class="font-label-lg text-label-lg text-on-surface font-semibold">${item.price}</p>
+            <span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  function saveProjectFeedback(btn) {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = `<span class="material-symbols-outlined text-[20px] animate-spin">refresh</span> Guardando...`;
+    btn.disabled = true;
+
+    setTimeout(() => {
+      btn.innerHTML = `<span class="material-symbols-outlined text-[20px]">check</span> ¡Guardado!`;
+      const toast = document.getElementById('save-toast');
+      if (toast) {
+        toast.classList.remove('hidden', 'translate-y-2');
+        toast.classList.add('flex');
+        setTimeout(() => {
+          toast.classList.add('hidden');
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 3200);
+      }
+    }, 600);
+  }
+
+  function openMeasureModal() {
+    window.history.back();
+  }
+</script></main></body></html>

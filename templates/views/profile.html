@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil de Usuario — CasaLista{% endblock %}
+
+{% block content %}
+{% set header_subtitle = "Mi Perfil" %}
+{% include "components/header.html" %}
+
+<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-20 pb-28 px-margin bg-surface">
+  <div class="flex flex-col w-full pb-6 space-y-4">
+    
+    <!-- User Card -->
+    <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/30 flex items-center gap-4">
+      <div class="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center font-headline-lg text-headline-lg font-bold shadow-sm">
+        {{ user.name[0] | default('U') }}
+      </div>
+      <div class="flex flex-col">
+        <h2 class="font-headline-md text-headline-md text-primary font-bold">{{ user.name }}</h2>
+        <span class="font-body-md text-body-md text-on-surface-variant">{{ user.email }}</span>
+        <span class="inline-flex items-center gap-1 text-[12px] font-label-sm text-secondary font-semibold mt-1">
+          <span class="material-symbols-outlined text-[14px]">location_on</span>
+          {{ user.city | default('Bogotá, D.C.') }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Estadísticas de Proyectos -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+      <div class="bg-surface-container-lowest p-3.5 rounded-xl shadow-sm border border-outline-variant/30 text-center">
+        <span class="font-label-sm text-label-sm text-on-surface-variant block">En curso</span>
+        <span class="font-headline-md text-headline-md text-primary font-bold">{{ stats.in_progress_count | default(0) }}</span>
+      </div>
+      <div class="bg-surface-container-lowest p-3.5 rounded-xl shadow-sm border border-outline-variant/30 text-center">
+        <span class="font-label-sm text-label-sm text-on-surface-variant block">Completados</span>
+        <span class="font-headline-md text-headline-md text-emerald-700 font-bold">{{ stats.completed_count | default(0) }}</span>
+      </div>
+      <div class="bg-surface-container-lowest p-3.5 rounded-xl shadow-sm border border-outline-variant/30 text-center">
+        <span class="font-label-sm text-label-sm text-on-surface-variant block">Favoritos</span>
+        <span class="font-headline-md text-headline-md text-secondary font-bold">{{ stats.favorites_count | default(0) }}</span>
+      </div>
+      <div class="bg-surface-container-lowest p-3.5 rounded-xl shadow-sm border border-outline-variant/30 text-center">
+        <span class="font-label-sm text-label-sm text-on-surface-variant block">Presupuesto COP</span>
+        <span class="font-headline-sm text-headline-sm text-primary font-bold">
+          ${{ "{:,.0f}".format(stats.total_budget_cop | default(0)).replace(",", ".") }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Ficha del Proyecto Académico -->
+    <div class="bg-surface-container-low p-5 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col gap-3">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary text-[22px]">school</span>
+        <h3 class="font-headline-sm text-headline-sm text-primary font-bold">Acerca del Proyecto Académico</h3>
+      </div>
+      <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+        <strong>CasaLista</strong> es un prototipo desarrollado para evaluar la usabilidad del modelo del <em>Semáforo de Seguridad</em> y las calculadoras paramétricas de bricolaje en Colombia.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 text-[12px] font-body-sm text-on-surface-variant">
+        <div>• <strong>Versión:</strong> 1.0.0 (FastAPI + SQLite + Jinja2)</div>
+        <div>• <strong>Stack UI:</strong> Architectural Precision & Tailwind</div>
+        <div>• <strong>Moneda:</strong> Pesos Colombianos (COP)</div>
+        <div>• <strong>Alcance:</strong> Catálogo cerrado (8 categorías)</div>
+      </div>
+    </div>
+
+    <!-- Acciones de Cuenta -->
+    <div class="pt-2 flex flex-col gap-2.5">
+      <a href="/logout" class="w-full h-12 bg-surface-container-lowest text-error border border-error/30 hover:bg-error-container/40 active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm">
+        <span class="material-symbols-outlined text-[20px]">logout</span>
+        <span>Cerrar sesión</span>
+      </a>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

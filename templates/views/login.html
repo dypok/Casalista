@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar sesión — CasaLista{% endblock %}
+
+{% block content %}
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl pt-safe">
+  <div class="h-16 px-margin flex items-center justify-between max-w-md mx-auto">
+    <a href="/bienvenida" aria-label="Volver" class="min-w-[44px] min-h-[44px] flex items-center justify-start text-on-surface hover:text-secondary transition-colors">
+      <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+    </a>
+    <div class="flex items-center gap-space-xs">
+      <span class="material-symbols-outlined text-secondary text-[22px]">foundation</span>
+      <span class="font-headline-sm text-headline-sm text-primary tracking-tight font-bold">CasaLista</span>
+    </div>
+    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0">
+      <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+    </div>
+  </div>
+</header>
+
+<main class="flex-1 flex flex-col relative w-full max-w-md mx-auto px-margin pt-20 pb-safe bg-surface">
+  <div class="flex flex-col w-full pb-8">
+    
+    <!-- Subtle Blueprint Ambient Accent -->
+    <div class="relative w-full overflow-hidden rounded-xl bg-surface-container p-space-md mb-space-md shadow-sm">
+      <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-secondary-fixed/30 blur-2xl pointer-events-none"></div>
+      <div class="flex items-center gap-space-sm mb-space-xs">
+        <div class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center shrink-0 shadow-sm">
+          <span class="material-symbols-outlined text-[16px] text-on-primary">architecture</span>
+        </div>
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Acceso a CasaLista</span>
+      </div>
+      <h1 class="font-headline-lg text-headline-lg text-primary mb-space-xs tracking-tight">Iniciar sesión</h1>
+      <p class="font-body-md text-body-md text-on-surface-variant">
+        Ingresa a tu cuenta para consultar tus proyectos y presupuestos guardados.
+      </p>
+    </div>
+
+    <!-- Banner Acceso Rápido Cuenta Prueba (Evaluadores) -->
+    <div class="bg-secondary-fixed/50 border border-secondary/20 rounded-xl p-3.5 mb-space-md flex flex-col gap-2">
+      <div class="flex items-center justify-between">
+        <span class="font-label-sm text-label-sm font-bold text-primary flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+          Cuenta Demo Académica
+        </span>
+        <span class="font-label-sm text-label-sm text-on-surface-variant">1 Clic</span>
+      </div>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">
+        Usuario: <span class="font-semibold text-primary">prueba@casalista.co</span> | Clave: <span class="font-semibold text-primary">casalista123</span>
+      </p>
+      <button type="button" onclick="autofillDemo()" class="w-full py-2 bg-secondary text-on-secondary rounded-lg font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 shadow-xs hover:bg-primary-container transition-all">
+        <span class="material-symbols-outlined text-[18px]">bolt</span>
+        Autocompletar cuenta de prueba
+      </button>
+    </div>
+
+    {% if error %}
+      <div class="bg-error-container/60 border border-error/30 text-on-error-container p-3 rounded-xl mb-4 flex items-center gap-2 font-body-sm text-body-sm">
+        <span class="material-symbols-outlined text-error text-[20px]">error</span>
+        <span>{{ error }}</span>
+      </div>
+    {% endif %}
+
+    <!-- Main Login Form -->
+    <form class="flex flex-col w-full gap-space-md" method="POST" action="/login">
+      <!-- Email Field -->
+      <div class="flex flex-col gap-space-xs">
+        <label class="font-label-lg text-label-lg text-on-surface flex items-center justify-between" for="email">
+          <span>Correo electrónico</span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant font-normal">Requerido</span>
+        </label>
+        <div class="relative flex items-center bg-surface-container-lowest rounded-xl shadow-sm focus-within:shadow-md transition-shadow">
+          <div class="absolute left-3 flex items-center pointer-events-none text-outline">
+            <span class="material-symbols-outlined text-[20px]">mail</span>
+          </div>
+          <input autocomplete="email" class="w-full h-12 pl-10 pr-4 bg-transparent rounded-xl font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-low transition-colors" id="email" name="email" value="{{ email | default('') }}" placeholder="ejemplo@correo.com" required type="email"/>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="flex flex-col gap-space-xs">
+        <div class="flex items-center justify-between">
+          <label class="font-label-lg text-label-lg text-on-surface" for="password">Contraseña</label>
+          <span class="font-label-sm text-label-sm text-outline">Mínimo 6 caracteres</span>
+        </div>
+        <div class="relative flex items-center bg-surface-container-lowest rounded-xl shadow-sm focus-within:shadow-md transition-shadow">
+          <div class="absolute left-3 flex items-center pointer-events-none text-outline">
+            <span class="material-symbols-outlined text-[20px]">lock</span>
+          </div>
+          <input autocomplete="current-password" class="w-full h-12 pl-10 pr-12 bg-transparent rounded-xl font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-low transition-colors" id="password" name="password" placeholder="••••••••" required type="password"/>
+          <button aria-label="Mostrar u ocultar contraseña" class="absolute right-2 w-9 h-9 flex items-center justify-center rounded-lg text-outline hover:text-primary active:scale-95 transition-transform" id="togglePassword" type="button" onclick="togglePasswordVisibility()">
+            <span class="material-symbols-outlined text-[20px]" id="eyeIcon">visibility</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Options Row: Remember Me & Forgot Password -->
+      <div class="flex items-center justify-between pt-space-xs">
+        <label class="flex items-center gap-space-sm cursor-pointer select-none">
+          <input checked class="w-4 h-4 rounded text-secondary focus:ring-secondary accent-secondary" id="rememberMe" type="checkbox"/>
+          <span class="font-body-md text-body-md text-on-surface">Recordarme</span>
+        </label>
+        <a class="font-label-md text-label-md text-secondary hover:underline focus:outline-none" href="#">
+          ¿Olvidaste tu contraseña?
+        </a>
+      </div>
+
+      <!-- CTA Button -->
+      <button class="mt-space-sm w-full h-12 bg-secondary text-on-secondary rounded-xl font-label-lg text-label-lg flex items-center justify-center gap-space-sm shadow-md hover:bg-primary-container active:scale-[0.99] transition-all font-semibold" type="submit">
+        <span>Iniciar sesión</span>
+        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+      </button>
+    </form>
+
+    <!-- Sign up callout banner -->
+    <div class="mt-space-lg w-full bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
+      <div class="flex flex-col">
+        <span class="font-body-sm text-body-sm text-on-surface-variant">¿Primera vez aquí?</span>
+        <span class="font-label-lg text-label-lg text-on-surface font-semibold">Empieza a presupuestar</span>
+      </div>
+      <a class="px-space-md py-space-sm bg-surface-container-high rounded-lg text-secondary font-label-md text-label-md hover:bg-surface-variant active:scale-95 transition-all text-center font-bold" href="/registro">
+        Crear cuenta
+      </a>
+    </div>
+
+  </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function autofillDemo() {
+    document.getElementById('email').value = "prueba@casalista.co";
+    document.getElementById('password').value = "casalista123";
+  }
+
+  function togglePasswordVisibility() {
+    const pwd = document.getElementById('password');
+    const eye = document.getElementById('eyeIcon');
+    if (pwd.type === 'password') {
+      pwd.type = 'text';
+      eye.textContent = 'visibility_off';
+    } else {
+      pwd.type = 'password';
+      eye.textContent = 'visibility';
+    }
+  }
+</script>
+{% endblock %}

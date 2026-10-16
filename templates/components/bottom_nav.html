@@ -1,0 +1,27 @@
+<nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)] border-t border-outline-variant/30">
+  <div class="flex justify-around items-center h-16 max-w-4xl mx-auto px-space-xs">
+    <!-- 1. Inicio -->
+    <a href="/" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 transition-colors {% if active_nav == 'inicio' %}text-secondary font-semibold{% else %}text-on-surface-variant hover:text-on-surface{% endif %}">
+      <span class="material-symbols-outlined text-[24px]" {% if active_nav == 'inicio' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>home</span>
+      <span class="font-label-sm text-label-sm">Inicio</span>
+    </a>
+
+    <!-- 2. Explorar Catálogo -->
+    <a href="/explorar" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 transition-colors {% if active_nav == 'explorar' %}text-secondary font-semibold{% else %}text-on-surface-variant hover:text-on-surface{% endif %}">
+      <span class="material-symbols-outlined text-[24px]" {% if active_nav == 'explorar' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>explore</span>
+      <span class="font-label-sm text-label-sm">Explorar</span>
+    </a>
+
+    <!-- 3. Proyectos -->
+    <a href="/mis-proyectos" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 transition-colors {% if active_nav == 'mis-proyectos' %}text-secondary font-semibold{% else %}text-on-surface-variant hover:text-on-surface{% endif %}">
+      <span class="material-symbols-outlined text-[24px]" {% if active_nav == 'mis-proyectos' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>assignment</span>
+      <span class="font-label-sm text-label-sm">Proyectos</span>
+    </a>
+
+    <!-- 4. Perfil -->
+    <a href="/perfil" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 transition-colors {% if active_nav == 'perfil' %}text-secondary font-semibold{% else %}text-on-surface-variant hover:text-on-surface{% endif %}">
+      <span class="material-symbols-outlined text-[24px]" {% if active_nav == 'perfil' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>person</span>
+      <span class="font-label-sm text-label-sm">Perfil</span>
+    </a>
+  </div>
+</nav>

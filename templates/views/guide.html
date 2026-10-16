@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Guía Paso a Paso — {{ task.title }} — CasaLista{% endblock %}
+
+{% block content %}
+{% set header_subtitle = "Guía de Ejecución" %}
+{% set back_url = "/tarea/" ~ task.id %}
+{% include "components/header.html" %}
+
+<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-20 pb-28 px-margin bg-surface">
+  <div class="flex flex-col w-full pb-8 space-y-4">
+    
+    <!-- Header Context -->
+    <div class="flex flex-col pt-2">
+      <div class="flex items-center gap-2 mb-1">
+        {% set level = task.security_level %}
+        {% set label = task.security_badge_label %}
+        {% include "components/traffic_badge.html" %}
+        <span class="font-label-sm text-label-sm text-on-surface-variant">Paso a paso guiado</span>
+      </div>
+      <h2 class="font-headline-lg text-headline-lg text-primary tracking-tight font-bold">{{ task.title }}</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">
+        Sigue la secuencia ordenada. Marca cada casilla al completar la tarea para registrar tu progreso.
+      </p>
+    </div>
+
+    <!-- Barra de Progreso Global -->
+    <div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col gap-2">
+      <div class="flex items-center justify-between">
+        <span class="font-label-md text-label-md text-primary font-bold">Progreso de ejecución</span>
+        <span class="font-headline-sm text-headline-sm text-secondary font-bold" id="progress-percent-label">0%</span>
+      </div>
+      <div class="w-full bg-surface-container rounded-full h-2.5 overflow-hidden">
+        <div class="bg-secondary h-2.5 rounded-full transition-all duration-300" id="progress-bar-fill" style="width: 0%;"></div>
+      </div>
+      <span class="font-label-sm text-label-sm text-on-surface-variant" id="steps-counter">0 de {{ steps|length }} pasos completados</span>
+    </div>
+
+    <!-- Lista Interactiva de Pasos -->
+    <div class="flex flex-col space-y-3">
+      {% for stp in steps %}
+        <div class="step-card bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-outline-variant/30 transition-all cursor-pointer flex items-start gap-3.5" id="step-card-{{ loop.index }}" onclick="toggleStep({{ loop.index }})">
+          <input type="checkbox" id="step-check-{{ loop.index }}" class="mt-1 w-5 h-5 rounded text-secondary focus:ring-secondary accent-secondary cursor-pointer shrink-0" onclick="event.stopPropagation(); updateProgress();"/>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="w-6 h-6 rounded-full bg-surface-container text-primary flex items-center justify-center font-label-sm text-label-sm font-bold shrink-0">
+                {{ stp.step_number }}
+              </span>
+              <h3 class="font-headline-sm text-headline-sm text-primary font-bold">{{ stp.title }}</h3>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              {{ stp.instructions }}
+            </p>
+
+            {% if stp.safety_tip %}
+              <div class="mt-2.5 p-2.5 bg-amber-50/70 border border-amber-200/60 rounded-lg text-amber-900 text-body-sm font-body-sm flex items-start gap-2">
+                <span class="material-symbols-outlined text-[16px] text-amber-700 shrink-0 mt-0.5">warning</span>
+                <span><strong class="font-semibold">Precaución:</strong> {{ stp.safety_tip }}</span>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Panel de Finalización -->
+    <div class="pt-4 flex flex-col sm:flex-row gap-3">
+      <button type="button" onclick="completeProject()" class="flex-1 h-12 bg-secondary text-on-secondary hover:bg-primary-container active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm">
+        <span class="material-symbols-outlined text-[20px]">check_circle</span>
+        <span>Marcar proyecto como completado</span>
+      </button>
+
+      <a href="/mis-proyectos" class="h-12 px-6 bg-surface-container-lowest text-primary hover:bg-surface-container-low active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm border border-outline-variant/30">
+        <span>Ir a mis proyectos</span>
+      </a>
+    </div>
+
+  </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const totalSteps = {{ steps|length }};
+
+  function toggleStep(index) {
+    const chk = document.getElementById(`step-check-${index}`);
+    chk.checked = !chk.checked;
+    updateProgress();
+  }
+
+  function updateProgress() {
+    let checkedCount = 0;
+    for (let i = 1; i <= totalSteps; i++) {
+      const chk = document.getElementById(`step-check-${i}`);
+      const card = document.getElementById(`step-card-${i}`);
+      if (chk && chk.checked) {
+        checkedCount++;
+        card.classList.add('bg-emerald-50/40', 'border-emerald-200');
+      } else if (card) {
+        card.classList.remove('bg-emerald-50/40', 'border-emerald-200');
+      }
+    }
+
+    const pct = totalSteps > 0 ? Math.round((checkedCount / totalSteps) * 100) : 0;
+    document.getElementById('progress-percent-label').innerText = pct + "%";
+    document.getElementById('progress-bar-fill').style.width = pct + "%";
+    document.getElementById('steps-counter').innerText = `${checkedCount} de ${totalSteps} pasos completados`;
+  }
+
+  async function completeProject() {
+    // Marcar todos los pasos
+    for (let i = 1; i <= totalSteps; i++) {
+      const chk = document.getElementById(`step-check-${i}`);
+      if (chk) chk.checked = true;
+    }
+    updateProgress();
+
+    // Guardar en la base de datos como completado
+    try {
+      await fetch('/api/projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          task_id: "{{ task.id }}",
+          project_name: "{{ task.title }}",
+          phase_name: "Completado con éxito",
+          status: "completado",
+          progress_percent: 100,
+          calculated_cost_cop: {{ task.base_cost_cop }}
+        })
+      });
+      alert("¡Felicitaciones! Has completado esta reparación con éxito.");
+      window.location.href = "/mis-proyectos?filtro=completados";
+    } catch (err) {
+      console.error(err);
+    }
+  }
+</script>
+{% endblock %}

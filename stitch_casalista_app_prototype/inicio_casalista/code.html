@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf8ff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-error": "#ffffff", "surface-tint": "#4059aa", "tertiary-fixed-dim": "#b9c8db", "on-primary-container": "#90a8ff", "on-primary": "#ffffff", "outline-variant": "#c5c5d3", "tertiary-fixed": "#d5e4f8", "surface-container": "#eaedff", "secondary-container": "#316bf3", "primary-fixed": "#dce1ff", "on-secondary-fixed-variant": "#003ea8", "secondary": "#0051d5", "on-tertiary": "#ffffff", "surface-variant": "#dae2fd", "error-container": "#ffdad6", "primary": "#00236f", "secondary-fixed": "#dbe1ff", "on-error-container": "#93000a", "inverse-on-surface": "#eef0ff", "inverse-primary": "#b6c4ff", "error": "#ba1a1a", "on-primary-fixed-variant": "#264191", "secondary-fixed-dim": "#b4c5ff", "on-tertiary-container": "#9eadc0", "surface-dim": "#d2d9f4", "on-surface-variant": "#444651", "primary-fixed-dim": "#b6c4ff", "surface-container-lowest": "#ffffff", "on-secondary-container": "#fefcff", "on-secondary": "#ffffff", "primary-container": "#1e3a8a", "outline": "#757682", "surface": "#faf8ff", "on-primary-fixed": "#00164e", "surface-container-highest": "#dae2fd", "tertiary": "#1d2b3a", "surface-bright": "#faf8ff", "tertiary-container": "#334151", "surface-container-high": "#e2e7ff", "background": "#faf8ff", "surface-container-low": "#f2f3ff", "on-background": "#131b2e", "inverse-surface": "#283044", "on-secondary-fixed": "#00174b", "on-surface": "#131b2e", "on-tertiary-fixed": "#0e1d2b", "on-tertiary-fixed-variant": "#3a4858" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xl": "2rem", "space-sm": "0.5rem", "gutter": "1rem", "margin": "1rem" }, "fontFamily": { "label-sm": ["Hanken Grotesk"], "body-md": ["Hanken Grotesk"], "headline-sm": ["Manrope"], "body-lg": ["Hanken Grotesk"], "body-sm": ["Hanken Grotesk"], "display-currency": ["Manrope"], "label-lg": ["Hanken Grotesk"], "headline-lg": ["Manrope"], "label-md": ["Hanken Grotesk"], "headline-md": ["Manrope"] }, "fontSize": { "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-sm": ["16px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-currency": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-lg": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between max-w-[390px] mx-auto w-full"><div class="flex items-center gap-space-sm"><img alt="CasaLista Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XfYM6CQ4Jf6gMoOTKR0dk3z8_gLqdo7xLQiC-CNY3q_xWZYxApUQVL5hhV8YdzM6hhHHvrrk1DtsuiH2LYhp1x-7thQt2WnrtTMMBzovpyuKudDRGXe7-Dn8ypq0JCm2pD5yC2-7fHxbfoUxkWroGz-cd0dKZuq8zNFjX_W7LM4piF5WTZQsM5DffZC_OgKcQCFNvMK4lKx4cVtQgBdIsoPx3KOQJSzA7gIK6m9tIuFYocgc6iC399cg"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">CasaLista</span><span class="font-label-sm text-label-sm text-on-surface-variant font-medium tracking-normal">Inicio</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notificaciones" class="relative w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-secondary ring-2 ring-surface"></span></button><div class="relative w-11 h-11 flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClYi0NQH2G26PtXrCTqby292pL0nJcm48-F_C2BQuVOih7yU9GtjKtnhgSOucRL2kF-4LV72gXFaxu41j7Z3svskrYQ46bvyCk0VeJqXapWfN39296cCu5G61wVx0G5yjO8I6cyPQR8UMIH4W-8NlVGNBR-zoJGgpu8rd_E6oE7zV1Uc1L82BgM9PE9OnIPmZOuOA8xJVGjw1TXk3lb9MXe4z3N6jHkNYbyWjPDUKnqWYkLyWQBe0B"/></div></div></div></header><main class="flex-1 flex flex-col relative w-full max-w-[390px] mx-auto pt-16 pb-24 px-margin bg-surface"><div class="flex flex-col w-full gap-space-lg pb-6">
+<!-- Saludo & Encabezado Cálido -->
+<section class="flex flex-col gap-space-xs pt-1">
+<div class="flex items-center justify-between">
+<span class="font-headline-lg text-headline-lg text-primary tracking-tight">¡Hola, Andrés! 👋</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] text-secondary">verified</span>
+        Bogotá, D.C.
+      </span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant">¿Qué quieres mejorar hoy en casa?</p>
+</section>
+<!-- Buscador Guiado -->
+<section class="flex flex-col gap-1.5">
+<div class="relative flex items-center bg-surface-container-lowest rounded-xl shadow-sm">
+<span class="material-symbols-outlined absolute left-3.5 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full h-12 pl-11 pr-4 bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none rounded-xl" placeholder="Buscar en el catálogo (ej. pintar pared, grifo)..." type="search"/>
+</div>
+<div class="flex items-center gap-1.5 px-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-secondary">menu_book</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Catálogo cerrado de reparaciones guiadas paso a paso</span>
+</div>
+</section>
+<!-- Banner Destacado: Continúa tu proyecto -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-0.5">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<h2 class="font-headline-sm text-headline-sm text-primary">Continúa tu proyecto</h2>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">En progreso</span>
+</div>
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest shadow-sm flex flex-col p-space-md gap-3.5">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[26px]">format_paint</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Pintar sala principal</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Fase 2: Preparación y masilla</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm font-bold shrink-0">65%</span>
+</div>
+<!-- Barra de progreso arquitectónica -->
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-secondary h-2 rounded-full transition-all duration-500" style="width: 65%;"></div>
+</div>
+<!-- Información financiera y CTA -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Presupuesto estimado</span>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-md text-headline-md text-primary">$185.000</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+</div>
+</div>
+<button class="px-4 py-2.5 rounded-xl bg-secondary text-on-secondary font-label-lg text-label-lg shadow-sm hover:bg-primary transition-colors flex items-center gap-1.5 active:scale-95 transform">
+<span>Continuar</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Accesos Rápidos por Categoría -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-0.5">
+<h2 class="font-headline-sm text-headline-sm text-primary">Categorías de reparación</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4 guías maestras</span>
+</div>
+<div class="grid grid-cols-2 gap-2.5">
+<!-- 1. Pintura y acabados -->
+<button class="flex flex-col text-left p-3.5 rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-colors group">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary mb-2 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">imagesearch_roller</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Pintura y acabados</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Rodillo, esmalte y muros</span>
+</button>
+<!-- 2. Paredes y daños -->
+<button class="flex flex-col text-left p-3.5 rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-colors group">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary mb-2 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">handyman</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Paredes y daños</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Grietas, yeso y estuco</span>
+</button>
+<!-- 3. Plomería menor -->
+<button class="flex flex-col text-left p-3.5 rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-colors group">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary mb-2 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">water_drop</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Plomería menor</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Grifos, sifones y llaves</span>
+</button>
+<!-- 4. Electricidad básica -->
+<button class="flex flex-col text-left p-3.5 rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-colors group relative overflow-hidden">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary mb-2 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">lightbulb</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="font-headline-sm text-headline-sm text-on-surface">Electricidad básica</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Switches y plafones</span>
+<div class="mt-2 inline-flex items-center gap-1 text-primary bg-surface-container px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px] text-error">warning</span>
+          Precaución requerida
+        </div>
+</button>
+</div>
+</section>
+<!-- Reparaciones Populares -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[20px]">trending_up</span>
+<h2 class="font-headline-sm text-headline-sm text-primary">Reparaciones populares</h2>
+</div>
+<button class="font-label-md text-label-md text-secondary hover:underline">Ver todas</button>
+</div>
+<div class="flex flex-col gap-2.5">
+<!-- Tarjeta 1: Pintar una pared interior -->
+<article class="flex items-center gap-3.5 p-3 rounded-xl bg-surface-container-lowest shadow-sm active:bg-surface-container-low transition-colors">
+<img class="w-18 h-18 w-[72px] h-[72px] rounded-lg object-cover shrink-0 bg-surface-container" data-alt="Close-up of a neat residential wall being smoothly rolled with modern neutral paint in a bright Colombian apartment living room, warm morning lighting, high detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkGFETcHQ3pfGR2EJTTRntA0g0QNXshRyMmOPh9zcNomqvrVm6ZiONoetRBO9MofXbkyjGhZqK3nYKueRz_N1Ti6mXCegllLmOYnq-LfIsYJLuTQpdNOqoMtBUaL834t1Dz5aztrRYxVeCq_MPRYsYqCvqQDmNIMQ6RqrmrYVvWrkq0_5m_GHZ4RR94gDmVCtTcm_BIAw5DHEV9JjkFNE84g6OluagACeesPO63mY4jVfMZT_T_rD6"/>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-primary font-label-sm text-label-sm">Fácil</span>
+<span class="text-outline text-label-sm">•</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">schedule</span> ~3h
+            </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Pintar una pared interior</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate mt-0.5">Herramientas básicas • Rodillo y cinta</p>
+<div class="flex items-center justify-between mt-1">
+<span class="font-label-md text-label-md text-primary font-bold">~$45.000 COP</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Tarjeta 2: Sellar ducha con silicona -->
+<article class="flex items-center gap-3.5 p-3 rounded-xl bg-surface-container-lowest shadow-sm active:bg-surface-container-low transition-colors">
+<img class="w-18 h-18 w-[72px] h-[72px] rounded-lg object-cover shrink-0 bg-surface-container" data-alt="Detailed shot of an immaculate modern bathroom tile seam being neatly sealed with translucent sanitary silicone caulk, crisp clean bathroom finish, architectural precision" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrRDuKsuza6KcrmUSrCfxx28jHEpwaqDUvCV74ltvco-gVZ3iUSqiZ8VB9r7l1NBozHEmSzd2oUQcwWx0TRREEwE7exGEKryh3tQudCtPiRbEpewSZzPbrgm-_boi3zWO1AM9lQzrmy2WuRkspCBWr6RhpHy5ryvfJfCpB0gAuG8QVn8L3M5znkU1vGRzkBryCS4_XWC0qCJsqugl5i0hz5c8OhHX5HchZW_1TTQBIkTXINVwUgIqX"/>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-primary font-label-sm text-label-sm">Fácil</span>
+<span class="text-outline text-label-sm">•</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">schedule</span> ~1.5h
+            </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Sellar ducha con silicona</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate mt-0.5">Evita humedad • Pistola de silicona</p>
+<div class="flex items-center justify-between mt-1">
+<span class="font-label-md text-label-md text-primary font-bold">~$28.000 COP</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Tarjeta 3: Instalar repisa flotante -->
+<article class="flex items-center gap-3.5 p-3 rounded-xl bg-surface-container-lowest shadow-sm active:bg-surface-container-low transition-colors">
+<img class="w-18 h-18 w-[72px] h-[72px] rounded-lg object-cover shrink-0 bg-surface-container" data-alt="Oak wood floating shelf firmly mounted onto a light slate wall with minimalist decor, level tool placed during installation, architectural photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmuGru057ibhtcKDlB__ljzF8_-f4bqlp3109cZ1pYhFyyASk6-LeCdP3zNJPBMfdpR4qFwh2B1ATR4W9f9VRSWf_0sZh2J0_8H7iV9Kqps_5nHeAPbc_X9y5JgF_YOwioNRtw28rnZKvJ8qYgIDehzy4g3Mljfs1tm07RW5qMGYJdu09s7nboohnBiuM7EEE_aTeIXQVVgqtybN8_Tri8dcLhBY_HHfN2FzFUTkQvE7vx63SJUu5a"/>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="px-1.5 py-0.2 rounded bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">Intermedio</span>
+<span class="text-outline text-label-sm">•</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">schedule</span> ~2h
+            </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Instalar repisa flotante</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate mt-0.5">Requiere taladro • Chazos y nivel</p>
+<div class="flex items-center justify-between mt-1">
+<span class="font-label-md text-label-md text-primary font-bold">~$60.000 COP</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Reparaciones Guardadas (Favoritos) -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+<h2 class="font-headline-sm text-headline-sm text-primary">Reparaciones guardadas</h2>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 guardados</span>
+</div>
+<div class="grid grid-cols-2 gap-2.5">
+<!-- Guardado 1 -->
+<div class="flex flex-col p-3 rounded-xl bg-surface-container-lowest shadow-sm relative group">
+<div class="flex items-start justify-between mb-2">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">valve</span>
+</div>
+<button aria-label="Quitar de favoritos" class="text-secondary hover:text-outline transition-colors">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</button>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface leading-tight truncate">Cambiar empaque grifo</h4>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Cocina / Lavaplatos</span>
+<div class="mt-2.5 pt-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary font-bold">~$12.000 COP</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">~45 min</span>
+</div>
+</div>
+<!-- Guardado 2 -->
+<div class="flex flex-col p-3 rounded-xl bg-surface-container-lowest shadow-sm relative group">
+<div class="flex items-start justify-between mb-2">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">texture</span>
+</div>
+<button aria-label="Quitar de favoritos" class="text-secondary hover:text-outline transition-colors">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</button>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface leading-tight truncate">Tapar huecos de puntilla</h4>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Paredes interiores</span>
+<div class="mt-2.5 pt-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary font-bold">~$18.000 COP</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">~30 min</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Consejo del Maestro CasaLista (Toque Humano y Didáctico) -->
+<section class="p-3.5 rounded-xl bg-surface-container flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">tips_and_updates</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary font-bold">Consejo práctico de obra</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+        Antes de comprar pintura o estuco, calcula el área restando puertas y ventanas para no desperdiciar presupuesto.
+      </p>
+</div>
+</section>
+</div>
+<script>
+  // Micro-interacción: simular feedback de toque táctil en botones
+  document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('touchstart', () => {
+      btn.style.transform = 'scale(0.98)';
+    });
+    btn.addEventListener('touchend', () => {
+      btn.style.transform = 'scale(1)';
+    });
+  });
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)]" data-active-classes="text-secondary font-semibold"><div class="flex justify-around items-center h-16 max-w-[390px] mx-auto px-space-xs"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 transition-colors text-secondary font-semibold" data-path="inicio" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm">Inicio</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant transition-colors hover:text-on-surface" data-path="explorar" href="#"><span class="material-symbols-outlined text-[24px]">explore</span><span class="font-label-sm text-label-sm">Explorar</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant transition-colors hover:text-on-surface" data-path="mis-proyectos" href="#"><span class="material-symbols-outlined text-[24px]">assignment</span><span class="font-label-sm text-label-sm">Proyectos</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant transition-colors hover:text-on-surface" data-path="perfil" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-label-sm text-label-sm">Perfil</span></a></div></nav></body></html>

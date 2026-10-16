@@ -1,0 +1,32 @@
+<header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe">
+  <div class="h-16 px-margin flex items-center justify-between max-w-4xl mx-auto w-full">
+    <div class="flex items-center gap-space-sm">
+      {% if back_url %}
+        <a href="{{ back_url }}" aria-label="Volver" class="min-w-[40px] min-h-[40px] -ml-2 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors">
+          <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+        </a>
+      {% endif %}
+      <a href="/" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-on-secondary shadow-sm">
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">home_repair_service</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none font-bold">CasaLista</span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant font-medium tracking-normal">{{ header_subtitle | default('Control & Presupuesto') }}</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="flex items-center gap-space-xs">
+      <a href="/mis-proyectos" aria-label="Notificaciones" class="relative w-10 h-10 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined text-[22px]">notifications</span>
+        <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary ring-2 ring-surface"></span>
+      </a>
+      <a href="/perfil" class="relative w-10 h-10 flex items-center justify-center">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary ring-1 ring-outline-variant/40 shadow-xs">
+          <span class="font-label-sm text-label-sm font-bold">{{ user.name[0] | default('U') }}</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf8ff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-error": "#ffffff", "surface-tint": "#4059aa", "tertiary-fixed-dim": "#b9c8db", "on-primary-container": "#90a8ff", "on-primary": "#ffffff", "outline-variant": "#c5c5d3", "tertiary-fixed": "#d5e4f8", "surface-container": "#eaedff", "secondary-container": "#316bf3", "primary-fixed": "#dce1ff", "on-secondary-fixed-variant": "#003ea8", "secondary": "#0051d5", "on-tertiary": "#ffffff", "surface-variant": "#dae2fd", "error-container": "#ffdad6", "primary": "#00236f", "secondary-fixed": "#dbe1ff", "on-error-container": "#93000a", "inverse-on-surface": "#eef0ff", "inverse-primary": "#b6c4ff", "error": "#ba1a1a", "on-primary-fixed-variant": "#264191", "secondary-fixed-dim": "#b4c5ff", "on-tertiary-container": "#9eadc0", "surface-dim": "#d2d9f4", "on-surface-variant": "#444651", "primary-fixed-dim": "#b6c4ff", "surface-container-lowest": "#ffffff", "on-secondary-container": "#fefcff", "on-secondary": "#ffffff", "primary-container": "#1e3a8a", "outline": "#757682", "surface": "#faf8ff", "on-primary-fixed": "#00164e", "surface-container-highest": "#dae2fd", "tertiary": "#1d2b3a", "surface-bright": "#faf8ff", "tertiary-container": "#334151", "surface-container-high": "#e2e7ff", "background": "#faf8ff", "surface-container-low": "#f2f3ff", "on-background": "#131b2e", "inverse-surface": "#283044", "on-secondary-fixed": "#00174b", "on-surface": "#131b2e", "on-tertiary-fixed": "#0e1d2b", "on-tertiary-fixed-variant": "#3a4858" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xl": "2rem", "space-sm": "0.5rem", "gutter": "1rem", "margin": "1rem" }, "fontFamily": { "label-sm": ["Hanken Grotesk"], "body-md": ["Hanken Grotesk"], "headline-sm": ["Manrope"], "body-lg": ["Hanken Grotesk"], "body-sm": ["Hanken Grotesk"], "display-currency": ["Manrope"], "label-lg": ["Hanken Grotesk"], "headline-lg": ["Manrope"], "label-md": ["Hanken Grotesk"], "headline-md": ["Manrope"] }, "fontSize": { "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-sm": ["16px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-currency": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-lg": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between max-w-[390px] mx-auto w-full"><div class="flex items-center gap-space-xs"><button aria-label="Volver" class="w-11 h-11 -ml-2 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="CasaLista Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XfYM6CQ4Jf6gMoOTKR0dk3z8_gLqdo7xLQiC-CNY3q_xWZYxApUQVL5hhV8YdzM6hhHHvrrk1DtsuiH2LYhp1x-7thQt2WnrtTMMBzovpyuKudDRGXe7-Dn8ypq0JCm2pD5yC2-7fHxbfoUxkWroGz-cd0dKZuq8zNFjX_W7LM4piF5WTZQsM5DffZC_OgKcQCFNvMK4lKx4cVtQgBdIsoPx3KOQJSzA7gIK6m9tIuFYocgc6iC399cg"/><h1 class="font-headline-sm text-headline-sm text-primary tracking-tight truncate max-w-[170px]">Cotizador De Reparacion</h1></div><div class="flex items-center"><div class="w-11 h-11 flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClYi0NQH2G26PtXrCTqby292pL0nJcm48-F_C2BQuVOih7yU9GtjKtnhgSOucRL2kF-4LV72gXFaxu41j7Z3svskrYQ46bvyCk0VeJqXapWfN39296cCu5G61wVx0G5yjO8I6cyPQR8UMIH4W-8NlVGNBR-zoJGgpu8rd_E6oE7zV1Uc1L82BgM9PE9OnIPmZOuOA8xJVGjw1TXk3lb9MXe4z3N6jHkNYbyWjPDUKnqWYkLyWQBe0B"/></div></div></div></header><main class="flex-1 flex flex-col relative w-full max-w-[390px] mx-auto pt-16 pb-safe px-margin bg-surface"><div class="flex flex-col w-full pb-6 space-y-4">
+<!-- Top Category, Difficulty & Favorite Bar -->
+<div class="flex items-center justify-between pt-2">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-md text-label-md">
+        Pintura y acabados
+      </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-primary font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+        Dificultad: Fácil • ~3 a 4 h
+      </span>
+</div>
+<button aria-label="Guardar en favoritos" class="w-10 h-10 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center transition-colors" id="favBtn" onclick="toggleFavorite()">
+<span class="material-symbols-outlined text-[22px] text-secondary transition-transform duration-200" id="favIcon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</button>
+</div>
+<!-- Primary Title -->
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">
+      Pintar una pared interior
+    </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 leading-relaxed">
+      Aprende a calcular la pintura exacta, preparar la superficie, resanar imperfecciones y aplicar manos uniformes para renovar cualquier habitación.
+    </p>
+</div>
+<!-- Illustrative Bento Visual Block -->
+<div class="relative w-full rounded-xl bg-surface-container-low p-4 overflow-hidden shadow-sm flex flex-col justify-between">
+<div class="absolute -right-6 -bottom-6 w-36 h-36 rounded-full bg-secondary-fixed/40 blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">format_paint</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block">Acabado Recomendado</span>
+<span class="font-headline-sm text-headline-sm text-primary">Vinilo Tipo 1 Satinado</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-secondary-container font-semibold uppercase">Rendimiento</span>
+<span class="font-headline-sm text-headline-sm text-primary block">~25 m²/gal</span>
+</div>
+</div>
+<!-- Stylized Flat Vector Paint Illustration -->
+<div class="relative w-full h-36 bg-gradient-to-br from-surface-container via-surface-container-high to-secondary-fixed/50 rounded-lg flex items-center justify-center overflow-hidden">
+<svg class="w-full h-full" fill="none" viewbox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
+<!-- Painted Stripe Effect -->
+<path d="M-10 40 Q 80 15, 170 35 T 340 25 L 340 95 Q 230 115, 150 90 T -10 100 Z" fill="#316bf3" fill-opacity="0.22"></path>
+<path d="M-10 48 Q 90 28, 180 44 T 340 38 L 340 85 Q 240 102, 160 80 T -10 88 Z" fill="#0051d5" fill-opacity="0.3"></path>
+<!-- Paint Roller Graphic -->
+<g transform="translate(48, 22)">
+<!-- Handle & Arm -->
+<path d="M 60 70 L 60 92 Q 60 98 54 98 L 46 98" stroke="#1e3a8a" stroke-linecap="round" stroke-width="4.5"></path>
+<path d="M 60 70 L 60 38 Q 60 32 66 32 L 86 32 Q 92 32 92 38 L 92 48" stroke="#00236f" stroke-linecap="round" stroke-width="4.5"></path>
+<!-- Wooden Grip -->
+<rect fill="#334151" height="26" rx="4" width="18" x="36" y="94"></rect>
+<line stroke="#d5e4f8" stroke-linecap="round" stroke-width="1.5" x1="40" x2="50" y1="102" y2="102"></line>
+<line stroke="#d5e4f8" stroke-linecap="round" stroke-width="1.5" x1="40" x2="50" y1="108" y2="108"></line>
+<!-- Roller Cylinder -->
+<rect fill="#316bf3" height="58" rx="6" width="36" x="74" y="16"></rect>
+<rect fill="#dbe1ff" fill-opacity="0.6" height="58" width="7" x="79" y="16"></rect>
+<!-- Wet Paint Driplets -->
+<circle cx="108" cy="74" fill="#0051d5" r="2.5"></circle>
+<circle cx="104" cy="82" fill="#0051d5" r="1.5"></circle>
+</g>
+<!-- Paint Brush Graphic -->
+<g transform="translate(196, 26)">
+<!-- Handle -->
+<path d="M 46 98 L 38 46 Q 37 40 43 38 L 57 38 Q 63 40 62 46 L 54 98 Q 50 106 46 98 Z" fill="#1e3a8a"></path>
+<circle cx="50" cy="88" fill="#faf8ff" r="2.5"></circle>
+<!-- Metal Ferrule -->
+<rect fill="#9eadc0" height="15" rx="2" width="32" x="34" y="32"></rect>
+<!-- Bristles -->
+<path d="M 34 32 L 31 6 Q 31 3 34 3 L 66 3 Q 69 3 69 6 L 66 32 Z" fill="#dbe1ff"></path>
+<!-- Dipped Paint Tip -->
+<path d="M 31 16 Q 48 22 69 16 L 69 6 Q 69 3 66 3 L 34 3 Q 31 3 31 6 Z" fill="#0051d5"></path>
+</g>
+</svg>
+</div>
+<!-- Quick Micro Stats -->
+<div class="mt-3 grid grid-cols-3 gap-2">
+<div class="bg-surface rounded-lg p-2 text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Manos</span>
+<span class="font-headline-sm text-headline-sm text-primary">2 capas</span>
+</div>
+<div class="bg-surface rounded-lg p-2 text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Secado</span>
+<span class="font-headline-sm text-headline-sm text-primary">2 a 4 hrs</span>
+</div>
+<div class="bg-surface rounded-lg p-2 text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Ahorro DIY</span>
+<span class="font-headline-sm text-headline-sm text-secondary">~65%</span>
+</div>
+</div>
+</div>
+<!-- Interactive Project Overview / Visual Progress -->
+<div class="w-full bg-surface-container-low rounded-xl p-4 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="font-headline-sm text-headline-sm text-primary">Fases del proyecto</span>
+<span class="font-label-md text-label-md text-secondary">5 etapas clave</span>
+</div>
+<div class="flex items-center gap-1.5 w-full">
+<div class="h-2 flex-1 rounded-full bg-secondary"></div>
+<div class="h-2 flex-1 rounded-full bg-secondary"></div>
+<div class="h-2 flex-1 rounded-full bg-secondary-fixed"></div>
+<div class="h-2 flex-1 rounded-full bg-secondary-fixed"></div>
+<div class="h-2 flex-1 rounded-full bg-surface-container-highest"></div>
+</div>
+<div class="flex justify-between mt-1 text-[11px] font-label-sm text-on-surface-variant">
+<span>1. Despeje</span>
+<span>2. Resane</span>
+<span>3. Cinta</span>
+<span>4. 1ª Mano</span>
+<span>5. Acabado</span>
+</div>
+</div>
+<!-- 2-Column Technical Specifications -->
+<div class="w-full">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2.5">
+      Ficha de preparación
+    </h3>
+<div class="grid grid-cols-2 gap-2.5">
+<!-- Herramientas Column -->
+<div class="bg-surface-container-low rounded-xl p-3 flex flex-col shadow-sm">
+<div class="flex items-center gap-1.5 mb-2.5">
+<div class="w-6 h-6 rounded bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">handyman</span>
+</div>
+<span class="font-label-lg text-label-lg text-primary">Herramientas</span>
+</div>
+<ul class="space-y-2 flex-1">
+<li class="flex items-start gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">check_circle</span>
+<span class="font-body-sm text-body-sm leading-tight">Rodillo con felpa antigoteo</span>
+</li>
+<li class="flex items-start gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">check_circle</span>
+<span class="font-body-sm text-body-sm leading-tight">Brocha 2.5" corte angular</span>
+</li>
+<li class="flex items-start gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">check_circle</span>
+<span class="font-body-sm text-body-sm leading-tight">Bandeja plástica reforzada</span>
+</li>
+<li class="flex items-start gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">check_circle</span>
+<span class="font-body-sm text-body-sm leading-tight">Espátula metálica (resane)</span>
+</li>
+<li class="flex items-start gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">check_circle</span>
+<span class="font-body-sm text-body-sm leading-tight">Cinta de enmascarar azul</span>
+</li>
+</ul>
+</div>
+<!-- Materiales Column -->
+<div class="bg-surface-container-low rounded-xl p-3 flex flex-col shadow-sm">
+<div class="flex items-center gap-1.5 mb-2.5">
+<div class="w-6 h-6 rounded bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">inventory_2</span>
+</div>
+<span class="font-label-lg text-label-lg text-primary">Materiales</span>
+</div>
+<ul class="space-y-2 flex-1">
+<li class="flex items-start gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">palette</span>
+<span class="font-body-sm text-body-sm leading-tight">Pintura Tipo 1 acrílica lavable</span>
+</li>
+<li class="flex items-start gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">construction</span>
+<span class="font-body-sm text-body-sm leading-tight">Masilla para estuco interior</span>
+</li>
+<li class="flex items-start gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">texture</span>
+<span class="font-body-sm text-body-sm leading-tight">Lija suave al agua grano 180</span>
+</li>
+<li class="flex items-start gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">layers</span>
+<span class="font-body-sm text-body-sm leading-tight">Plástico protector de piso (2x3m)</span>
+</li>
+<li class="flex items-start gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">water_drop</span>
+<span class="font-body-sm text-body-sm leading-tight">Agua limpia para dilución (10%)</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Preventive Pro-tip Alert Box -->
+<div class="w-full bg-tertiary-fixed/60 rounded-xl p-3.5 flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+</div>
+<div class="flex-1">
+<span class="font-label-md text-label-md text-primary block">Consejo de experto CasaLista</span>
+<p class="font-body-sm text-body-sm text-on-tertiary-fixed-variant mt-0.5 leading-snug">
+        Ventila adecuadamente el espacio y protege rodapiés y tomacorrientes antes de comenzar para evitar manchas indeseadas y reducir tiempo de limpieza.
+      </p>
+</div>
+</div>
+<!-- Photo Sample Reference (Placeholder) -->
+<div class="w-full bg-surface-container-low rounded-xl p-3 shadow-sm flex items-center gap-3">
+<img class="w-16 h-16 rounded-lg object-cover shrink-0" data-alt="A clean, modern Colombian apartment living room wall with a smooth, professional matte navy and soft cream coat of paint, natural morning daylight through an open balcony window, minimalist architectural vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsmIvtuPilapbZVRiuZiLFOlz4J4dvLlD0gfE4QnlMDJ7wEIrNrZBWJ-FsK76I3Ii-L1LG_F-bD3JKHEifrVYmfJInwifGvQZyGvQ1Ti6LpPt5CrbBYAJRdAirxh9iuPu-s_NVoM906ycICln6Sep3eRFy_uGkAQEvJ1BAeQQy3LCwshzwMs_fqHsSYfyvCFiai0hRLkzB7Pw8hKEnxY6bBuSUICBrNa5oHXjlghb3IgH_6nnMSYdp"/>
+<div class="flex-1 min-w-0">
+<span class="font-label-md text-label-md text-primary block truncate">Resultado esperado</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mt-0.5">
+        Pared lisa, sin marcas de rodillo ni sombras de empalme, con bordes perfectamente definidos.
+      </p>
+</div>
+</div>
+<!-- Action CTA Panel -->
+<div class="pt-2 flex flex-col gap-2.5">
+<!-- Primary CTA: Calculate Budget -->
+<button class="w-full h-12 bg-secondary text-on-secondary hover:bg-primary-container active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg shadow-sm" onclick="triggerCalculatorModal()">
+<span class="material-symbols-outlined text-[20px]">calculate</span>
+<span>Calcular materiales y presupuesto</span>
+</button>
+<!-- Secondary CTA: Step-by-Step Guide -->
+<button class="w-full h-11 bg-surface-container-lowest text-primary hover:bg-surface-container-low active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg shadow-sm" onclick="triggerGuideModal()">
+<span class="material-symbols-outlined text-[20px] text-secondary">checklist</span>
+<span>Ver guía paso a paso (5 pasos)</span>
+</button>
+</div>
+<!-- Interactive Feedback Toast (Hidden by default) -->
+<div class="opacity-0 pointer-events-none transition-opacity duration-300 fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-primary text-on-primary px-4 py-2 rounded-full shadow-lg flex items-center gap-2 font-label-md text-label-md" id="toast">
+<span class="material-symbols-outlined text-[18px] text-secondary-fixed">bookmark_added</span>
+<span id="toastMsg">Guardado en tus proyectos favoritos</span>
+</div>
+</div>
+<script>
+  let isFavorite = true;
+
+  function toggleFavorite() {
+    isFavorite = !isFavorite;
+    const favIcon = document.getElementById('favIcon');
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toastMsg');
+
+    if (isFavorite) {
+      favIcon.style.fontVariationSettings = "'FILL' 1";
+      favIcon.classList.remove('text-on-surface-variant');
+      favIcon.classList.add('text-secondary');
+      toastMsg.textContent = "Guardado en tus proyectos favoritos";
+    } else {
+      favIcon.style.fontVariationSettings = "'FILL' 0";
+      favIcon.classList.remove('text-secondary');
+      favIcon.classList.add('text-on-surface-variant');
+      toastMsg.textContent = "Eliminado de favoritos";
+    }
+
+    // Micro bounce
+    favIcon.classList.add('scale-125');
+    setTimeout(() => favIcon.classList.remove('scale-125'), 200);
+
+    // Show toast
+    toast.classList.remove('opacity-0', 'pointer-events-none');
+    setTimeout(() => {
+      toast.classList.add('opacity-0', 'pointer-events-none');
+    }, 2200);
+  }
+
+  function triggerCalculatorModal() {
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toastMsg');
+    toastMsg.textContent = "Abriendo calculadora de pintura (m² y galones)...";
+    toast.classList.remove('opacity-0', 'pointer-events-none');
+    setTimeout(() => {
+      toast.classList.add('opacity-0', 'pointer-events-none');
+    }, 1800);
+  }
+
+  function triggerGuideModal() {
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toastMsg');
+    toastMsg.textContent = "Cargando guía detallada paso a paso...";
+    toast.classList.remove('opacity-0', 'pointer-events-none');
+    setTimeout(() => {
+      toast.classList.add('opacity-0', 'pointer-events-none');
+    }, 1800);
+  }
+</script></main></body></html>

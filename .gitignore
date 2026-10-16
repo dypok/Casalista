@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+casalista.db
+*.egg-info/
+dist/
+build/
+.DS_Store

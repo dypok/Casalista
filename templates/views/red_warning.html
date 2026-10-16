@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Precaución de Seguridad — {{ task.title }} — CasaLista{% endblock %}
+
+{% block content %}
+{% set header_subtitle = "Seguridad Crítica" %}
+{% set back_url = "/explorar" %}
+{% include "components/header.html" %}
+
+<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-20 pb-24 px-margin bg-surface">
+  <div class="flex flex-col w-full pb-8 space-y-5">
+    
+    <!-- Hero Banner de Advertencia Roja -->
+    <div class="rounded-2xl bg-rose-50 border-2 border-rose-300 p-5 shadow-sm flex flex-col sm:flex-row items-start gap-4 text-rose-950">
+      <div class="w-14 h-14 rounded-2xl bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-md">
+        <span class="material-symbols-outlined text-[36px]">gpp_bad</span>
+      </div>
+      <div class="flex-1">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="px-2.5 py-0.5 rounded-full bg-rose-200 text-rose-900 font-label-sm text-label-sm font-bold uppercase tracking-wide">
+            Semáforo Rojo • Alto Riesgo
+          </span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-rose-900 tracking-tight font-bold">
+          Esta tarea requiere un profesional calificado
+        </h2>
+        <p class="font-body-md text-body-md text-rose-900/90 mt-1 leading-relaxed">
+          Para proteger tu integridad, la de tu familia y la infraestructura de tu vivienda, CasaLista no proporciona instrucciones de ejecución autónoma para esta labor.
+        </p>
+      </div>
+    </div>
+
+    <!-- Diagnóstico del Riesgo Específico -->
+    <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col gap-3">
+      <h3 class="font-headline-sm text-headline-sm text-primary font-bold flex items-center gap-2">
+        <span class="material-symbols-outlined text-[22px] text-error">report_problem</span>
+        ¿Por qué no debes intentar hacerlo por tu cuenta?
+      </h3>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        {{ task.security_reason }}
+      </p>
+    </div>
+
+    <!-- Protocolo de Contingencia Inmediata -->
+    <div class="bg-surface-container-low p-5 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col gap-3.5">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-secondary animate-ping"></span>
+        <h3 class="font-headline-sm text-headline-sm text-primary font-bold">Medidas de contingencia inmediata</h3>
+      </div>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">
+        Si se está presentando una emergencia en este momento, sigue estos pasos de contención preventiva:
+      </p>
+
+      <div class="flex flex-col gap-2.5">
+        <div class="flex items-start gap-3 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/20">
+          <span class="w-7 h-7 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-label-sm shrink-0 mt-0.5">1</span>
+          <div>
+            <h4 class="font-label-lg text-label-lg text-primary font-bold">Corte inmediato del suministro</h4>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+              Cierra la llave de paso general del agua, baja el interruptor principal (breaker) de la luz o gira la válvula de gas según corresponda.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/20">
+          <span class="w-7 h-7 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-label-sm shrink-0 mt-0.5">2</span>
+          <div>
+            <h4 class="font-label-lg text-label-lg text-primary font-bold">Ventilación y despeje</h4>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+              Si hay presencia de olor a gas o cables recalentados, abre ventanas ampliamente y mantén a niños y mascotas alejados de la zona.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/20">
+          <span class="w-7 h-7 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-label-sm shrink-0 mt-0.5">3</span>
+          <div>
+            <h4 class="font-label-lg text-label-lg text-primary font-bold">Contactar asistencia calificada</h4>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+              Solicita el servicio de un especialista con matrícula profesional certificada (ej. técnico electricista matriculado en CONTE o técnico de la empresa prestadora de gas).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Directorio y Líneas de Asistencia en Colombia -->
+    <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col gap-3">
+      <h3 class="font-headline-sm text-headline-sm text-primary font-bold flex items-center gap-2">
+        <span class="material-symbols-outlined text-[22px] text-secondary">support_agent</span>
+        Líneas de emergencia pública (Colombia)
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+        <div class="p-3 rounded-lg bg-surface-container-low flex flex-col">
+          <span class="font-label-sm text-label-sm text-on-surface-variant">Acueducto & Alcantarillado</span>
+          <span class="font-headline-sm text-headline-sm text-primary font-bold">Línea 116</span>
+        </div>
+        <div class="p-3 rounded-lg bg-surface-container-low flex flex-col">
+          <span class="font-label-sm text-label-sm text-on-surface-variant">Gas Natural / Emergencias</span>
+          <span class="font-headline-sm text-headline-sm text-primary font-bold">Línea 164</span>
+        </div>
+        <div class="p-3 rounded-lg bg-surface-container-low flex flex-col">
+          <span class="font-label-sm text-label-sm text-on-surface-variant">Cuerpo Oficial de Bomberos</span>
+          <span class="font-headline-sm text-headline-sm text-primary font-bold">Línea 119</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="pt-2 flex flex-col sm:flex-row gap-3">
+      <a href="/explorar" class="flex-1 h-12 bg-primary text-on-primary hover:bg-primary-container active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm">
+        <span class="material-symbols-outlined text-[20px]">explore</span>
+        <span>Volver al catálogo seguro</span>
+      </a>
+
+      <a href="/" class="h-12 px-6 bg-surface-container-lowest text-primary hover:bg-surface-container-low active:scale-[0.99] transition-all rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm border border-outline-variant/30">
+        <span>Ir al inicio</span>
+      </a>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio — CasaLista{% endblock %}
+
+{% block content %}
+{% set header_subtitle = "Inicio" %}
+{% include "components/header.html" %}
+
+<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-20 pb-24 px-margin bg-surface">
+  <div class="flex flex-col w-full gap-space-lg pb-6">
+    
+    <!-- Saludo & Encabezado Cálido Dinámico -->
+    <section class="flex flex-col gap-space-xs pt-1">
+      <div class="flex items-center justify-between">
+        <span class="font-headline-lg text-headline-lg text-primary tracking-tight font-bold">¡Hola, {{ user.name.split(' ')[0] }}! 👋</span>
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-semibold">
+          <span class="material-symbols-outlined text-[14px] text-secondary">verified</span>
+          {{ user.city | default('Colombia') }}
+        </span>
+      </div>
+      <p class="font-body-lg text-body-lg text-on-surface-variant">¿Qué quieres mejorar hoy en casa?</p>
+    </section>
+
+    <!-- Buscador Guiado -->
+    <section class="flex flex-col gap-1.5">
+      <form action="/explorar" method="GET" class="relative flex items-center bg-surface-container-lowest rounded-xl shadow-sm focus-within:shadow-md transition-shadow">
+        <span class="material-symbols-outlined absolute left-3.5 text-on-surface-variant text-[20px]">search</span>
+        <input name="q" class="w-full h-12 pl-11 pr-4 bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none rounded-xl" placeholder="Buscar en el catálogo (ej. pintar pared, grifo)..." type="search"/>
+      </form>
+      <div class="flex items-center gap-1.5 px-1 text-on-surface-variant">
+        <span class="material-symbols-outlined text-[14px] text-secondary">menu_book</span>
+        <span class="font-label-sm text-label-sm text-on-surface-variant">Catálogo cerrado con semáforo y presupuestos en COP</span>
+      </div>
+    </section>
+
+    <!-- Banner Destacado: Continúa tu proyecto (Dinámico de SQLite) -->
+    <section class="flex flex-col gap-space-sm">
+      <div class="flex items-center justify-between px-0.5">
+        <div class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+          <h2 class="font-headline-sm text-headline-sm text-primary font-bold">Continúa tu proyecto</h2>
+        </div>
+        <a href="/mis-proyectos" class="font-label-sm text-label-sm text-secondary font-semibold hover:underline">Ver todos</a>
+      </div>
+
+      {% if active_project %}
+        <div class="relative overflow-hidden rounded-xl bg-surface-container-lowest shadow-sm flex flex-col p-space-md gap-3.5 border border-outline-variant/30">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-secondary-fixed flex items-center justify-center shrink-0 text-secondary">
+                <span class="material-symbols-outlined text-[26px]">format_paint</span>
+              </div>
+              <div class="flex flex-col">
+                <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">{{ active_project.project_name }}</h3>
+                <span class="font-body-sm text-body-sm text-on-surface-variant">{{ active_project.phase_name }}</span>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm font-bold shrink-0">{{ active_project.progress_percent }}%</span>
+          </div>
+
+          <!-- Barra de progreso arquitectónica -->
+          <div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+            <div class="bg-secondary h-2 rounded-full transition-all duration-500" style="width: {{ active_project.progress_percent }}%;"></div>
+          </div>
+
+          <!-- Información financiera y CTA -->
+          <div class="flex items-center justify-between pt-1">
+            <div class="flex flex-col">
+              <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Presupuesto estimado</span>
+              <div class="flex items-baseline gap-1">
+                <span class="font-headline-md text-headline-md text-primary font-bold">${{ "{:,.0f}".format(active_project.calculated_cost_cop).replace(",", ".") }}</span>
+                <span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+              </div>
+            </div>
+            <a href="/tarea/{{ active_project.task_id }}/guia" class="px-4 py-2.5 rounded-xl bg-secondary text-on-secondary font-label-lg text-label-lg shadow-sm hover:bg-primary transition-colors flex items-center gap-1.5 active:scale-95 transform font-semibold">
+              <span>Continuar</span>
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+      {% else %}
+        <div class="rounded-xl bg-surface-container-lowest p-space-md border border-outline-variant/30 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+              <span class="material-symbols-outlined text-[20px]">add_task</span>
+            </div>
+            <div>
+              <p class="font-headline-sm text-headline-sm text-primary font-semibold">No tienes proyectos en marcha</p>
+              <p class="font-body-sm text-body-sm text-on-surface-variant">Elige una tarea del catálogo para calcular insumos y empezar.</p>
+            </div>
+          </div>
+          <a href="/explorar" class="px-3 py-1.5 rounded-lg bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold">Explorar</a>
+        </div>
+      {% endif %}
+    </section>
+
+    <!-- Accesos Rápidos por Categoría (8 Categorías Dinámicas) -->
+    <section class="flex flex-col gap-space-sm">
+      <div class="flex items-center justify-between px-0.5">
+        <h2 class="font-headline-sm text-headline-sm text-primary font-bold">Categorías de reparación</h2>
+        <span class="font-label-sm text-label-sm text-on-surface-variant">8 especialidades</span>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+        {% for cat in categories %}
+          <a href="/explorar?categoria={{ cat.id }}" class="flex flex-col text-left p-3.5 rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-colors group border border-outline-variant/20">
+            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary mb-2 group-hover:scale-105 transition-transform">
+              <span class="material-symbols-outlined text-[22px]">{{ cat.icon }}</span>
+            </div>
+            <span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">{{ cat.name }}</span>
+            <span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 truncate">{{ cat.subtitle }}</span>
+            
+            {% if cat.badge_type == 'warning' %}
+              <div class="mt-2 inline-flex items-center gap-1 text-primary bg-surface-container px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold">
+                <span class="material-symbols-outlined text-[13px] text-error">warning</span>
+                {{ cat.badge_text }}
+              </div>
+            {% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Reparaciones Populares Dinámicas -->
+    <section class="flex flex-col gap-space-sm">
+      <div class="flex items-center justify-between px-0.5">
+        <div class="flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-secondary text-[20px]">trending_up</span>
+          <h2 class="font-headline-sm text-headline-sm text-primary font-bold">Reparaciones populares</h2>
+        </div>
+        <a href="/explorar" class="font-label-md text-label-md text-secondary hover:underline font-semibold">Ver todas</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+        {% for task in popular_tasks %}
+          <a href="/tarea/{{ task.id }}" class="flex items-center gap-3.5 p-3 rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low active:bg-surface-container transition-colors border border-outline-variant/20">
+            <img class="w-[72px] h-[72px] rounded-lg object-cover shrink-0 bg-surface-container" alt="{{ task.title }}" src="{{ task.image_url }}"/>
+            <div class="flex flex-col min-w-0 flex-1">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-surface-container text-primary font-label-sm text-label-sm font-medium">{{ task.difficulty }}</span>
+                <span class="text-outline text-label-sm">•</span>
+                <span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[13px]">schedule</span> {{ task.estimated_time }}
+                </span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface truncate font-semibold">{{ task.title }}</h3>
+              <p class="font-body-sm text-body-sm text-on-surface-variant truncate mt-0.5">{{ task.short_description }}</p>
+              <div class="flex items-center justify-between mt-1">
+                <span class="font-label-md text-label-md text-primary font-bold">~${{ "{:,.0f}".format(task.base_cost_cop).replace(",", ".") }} COP</span>
+                <span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Reparaciones Guardadas / Favoritos de SQLite -->
+    {% if favorite_projects %}
+      <section class="flex flex-col gap-space-sm">
+        <div class="flex items-center justify-between px-0.5">
+          <div class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+            <h2 class="font-headline-sm text-headline-sm text-primary font-bold">Reparaciones guardadas</h2>
+          </div>
+          <span class="font-label-sm text-label-sm text-on-surface-variant">{{ favorite_projects|length }} guardados</span>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+          {% for fav in favorite_projects %}
+            <a href="/tarea/{{ fav.task_id }}" class="flex flex-col p-3 rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-colors border border-outline-variant/20 relative group">
+              <div class="flex items-start justify-between mb-2">
+                <div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+                  <span class="material-symbols-outlined text-[18px]">{{ fav.category_icon | default('bookmark') }}</span>
+                </div>
+                <span class="text-secondary">
+                  <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+                </span>
+              </div>
+              <h4 class="font-headline-sm text-headline-sm text-on-surface leading-tight truncate font-semibold">{{ fav.task_title }}</h4>
+              <span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 truncate">{{ fav.category_name }}</span>
+              <div class="mt-2.5 pt-2 flex items-center justify-between border-t border-outline-variant/20">
+                <span class="font-label-sm text-label-sm text-secondary font-bold">~${{ "{:,.0f}".format(fav.calculated_cost_cop).replace(",", ".") }} COP</span>
+                <span class="font-label-sm text-label-sm text-on-surface-variant">{{ fav.estimated_time }}</span>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    <!-- Consejo del Maestro CasaLista -->
+    <section class="p-3.5 rounded-xl bg-surface-container flex items-start gap-3 border border-outline-variant/20">
+      <div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-[18px]">tips_and_updates</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-label-sm text-label-sm text-primary font-bold">Consejo didáctico de obra</span>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          Antes de comprar pintura o estuco, calcula el área restando puertas y ventanas para no comprar material innecesario y cuidar tu presupuesto.
+        </p>
+      </div>
+    </section>
+
+  </div>
+</main>
+{% endblock %}

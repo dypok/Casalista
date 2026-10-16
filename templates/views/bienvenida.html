@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Bienvenido a CasaLista — Tu hogar, tus proyectos, más fáciles{% endblock %}
+
+{% block content %}
+<main class="flex-1 flex flex-col relative w-full max-w-md mx-auto px-margin pt-safe pb-safe bg-surface">
+  <div class="flex flex-col w-full pb-6 space-y-6">
+    <!-- Brand & Identity Header -->
+    <div class="flex items-center justify-between pt-4">
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-on-secondary shadow-md shadow-secondary/20">
+          <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">home_repair_service</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-headline-md text-headline-md text-primary tracking-tight font-bold">CasaLista</span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Control & Presupuesto</span>
+        </div>
+      </div>
+      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-semibold">
+        <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+        Colombia COP
+      </span>
+    </div>
+
+    <!-- Hero Visual: Architectural Blueprint Card -->
+    <div class="relative w-full rounded-2xl bg-surface-container-lowest shadow-sm p-4 overflow-hidden">
+      <div class="absolute -right-8 -top-8 w-32 h-32 bg-surface-container-high rounded-full opacity-60 pointer-events-none"></div>
+      <div class="relative w-full h-44 rounded-xl overflow-hidden mb-4">
+        <img class="w-full h-full object-cover" alt="Renovación en hogar en Colombia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5D5oVmAmuZT4voN3AarMdeplN5m6eUfuh1DNohm0t-BG6cuQFHGdZkoEEcori0H5EOv_QRjE3Yelwop-DEpFvUuBJ6h3ETHh6Zz3yZkqGJrltwsqY6L2TIQthcQeXG7OYTBcGy3m35oLaM_v3Z2xoeoSvs-k2c2zy1ilYkD6c2HDMLgFYSwsDFE45BfbZsjfPD1wh-o0yISIA59W1uqZztVyU3OHfpX6yoVZwdDbECdFYACobdwhi"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent flex items-end p-3">
+          <div class="inline-flex items-center space-x-1.5 bg-surface-container-lowest/90 backdrop-blur-sm px-2.5 py-1 rounded-lg text-primary shadow-xs">
+            <span class="material-symbols-outlined text-secondary text-[16px]">architecture</span>
+            <span class="font-label-sm text-label-sm font-semibold">Cálculo paramétrico de obra</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slogan & Value Proposition -->
+      <div class="space-y-2">
+        <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Tu hogar, tus proyectos, <span class="text-secondary font-bold">más fáciles</span>.
+        </h1>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Planifica pequeñas reparaciones, calcula los materiales necesarios y estima tu presupuesto en minutos sin complicaciones ni sorpresas.
+        </p>
+      </div>
+    </div>
+
+    <!-- Key Value Pillars (Micro-cards Bento) -->
+    <div class="space-y-2.5">
+      <div class="flex items-center justify-between px-1">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">Beneficios clave</span>
+        <span class="font-label-sm text-label-sm text-secondary font-semibold">100% Preciso</span>
+      </div>
+
+      <!-- Bento Item 1 -->
+      <div class="flex items-center p-3 rounded-xl bg-surface-container-lowest shadow-sm space-x-3 transition-transform active:scale-[0.99]">
+        <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">checklist</span>
+        </div>
+        <div class="flex flex-col min-w-0 flex-1">
+          <span class="font-headline-sm text-headline-sm text-on-surface truncate">Catálogo guiado paso a paso</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">Rutas estandarizadas para pintura, drywall y plomería básica.</span>
+        </div>
+      </div>
+
+      <!-- Bento Item 2 -->
+      <div class="flex items-center p-3 rounded-xl bg-surface-container-lowest shadow-sm space-x-3 transition-transform active:scale-[0.99]">
+        <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary shrink-0">
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">calculate</span>
+        </div>
+        <div class="flex flex-col min-w-0 flex-1">
+          <span class="font-headline-sm text-headline-sm text-on-surface truncate">Cálculo exacto de materiales</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">Metraje cuadrado a galones, sacos y unidades de tornillería.</span>
+        </div>
+      </div>
+
+      <!-- Bento Item 3 -->
+      <div class="flex items-center p-3 rounded-xl bg-surface-container-lowest shadow-sm space-x-3 transition-transform active:scale-[0.99]">
+        <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary-container shrink-0">
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">traffic</span>
+        </div>
+        <div class="flex flex-col min-w-0 flex-1">
+          <span class="font-headline-sm text-headline-sm text-on-surface truncate">Semáforo de seguridad</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">Reconoce cuándo proceder con calma o llamar a un técnico calificado.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="pt-2 flex flex-col space-y-3">
+      <a href="/registro" class="w-full h-12 bg-secondary text-on-secondary rounded-xl font-label-lg text-label-lg font-semibold flex items-center justify-center space-x-2 shadow-md shadow-secondary/25 transition-all duration-150 active:bg-primary-container active:scale-[0.98]">
+        <span>Crear cuenta</span>
+        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+      </a>
+
+      <a href="/login" class="w-full h-12 bg-surface-container-lowest text-primary rounded-xl font-label-lg text-label-lg font-semibold flex items-center justify-center transition-all duration-150 shadow-sm hover:bg-surface-container active:scale-[0.98]">
+        <span>Iniciar sesión</span>
+      </a>
+
+      <div class="pt-1 flex justify-center">
+        <a href="/explorar" class="inline-flex items-center space-x-1.5 py-1 px-3 rounded-full text-on-surface-variant hover:text-primary transition-colors">
+          <span class="font-body-sm text-body-sm">¿Solo revisando precios?</span>
+          <span class="font-label-sm text-label-sm text-secondary font-bold underline decoration-secondary/40 underline-offset-4">Explorar como invitado</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

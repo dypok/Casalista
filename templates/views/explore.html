@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Explorar Catálogo — CasaLista{% endblock %}
+
+{% block content %}
+{% set header_subtitle = "Catálogo" %}
+{% include "components/header.html" %}
+
+<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-20 pb-24 px-margin bg-surface">
+  <div class="flex flex-col w-full pb-6">
+    
+    <!-- Header Intro & Search -->
+    <section class="flex flex-col gap-space-xs mb-space-md">
+      <div class="flex items-center justify-between">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Guías & Presupuestos</span>
+        <span class="inline-flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm bg-surface-container px-2.5 py-0.5 rounded-full">
+          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> {{ tasks|length }} Tareas Disponibles
+        </span>
+      </div>
+      <h2 class="font-headline-lg text-headline-lg text-primary tracking-tight font-bold">Catálogo de Reparaciones</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-snug">
+        Selecciona una tarea o categoría para conocer los insumos, pasos guiados y el nivel de seguridad.
+      </p>
+
+      <!-- Search input -->
+      <form action="/explorar" method="GET" class="relative mt-space-xs">
+        <div class="flex items-center h-12 w-full rounded-xl bg-surface-container-low px-space-md shadow-sm border border-outline-variant/30 focus-within:border-secondary transition-colors">
+          <span class="material-symbols-outlined text-[20px] text-outline mr-space-sm">search</span>
+          <input name="q" value="{{ search_query }}" class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none" id="search-input" placeholder="Buscar tarea (ej. pintar pared, grifo, repisa)..." type="text"/>
+          {% if search_query %}
+            <a href="/explorar" class="text-outline hover:text-on-surface p-1">
+              <span class="material-symbols-outlined text-[18px]">cancel</span>
+            </a>
+          {% endif %}
+        </div>
+        {% if active_filter and active_filter != 'todas' %}
+          <input type="hidden" name="dificultad" value="{{ active_filter }}"/>
+        {% endif %}
+      </form>
+    </section>
+
+    <!-- Filter Chips (Complejidad y Seguridad) -->
+    <section class="mb-space-md">
+      <div class="flex items-center justify-between mb-space-xs">
+        <span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">FILTRAR POR COMPLEJIDAD</span>
+        <span class="font-label-sm text-label-sm text-secondary font-semibold">{{ categories|length }} categorías</span>
+      </div>
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <a href="/explorar{% if search_query %}?q={{ search_query }}{% endif %}" class="flex-shrink-0 px-3.5 py-1.5 rounded-lg font-label-md text-label-md font-semibold transition-all shadow-sm {% if active_filter == 'todas' or not active_filter %}bg-primary-container text-on-primary{% else %}bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container{% endif %}">
+          Todas
+        </a>
+        <a href="/explorar?dificultad=facil{% if search_query %}&q={{ search_query }}{% endif %}" class="flex-shrink-0 px-3.5 py-1.5 rounded-lg font-label-md text-label-md font-semibold transition-all shadow-sm {% if active_filter == 'facil' %}bg-primary-container text-on-primary{% else %}bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container{% endif %}">
+          🌱 Fácil
+        </a>
+        <a href="/explorar?dificultad=intermedio{% if search_query %}&q={{ search_query }}{% endif %}" class="flex-shrink-0 px-3.5 py-1.5 rounded-lg font-label-md text-label-md font-semibold transition-all shadow-sm {% if active_filter == 'intermedio' %}bg-primary-container text-on-primary{% else %}bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container{% endif %}">
+          ⚙️ Intermedio
+        </a>
+        <a href="/explorar?dificultad=precaucion{% if search_query %}&q={{ search_query }}{% endif %}" class="flex-shrink-0 px-3.5 py-1.5 rounded-lg font-label-md text-label-md font-semibold transition-all shadow-sm {% if active_filter == 'precaucion' %}bg-primary-container text-on-primary{% else %}bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container{% endif %}">
+          ⚡ Requiere precaución
+        </a>
+      </div>
+    </section>
+
+    <!-- Tareas Listado Principal Dinámico -->
+    <section class="flex flex-col gap-3">
+      {% for task in tasks %}
+        <article class="group relative bg-surface-container-lowest rounded-xl p-space-md shadow-sm border border-outline-variant/30 hover:border-secondary/40 transition-all duration-200">
+          <div class="flex items-start gap-space-md">
+            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-secondary-fixed flex items-center justify-center text-primary-container group-hover:scale-105 transition-transform">
+              <span class="material-symbols-outlined text-[26px]">{{ task.category_icon | default('home_repair_service') }}</span>
+            </div>
+            
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-2 mb-1 flex-wrap">
+                <h3 class="font-headline-sm text-headline-sm text-primary font-bold truncate">{{ task.title }}</h3>
+                
+                <!-- Semáforo Dinámico -->
+                {% set level = task.security_level %}
+                {% set label = task.security_badge_label %}
+                {% include "components/traffic_badge.html" %}
+              </div>
+
+              <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-2">
+                {{ task.short_description }}
+              </p>
+
+              <div class="flex items-center justify-between pt-1 border-t border-outline-variant/20 flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">
+                    {{ task.category_name }}
+                  </span>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant">
+                    ⏱️ {{ task.estimated_time }}
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  {% if task.security_level != 'red' %}
+                    <span class="font-headline-sm text-headline-sm text-primary font-bold">~${{ "{:,.0f}".format(task.base_cost_cop).replace(",", ".") }} COP</span>
+                    <a href="/tarea/{{ task.id }}" class="px-3 py-1.5 rounded-lg bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold hover:bg-primary transition-colors flex items-center gap-1">
+                      <span>Ver tarea</span>
+                      <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                    </a>
+                  {% else %}
+                    <span class="font-label-sm text-label-sm text-error font-bold">Asistencia técnica</span>
+                    <a href="/tarea/{{ task.id }}/alerta-riesgo" class="px-3 py-1.5 rounded-lg bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold hover:bg-error/20 transition-colors flex items-center gap-1">
+                      <span>Ver riesgo</span>
+                      <span class="material-symbols-outlined text-[16px]">warning</span>
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </article>
+      {% else %}
+        <div class="p-8 text-center rounded-xl bg-surface-container-lowest border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[48px] text-outline mb-2">search_off</span>
+          <p class="font-headline-sm text-headline-sm text-primary font-semibold">No se encontraron tareas</p>
+          <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Intenta con otro término o remueve los filtros activos.</p>
+          <a href="/explorar" class="mt-3 inline-block px-4 py-2 bg-secondary text-on-secondary rounded-lg font-label-sm text-label-sm font-semibold">Ver catálogo completo</a>
+        </div>
+      {% endfor %}
+    </section>
+
+  </div>
+</main>
+{% endblock %}

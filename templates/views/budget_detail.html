@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+
+{% block title %}Presupuesto Estimado — {{ task.title }} — CasaLista{% endblock %}
+
+{% block content %}
+{% set header_subtitle = "Presupuesto COP" %}
+{% set back_url = "/tarea/" ~ task.id %}
+{% include "components/header.html" %}
+
+<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-20 pb-28 px-margin bg-surface">
+  <div class="flex flex-col w-full pb-8 space-y-4">
+    
+    <!-- Encabezado contextual con micro-badge -->
+    <div class="flex flex-col pt-2">
+      <div class="flex items-center gap-1.5 mb-1">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm tracking-wide uppercase font-bold">
+          Cálculo paramétrico
+        </span>
+        <span class="inline-flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant">
+          <span class="material-symbols-outlined text-[14px]">calendar_today</span>
+          Precios vigentes Colombia (COP)
+        </span>
+      </div>
+      <h2 class="font-headline-lg text-headline-lg text-primary tracking-tight font-bold">Presupuesto Estimado</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1 mt-0.5">
+        <span class="material-symbols-outlined text-[16px] text-secondary">format_paint</span>
+        {{ task.title }} • <span id="area-label">{{ area_m2 }}</span> m² (2 manos)
+      </p>
+    </div>
+
+    <!-- Modificador de Medidas / Calculadora Reactiva -->
+    <div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3 w-full sm:w-auto">
+        <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary shrink-0">
+          <span class="material-symbols-outlined text-[20px]">square_foot</span>
+        </div>
+        <div>
+          <label for="area-input" class="font-label-md text-label-md text-primary font-bold block">Área a reparar / pintar</label>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">Introduce los metros cuadrados aproximados</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 w-full sm:w-auto">
+        <input type="number" id="area-input" value="{{ area_m2 }}" min="1" max="200" step="0.5" class="w-24 h-11 px-3 bg-surface-container-low border border-outline-variant/40 rounded-lg font-headline-sm text-headline-sm text-primary text-center font-bold focus:outline-none focus:border-secondary transition-colors" onchange="updateCalculation()"/>
+        <span class="font-label-md text-label-md text-on-surface-variant font-semibold">m²</span>
+        <button type="button" onclick="updateCalculation()" class="px-3.5 py-2 bg-secondary text-on-secondary rounded-lg font-label-sm text-label-sm font-semibold hover:bg-primary transition-colors">
+          Recalcular
+        </button>
+      </div>
+    </div>
+
+    <!-- Hero Visual Ilustrado de Obra -->
+    <div class="relative w-full h-32 rounded-xl overflow-hidden bg-surface-container-high shadow-sm border border-outline-variant/30">
+      <img class="w-full h-full object-cover" alt="Renovación de muro" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEsLDHiCC2pQBGdntWJa5ePKOOAeppP1EDpxsAw2cL-R2uZktrA41ido2kmWfsSNTB57EL8k6QlOokM_isrZzn5wej7LfRG1fg36RF4mj9ai2A02J7Jwo2ULVJfp7bhOSfUTy5cBL6sc2V-ciHhdhNOxoPCk4SwppHOcCRs_6SeAJ1WGGDoPXPg_FvnrImDltH1MF-UOywZ0ufIiP6mh-zHmBTvy7xyk3-7b7opBEG28t179_xIboM"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-primary/85 via-primary/30 to-transparent flex items-end p-3">
+        <div class="flex items-center justify-between w-full text-on-primary">
+          <div class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[18px]">square_foot</span>
+            <span class="font-label-md text-label-md" id="calc-formula">Área calculada: {{ area_m2 }} m²</span>
+          </div>
+          <span class="font-label-sm text-label-sm bg-surface/20 backdrop-blur-md px-2.5 py-0.5 rounded-full font-semibold">
+            2 capas previstas
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Selector de Nivel de Presupuesto (3 Tabs / Cards dinámicas) -->
+    <div class="flex flex-col space-y-2">
+      <label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-bold">
+        Selecciona tu gama de materiales
+      </label>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5" id="tier-selector-group">
+        
+        <!-- Opción 1: Económica -->
+        <button class="tier-btn w-full text-left p-3.5 rounded-xl bg-surface-container-low transition-all duration-200 active:scale-[0.99] flex flex-col justify-between shadow-sm border border-outline-variant/30" data-tier="eco" onclick="selectTier('eco', this)" type="button">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-surface-container-highest text-tertiary flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[20px]">savings</span>
+            </div>
+            <div>
+              <span class="font-headline-sm text-headline-sm text-on-surface font-bold">Económica</span>
+              <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1">Vinilo Tipo 2, herramientas estándar</p>
+            </div>
+          </div>
+          <div class="text-right shrink-0 mt-3 pt-2 border-t border-outline-variant/20 w-full flex items-baseline justify-between">
+            <span class="font-label-sm text-label-sm text-on-surface-variant">Inversión aprox.</span>
+            <div>
+              <span class="font-headline-sm text-headline-sm text-on-surface font-bold" id="price-eco">$98.000</span>
+              <span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+            </div>
+          </div>
+        </button>
+
+        <!-- Opción 2: Recomendada (Seleccionada por defecto) -->
+        <button class="tier-btn active-tier w-full text-left p-3.5 rounded-xl bg-secondary-fixed text-on-secondary-fixed shadow-md relative overflow-hidden transition-all duration-200 active:scale-[0.99] flex flex-col justify-between border-2 border-secondary" data-tier="recom" onclick="selectTier('recom', this)" type="button">
+          <div class="absolute top-0 right-0 bg-secondary text-on-secondary px-2.5 py-0.5 rounded-bl-lg font-label-sm text-label-sm flex items-center gap-1 shadow-sm font-semibold">
+            <span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+            Recomendada
+          </div>
+          <div class="flex items-start gap-3 mt-2">
+            <div class="w-9 h-9 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+              <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">thumb_up</span>
+            </div>
+            <div class="pr-2">
+              <span class="font-headline-sm text-headline-sm text-primary font-bold">Recomendada</span>
+              <p class="font-body-sm text-body-sm text-on-secondary-fixed-variant line-clamp-2 mt-0.5">
+                Vinilo acrílico Tipo 1 lavable, rodillo antigota, cinta profesional
+              </p>
+            </div>
+          </div>
+          <div class="flex items-baseline justify-between mt-3 pt-2 bg-on-secondary-fixed/5 rounded-lg px-2.5 py-1 w-full">
+            <span class="font-label-md text-label-md text-primary font-semibold">Inversión calculada</span>
+            <div class="text-right">
+              <span class="font-headline-md text-headline-md text-primary font-bold" id="price-recom">$148.500</span>
+              <span class="font-label-sm text-label-sm text-primary/80 ml-0.5">COP</span>
+            </div>
+          </div>
+        </button>
+
+        <!-- Opción 3: Prémium -->
+        <button class="tier-btn w-full text-left p-3.5 rounded-xl bg-surface-container-low transition-all duration-200 active:scale-[0.99] flex flex-col justify-between shadow-sm border border-outline-variant/30" data-tier="prem" onclick="selectTier('prem', this)" type="button">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-surface-container-highest text-tertiary flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[20px]">workspace_premium</span>
+            </div>
+            <div>
+              <span class="font-headline-sm text-headline-sm text-on-surface font-bold">Prémium</span>
+              <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1">Esmalte al agua antibacterial, kit pro</p>
+            </div>
+          </div>
+          <div class="text-right shrink-0 mt-3 pt-2 border-t border-outline-variant/20 w-full flex items-baseline justify-between">
+            <span class="font-label-sm text-label-sm text-on-surface-variant">Inversión aprox.</span>
+            <div>
+              <span class="font-headline-sm text-headline-sm text-on-surface font-bold" id="price-prem">$215.000</span>
+              <span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+            </div>
+          </div>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Contenedor Desglose de Insumos -->
+    <div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col space-y-3 border border-outline-variant/30">
+      <div class="flex items-center justify-between pb-1 border-b border-outline-variant/20">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary text-[20px]">receipt_long</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold" id="breakdown-title">
+            Desglose Opción Recomendada
+          </h3>
+        </div>
+        <span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-semibold" id="item-count">
+          Insumos comerciales
+        </span>
+      </div>
+
+      <!-- Lista Desglosada Dinámica -->
+      <div class="flex flex-col space-y-2.5" id="breakdown-list">
+        <!-- Renderizado dinámico vía JavaScript de las filas de materiales -->
+      </div>
+    </div>
+
+    <!-- Nota Pedagógica de Presupuesto Orientativo -->
+    <div class="p-3 bg-surface-container-low rounded-xl text-on-surface-variant text-[12px] font-body-sm flex items-center gap-2 border border-outline-variant/20">
+      <span class="material-symbols-outlined text-[16px] text-secondary">info</span>
+      <span>Presupuesto orientativo estimado para Colombia con base en precios comerciales. No constituye cotización comercial formal.</span>
+    </div>
+
+    <!-- Totalizador Flotante e Interactivo -->
+    <div class="fixed bottom-0 inset-x-0 bg-surface-container-lowest/95 backdrop-blur-xl border-t border-outline-variant/30 p-3.5 z-40 shadow-lg">
+      <div class="max-w-4xl mx-auto flex items-center justify-between gap-4">
+        <div class="flex flex-col">
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Total Orientativo</span>
+          <div class="flex items-baseline gap-1">
+            <span class="font-display-currency text-display-currency text-primary font-extrabold" id="display-grand-total">$148.500</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="saveProjectToDB(this)" class="px-4 py-3 bg-secondary text-on-secondary rounded-xl font-label-lg text-label-lg font-semibold hover:bg-primary-container active:scale-95 transition-all flex items-center gap-2 shadow-sm">
+            <span class="material-symbols-outlined text-[20px]">bookmark_add</span>
+            <span>Guardar proyecto</span>
+          </button>
+          
+          <a href="/tarea/{{ task.id }}/guia" class="px-4 py-3 bg-primary text-on-primary rounded-xl font-label-lg text-label-lg font-semibold hover:bg-primary-container active:scale-95 transition-all flex items-center gap-1.5 shadow-sm">
+            <span>Iniciar guía</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast de Confirmación -->
+    <div class="opacity-0 pointer-events-none transition-opacity duration-300 fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-primary text-on-primary px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2 font-label-md text-label-md" id="save-toast">
+      <span class="material-symbols-outlined text-[18px] text-secondary-fixed">check_circle</span>
+      <span id="toastMsg">Proyecto guardado exitosamente en SQLite</span>
+    </div>
+
+  </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  let currentTier = "recom";
+  let currentArea = {{ area_m2 }};
+  const taskId = "{{ task.id }}";
+  let currentTotalCop = 148500;
+
+  async function updateCalculation() {
+    const areaInput = document.getElementById('area-input');
+    currentArea = parseFloat(areaInput.value) || 12.0;
+    document.getElementById('area-label').innerText = currentArea;
+    document.getElementById('calc-formula').innerText = `Área calculada: ${currentArea} m²`;
+
+    try {
+      // Llamar al endpoint de cálculo de la API
+      const res = await fetch('/api/calculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          task_id: taskId,
+          area_m2: currentArea,
+          tier: currentTier
+        })
+      });
+      const data = await res.json();
+      currentTotalCop = data.total_cop;
+      document.getElementById('display-grand-total').innerText = data.total_formatted;
+      document.getElementById('breakdown-title').innerText = "Desglose Opción " + data.tier_name;
+      document.getElementById('item-count').innerText = `${data.items.length} ítems`;
+
+      // Actualizar precios en las tarjetas
+      const baseEco = Math.round(98000 * (currentArea / 12.0));
+      const baseRecom = data.total_cop;
+      const basePrem = Math.round(215000 * (currentArea / 12.0));
+      document.getElementById('price-eco').innerText = "$" + baseEco.toLocaleString('es-CO');
+      document.getElementById('price-recom').innerText = "$" + baseRecom.toLocaleString('es-CO');
+      document.getElementById('price-prem').innerText = "$" + basePrem.toLocaleString('es-CO');
+
+      // Renderizar filas de insumos
+      const listEl = document.getElementById('breakdown-list');
+      listEl.innerHTML = data.items.map(item => `
+        <div class="flex items-start justify-between py-2 bg-surface-container-low/60 px-3 rounded-lg border border-outline-variant/10">
+          <div class="flex items-start gap-2.5 pr-2">
+            <div class="w-7 h-7 rounded-md bg-secondary-container/15 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">${item.icon || 'check_circle'}</span>
+            </div>
+            <div>
+              <p class="font-label-lg text-label-lg text-on-surface font-semibold">${item.name}</p>
+              <p class="font-body-sm text-body-sm text-on-surface-variant">${item.desc}</p>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <p class="font-label-lg text-label-lg text-on-surface font-bold">${item.price}</p>
+            <span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
+          </div>
+        </div>
+      `).join('');
+
+    } catch (err) {
+      console.error("Error al calcular presupuesto", err);
+    }
+  }
+
+  function selectTier(tierKey, clickedBtn) {
+    currentTier = tierKey;
+    document.querySelectorAll('.tier-btn').forEach(btn => {
+      btn.className = "tier-btn w-full text-left p-3.5 rounded-xl bg-surface-container-low transition-all duration-200 active:scale-[0.99] flex flex-col justify-between shadow-sm border border-outline-variant/30";
+    });
+    clickedBtn.className = "tier-btn active-tier w-full text-left p-3.5 rounded-xl bg-secondary-fixed text-on-secondary-fixed shadow-md relative overflow-hidden transition-all duration-200 active:scale-[0.99] flex flex-col justify-between border-2 border-secondary";
+    updateCalculation();
+  }
+
+  async function saveProjectToDB(btn) {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = `<span class="material-symbols-outlined text-[20px] animate-spin">refresh</span> Guardando...`;
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('/api/projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          task_id: taskId,
+          project_name: "{{ task.title }}",
+          phase_name: "Presupuesto calculado",
+          status: "planeado",
+          progress_percent: 0,
+          area_m2: currentArea,
+          tier_selected: currentTier,
+          calculated_cost_cop: currentTotalCop,
+          notes: `Presupuesto calculado para ${currentArea} m² en gama ${currentTier}.`,
+          is_favorite: true
+        })
+      });
+      const data = await res.json();
+
+      const toast = document.getElementById('save-toast');
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }, 2500);
+
+    } catch (err) {
+      console.error("Error guardando proyecto", err);
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }
+  }
+
+  // Inicializar cálculo al cargar la página
+  document.addEventListener('DOMContentLoaded', updateCalculation);
+</script>
+{% endblock %}
