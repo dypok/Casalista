@@ -138,21 +138,22 @@ def calculate_budget(req: CalculateRequest):
         raise HTTPException(status_code=404, detail="Tarea no encontrada")
 
     task = dict_from_row(task_row)
+
+    area = req.area_m2 if req.area_m2 and req.area_m2 > 0 else 12.0
+    scale_factor = max(0.5, area / 12.0)
+
+    # Insumos del tier solicitado
     materials = dicts_from_rows(conn.execute(
         "SELECT * FROM task_materials WHERE task_id = ? AND tier = ?",
         (req.task_id, req.tier)
     ).fetchall())
-    conn.close()
-
-    area = req.area_m2 if req.area_m2 and req.area_m2 > 0 else 12.0
-    scale_factor = max(0.5, area / 12.0)
 
     calculated_items = []
     total_cop = 0
 
     if materials:
         for m in materials:
-            if "galón" in m["name"].lower() or "vinilo" in m["name"].lower():
+            if any(k in m["name"].lower() for k in ["galón", "vinilo", "esmalte", "masilla", "m²"]):
                 item_price = int(round(m["unit_price_cop"] * scale_factor))
             else:
                 item_price = m["unit_price_cop"]
@@ -175,6 +176,27 @@ def calculate_budget(req: CalculateRequest):
             "icon": "check_circle"
         })
 
+    # Calcular totales por tier para alimentar las tarjetas del frontend
+    tier_totals = {}
+    for t_key in ["eco", "recom", "prem"]:
+        t_mats = dicts_from_rows(conn.execute(
+            "SELECT * FROM task_materials WHERE task_id = ? AND tier = ?",
+            (req.task_id, t_key)
+        ).fetchall())
+        if t_mats:
+            t_sum = 0
+            for m in t_mats:
+                if any(k in m["name"].lower() for k in ["galón", "vinilo", "esmalte", "masilla", "m²"]):
+                    t_sum += int(round(m["unit_price_cop"] * scale_factor))
+                else:
+                    t_sum += m["unit_price_cop"]
+            tier_totals[t_key] = t_sum
+        else:
+            multipliers = {"eco": 0.75, "recom": 1.0, "prem": 1.45}
+            tier_totals[t_key] = int(round(task["base_cost_cop"] * multipliers[t_key] * scale_factor))
+
+    conn.close()
+
     tier_names = {"eco": "Económica", "recom": "Recomendada", "prem": "Prémium"}
     tier_name = tier_names.get(req.tier, "Recomendada")
 
@@ -185,7 +207,15 @@ def calculate_budget(req: CalculateRequest):
         "tier_name": tier_name,
         "total_cop": total_cop,
         "total_formatted": f"${total_cop:,.0f}".replace(",", "."),
-        "items": calculated_items
+        "items": calculated_items,
+        "tier_totals": {
+            "eco": tier_totals["eco"],
+            "eco_formatted": f"${tier_totals['eco']:,.0f}".replace(",", "."),
+            "recom": tier_totals["recom"],
+            "recom_formatted": f"${tier_totals['recom']:,.0f}".replace(",", "."),
+            "prem": tier_totals["prem"],
+            "prem_formatted": f"${tier_totals['prem']:,.0f}".replace(",", ".")
+        }
     }
 
 # 6. Gestión de Proyectos Guardados (Protegido por require_auth_api)

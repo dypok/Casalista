@@ -79,7 +79,9 @@
             </div>
             <div>
               <span class="font-headline-sm text-headline-sm text-on-surface font-bold">Económica</span>
-              <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1">Vinilo Tipo 2, herramientas estándar</p>
+              <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1" id="desc-eco">
+                {% if eco_items %}{{ eco_items[0].name }}, insumos estándar{% else %}Insumos básicos de ferretería{% endif %}
+              </p>
             </div>
           </div>
           <div class="text-right shrink-0 mt-3 pt-2 border-t border-outline-variant/20 w-full flex items-baseline justify-between">
@@ -103,8 +105,8 @@
             </div>
             <div class="pr-2">
               <span class="font-headline-sm text-headline-sm text-primary font-bold">Recomendada</span>
-              <p class="font-body-sm text-body-sm text-on-secondary-fixed-variant line-clamp-2 mt-0.5">
-                Vinilo acrílico Tipo 1 lavable, rodillo antigota, cinta profesional
+              <p class="font-body-sm text-body-sm text-on-secondary-fixed-variant line-clamp-2 mt-0.5" id="desc-recom">
+                {% if recom_items %}{{ recom_items[0].name }}, calidad balanceada{% else %}Vinilo acrílico Tipo 1 lavable, rodillo antigota, cinta profesional{% endif %}
               </p>
             </div>
           </div>
@@ -125,7 +127,9 @@
             </div>
             <div>
               <span class="font-headline-sm text-headline-sm text-on-surface font-bold">Prémium</span>
-              <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1">Esmalte al agua antibacterial, kit pro</p>
+              <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1" id="desc-prem">
+                {% if prem_items %}{{ prem_items[0].name }}, máxima durabilidad{% else %}Insumos pro de alta especificación{% endif %}
+              </p>
             </div>
           </div>
           <div class="text-right shrink-0 mt-3 pt-2 border-t border-outline-variant/20 w-full flex items-baseline justify-between">
@@ -232,12 +236,11 @@
       document.getElementById('item-count').innerText = `${data.items.length} ítems`;
 
       // Actualizar precios en las tarjetas
-      const baseEco = Math.round(98000 * (currentArea / 12.0));
-      const baseRecom = data.total_cop;
-      const basePrem = Math.round(215000 * (currentArea / 12.0));
-      document.getElementById('price-eco').innerText = "$" + baseEco.toLocaleString('es-CO');
-      document.getElementById('price-recom').innerText = "$" + baseRecom.toLocaleString('es-CO');
-      document.getElementById('price-prem').innerText = "$" + basePrem.toLocaleString('es-CO');
+      if (data.tier_totals) {
+        document.getElementById('price-eco').innerText = data.tier_totals.eco_formatted;
+        document.getElementById('price-recom').innerText = data.tier_totals.recom_formatted;
+        document.getElementById('price-prem').innerText = data.tier_totals.prem_formatted;
+      }
 
       // Renderizar filas de insumos
       const listEl = document.getElementById('breakdown-list');
