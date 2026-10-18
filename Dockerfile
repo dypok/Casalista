@@ -24,8 +24,8 @@ COPY static/ ./static/
 COPY pyproject.toml .
 COPY README.md .
 
-# Crear directorio de datos
-RUN mkdir -p /app/data
+# Crear directorios de datos y estáticos
+RUN mkdir -p /app/data /app/static
 
 # Exponer el puerto
 EXPOSE ${PORT}
@@ -35,4 +35,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:${PORT}/health || exit 1
 
 # Comando de inicio usando el puerto dinámico de Railway
-CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
