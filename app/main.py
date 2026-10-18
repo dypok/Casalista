@@ -28,6 +28,15 @@ app = FastAPI(
 os.makedirs(STATIC_DIR, exist_ok=True)
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
+# Endpoint de monitoreo y healthcheck para Railway y plataformas cloud
+@app.get("/health", tags=["Salud"])
+async def health_check():
+    return {
+        "status": "ok",
+        "app": "CasaLista",
+        "version": "1.0.0"
+    }
+
 # Registrar routers
 app.include_router(api_router)
 app.include_router(web_router)

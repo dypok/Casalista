@@ -1,0 +1,13 @@
+.git/
+.gitignore
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+casalista.db
+tests/
+documentation/
+stitch_casalista_app_prototype/
+scripts/

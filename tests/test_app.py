@@ -100,6 +100,12 @@ def test_public_routes_accessible_without_auth():
     })
     assert r_calc.status_code == 200
 
+    # Monitoreo de salud para Railway
+    r_health = unauthed_client.get("/health")
+    assert r_health.status_code == 200
+    assert r_health.json()["status"] == "ok"
+
+
 # ----------------- PRUEBAS CON SESIÓN AUTENTICADA -----------------
 
 def test_login_and_authenticated_access():
