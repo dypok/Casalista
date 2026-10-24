@@ -6,17 +6,18 @@ def seed_database():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # 1. Usuario de prueba principal (Dylan Gamero)
+    # 1. Usuario de prueba principal (Karla Polanco)
     existing_user = cursor.execute("SELECT id FROM users WHERE email = 'prueba@casalista.co'").fetchone()
     if not existing_user:
         hashed_pwd = hash_password("casalista123")
         cursor.execute("""
             INSERT INTO users (name, email, password_hash, city)
             VALUES (?, ?, ?, ?)
-        """, ("Dylan Gamero", "prueba@casalista.co", hashed_pwd, "Bogotá, D.C."))
+        """, ("Karla Polanco", "prueba@casalista.co", hashed_pwd, "Bogotá, D.C."))
         user_id = cursor.lastrowid
     else:
         user_id = existing_user["id"]
+        cursor.execute("UPDATE users SET name = ? WHERE id = ?", ("Karla Polanco", user_id))
 
     # 2. Las 8 Categorías Oficiales
     categories = [
@@ -767,7 +768,7 @@ def seed_database():
             VALUES (?, ?, ?, ?, ?)
         """, stp)
 
-    # 7. Proyectos y Favoritos de Prueba para el usuario Dylan Gamero
+    # 7. Proyectos y Favoritos de Prueba para el usuario Karla Polanco
     cursor.execute("DELETE FROM user_projects WHERE user_id = ?", (user_id,))
 
     sample_projects = [

@@ -131,7 +131,7 @@ def test_login_and_authenticated_access():
     # 3. Acceso a home protegido
     res_home = auth_client.get("/")
     assert res_home.status_code == 200
-    assert "Dylan" in res_home.text
+    assert "Karla" in res_home.text
     assert "CasaLista" in res_home.text
 
     # 4. Acceso a /api/user/me protegido
