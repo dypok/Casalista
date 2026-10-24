@@ -1,6 +1,6 @@
 <!-- Modal Universal CasaLista (Diseño Architectural Precision) -->
-<div id="casa-modal-backdrop" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-200">
-  <div id="casa-modal-card" class="relative w-full max-w-md bg-surface-container-lowest rounded-2xl shadow-2xl border border-outline-variant/30 p-6 flex flex-col items-center text-center transform scale-95 transition-all duration-200">
+<div id="casa-modal-backdrop" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-200 overflow-y-auto touch-pan-y overscroll-contain">
+  <div id="casa-modal-card" class="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-surface-container-lowest rounded-2xl shadow-2xl border border-outline-variant/30 p-5 sm:p-6 flex flex-col items-center text-center transform scale-95 transition-all duration-200 my-auto overscroll-contain">
     
     <!-- Botón X para cerrar rápido -->
     <button type="button" onclick="CasaModal.close()" aria-label="Cerrar modal" class="absolute top-4 right-4 text-outline hover:text-on-surface p-1 rounded-lg transition-colors">
@@ -125,12 +125,14 @@
       currentOnCancel = options.onCancel || null;
 
       // Animación de entrada
+      document.body.classList.add('overflow-hidden');
       backdrop.classList.remove('opacity-0', 'pointer-events-none');
       card.classList.remove('scale-95');
       card.classList.add('scale-100');
     }
 
     function close() {
+      document.body.classList.remove('overflow-hidden');
       card.classList.remove('scale-100');
       card.classList.add('scale-95');
       backdrop.classList.add('opacity-0', 'pointer-events-none');

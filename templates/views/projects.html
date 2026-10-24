@@ -6,7 +6,7 @@
 {% set header_subtitle = "Mis Proyectos" %}
 {% include "components/header.html" %}
 
-<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-20 pb-28 px-margin bg-surface">
+<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-header pb-nav px-margin bg-surface">
   <div class="flex flex-col w-full pb-6 space-y-4">
     
     <!-- Header -->
@@ -19,7 +19,7 @@
     </div>
 
     <!-- Filter Tabs -->
-    <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none border-b border-outline-variant/30">
+    <div class="flex items-center gap-2 touch-scroll-x pb-1 border-b border-outline-variant/30 -mx-margin px-margin sm:mx-0 sm:px-0">
       <a href="/mis-proyectos?filtro=todos" class="px-3.5 py-2 font-label-md text-label-md font-semibold transition-all border-b-2 {% if active_filter == 'todos' or not active_filter %}border-secondary text-secondary{% else %}border-transparent text-on-surface-variant hover:text-on-surface{% endif %}">
         Todos ({{ projects|length }})
       </a>

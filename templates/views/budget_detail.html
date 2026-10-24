@@ -2,12 +2,16 @@
 
 {% block title %}Presupuesto Estimado — {{ task.title }} — CasaLista{% endblock %}
 
+{% block bottom_nav %}
+  <!-- Omitido en la vista de presupuesto para dar prioridad al totalizador flotante y evitar solapamientos -->
+{% endblock %}
+
 {% block content %}
 {% set header_subtitle = "Presupuesto COP" %}
 {% set back_url = "/tarea/" ~ task.id %}
 {% include "components/header.html" %}
 
-<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-20 pb-28 px-margin bg-surface">
+<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-header pb-float-bar px-margin bg-surface">
   <div class="flex flex-col w-full pb-8 space-y-4">
     
     <!-- Encabezado contextual con micro-badge -->
@@ -171,24 +175,24 @@
     </div>
 
     <!-- Totalizador Flotante e Interactivo -->
-    <div class="fixed bottom-0 inset-x-0 bg-surface-container-lowest/95 backdrop-blur-xl border-t border-outline-variant/30 p-3.5 z-40 shadow-lg">
-      <div class="max-w-4xl mx-auto flex items-center justify-between gap-4">
-        <div class="flex flex-col">
+    <div class="fixed bottom-0 inset-x-0 bg-surface-container-lowest/95 backdrop-blur-xl border-t border-outline-variant/30 p-3 sm:p-4 z-40 shadow-lg pb-safe">
+      <div class="max-w-4xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center justify-between sm:flex-col sm:items-start">
           <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Total Orientativo</span>
           <div class="flex items-baseline gap-1">
-            <span class="font-display-currency text-display-currency text-primary font-extrabold" id="display-grand-total">$148.500</span>
+            <span class="text-2xl sm:text-display-currency font-headline-lg sm:font-display-currency text-primary font-extrabold" id="display-grand-total">$148.500</span>
             <span class="font-label-sm text-label-sm text-on-surface-variant">COP</span>
           </div>
         </div>
         
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="saveProjectToDB(this)" class="px-4 py-3 bg-secondary text-on-secondary rounded-xl font-label-lg text-label-lg font-semibold hover:bg-primary-container active:scale-95 transition-all flex items-center gap-2 shadow-sm">
-            <span class="material-symbols-outlined text-[20px]">bookmark_add</span>
-            <span>Guardar proyecto</span>
+        <div class="grid grid-cols-2 sm:flex sm:items-center gap-2 w-full sm:w-auto">
+          <button type="button" onclick="saveProjectToDB(this)" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary text-on-secondary rounded-xl font-label-md sm:font-label-lg font-semibold hover:bg-primary-container active:scale-95 transition-all flex items-center justify-center gap-1.5 shadow-sm text-center">
+            <span class="material-symbols-outlined text-[18px] sm:text-[20px]">bookmark_add</span>
+            <span class="truncate">Guardar</span>
           </button>
           
-          <a href="/tarea/{{ task.id }}/guia" class="px-4 py-3 bg-primary text-on-primary rounded-xl font-label-lg text-label-lg font-semibold hover:bg-primary-container active:scale-95 transition-all flex items-center gap-1.5 shadow-sm">
-            <span>Iniciar guía</span>
+          <a href="/tarea/{{ task.id }}/guia" class="w-full sm:w-auto px-3 sm:px-4 py-2.5 sm:py-3 bg-primary text-on-primary rounded-xl font-label-md sm:font-label-lg font-semibold hover:bg-primary-container active:scale-95 transition-all flex items-center justify-center gap-1.5 shadow-sm text-center">
+            <span class="truncate">Iniciar guía</span>
             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
           </a>
         </div>

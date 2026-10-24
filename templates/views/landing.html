@@ -40,18 +40,20 @@
       </nav>
 
       <!-- User Auth CTAs -->
-      <div class="flex items-center gap-2.5">
+      <div class="flex items-center gap-1.5 sm:gap-2.5">
         {% if user %}
-          <a href="/" class="h-10 px-4 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold flex items-center gap-2 hover:bg-primary-container transition-all shadow-sm">
+          <a href="/" class="h-9 sm:h-10 px-3 sm:px-4 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold flex items-center gap-1.5 sm:gap-2 hover:bg-primary-container transition-all shadow-sm">
             <span class="material-symbols-outlined text-[18px]">dashboard</span>
-            <span>Mi Panel</span>
+            <span class="hidden xs:inline">Mi Panel</span>
           </a>
         {% else %}
-          <a href="/login" class="h-10 px-4 rounded-xl text-primary font-label-md text-label-md font-semibold flex items-center hover:bg-surface-container transition-all">
-            Iniciar sesión
+          <a href="/login" class="h-9 sm:h-10 px-2.5 sm:px-4 rounded-xl text-primary font-label-md text-label-md font-semibold flex items-center hover:bg-surface-container transition-all">
+            <span class="hidden sm:inline">Iniciar sesión</span>
+            <span class="sm:hidden">Entrar</span>
           </a>
-          <a href="/registro" class="h-10 px-4 rounded-xl bg-secondary text-on-secondary font-label-md text-label-md font-semibold flex items-center gap-1.5 hover:bg-primary transition-all shadow-sm shadow-secondary/20">
-            <span>Comenzar gratis</span>
+          <a href="/registro" class="h-9 sm:h-10 px-3 sm:px-4 rounded-xl bg-secondary text-on-secondary font-label-md text-label-md font-semibold flex items-center gap-1 hover:bg-primary transition-all shadow-sm shadow-secondary/20">
+            <span class="hidden sm:inline">Comenzar gratis</span>
+            <span class="sm:hidden">Registro</span>
             <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
           </a>
         {% endif %}
@@ -524,42 +526,46 @@
       </div>
 
       <div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/30 overflow-hidden">
-        <div class="grid grid-cols-12 bg-surface-container p-4 font-label-md text-label-md font-bold text-primary border-b border-outline-variant/30">
-          <div class="col-span-5 sm:col-span-4">Criterio</div>
-          <div class="col-span-3 sm:col-span-4 text-center text-rose-800">Método Tradicional</div>
-          <div class="col-span-4 sm:col-span-4 text-center text-secondary">Con CasaLista</div>
-        </div>
-
-        <div class="divide-y divide-outline-variant/20 font-body-sm text-body-sm">
-          <div class="grid grid-cols-12 p-4 items-center">
-            <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Cálculo de pintura / masilla</div>
-            <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Al tanteo, sobra o falta</div>
-            <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
-              <span class="material-symbols-outlined text-[16px]">check_circle</span> Cantidad exacta por m²
+        <div class="overflow-x-auto touch-scroll-x">
+          <div class="min-w-[540px]">
+            <div class="grid grid-cols-12 bg-surface-container p-4 font-label-md text-label-md font-bold text-primary border-b border-outline-variant/30">
+              <div class="col-span-5 sm:col-span-4">Criterio</div>
+              <div class="col-span-3 sm:col-span-4 text-center text-rose-800">Método Tradicional</div>
+              <div class="col-span-4 sm:col-span-4 text-center text-secondary">Con CasaLista</div>
             </div>
-          </div>
 
-          <div class="grid grid-cols-12 p-4 items-center bg-surface-container-low/30">
-            <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Precios y presupuesto</div>
-            <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Sorpresas en caja de ferretería</div>
-            <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
-              <span class="material-symbols-outlined text-[16px]">check_circle</span> Precios COP por 3 gamas
-            </div>
-          </div>
+            <div class="divide-y divide-outline-variant/20 font-body-sm text-body-sm">
+              <div class="grid grid-cols-12 p-4 items-center">
+                <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Cálculo de pintura / masilla</div>
+                <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Al tanteo, sobra o falta</div>
+                <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[16px]">check_circle</span> Cantidad exacta por m²
+                </div>
+              </div>
 
-          <div class="grid grid-cols-12 p-4 items-center">
-            <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Seguridad y riesgos</div>
-            <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Ignorar cortes de agua/luz</div>
-            <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
-              <span class="material-symbols-outlined text-[16px]">check_circle</span> Semáforo de 3 niveles
-            </div>
-          </div>
+              <div class="grid grid-cols-12 p-4 items-center bg-surface-container-low/30">
+                <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Precios y presupuesto</div>
+                <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Sorpresas en caja de ferretería</div>
+                <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[16px]">check_circle</span> Precios COP por 3 gamas
+                </div>
+              </div>
 
-          <div class="grid grid-cols-12 p-4 items-center bg-surface-container-low/30">
-            <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Pasos e instrucciones</div>
-            <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Tutoriales de video confusos</div>
-            <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
-              <span class="material-symbols-outlined text-[16px]">check_circle</span> Lista interactiva y avance
+              <div class="grid grid-cols-12 p-4 items-center">
+                <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Seguridad y riesgos</div>
+                <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Ignorar cortes de agua/luz</div>
+                <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[16px]">check_circle</span> Semáforo de 3 niveles
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12 p-4 items-center bg-surface-container-low/30">
+                <div class="col-span-5 sm:col-span-4 font-semibold text-primary">Pasos e instrucciones</div>
+                <div class="col-span-3 sm:col-span-4 text-center text-on-surface-variant">Tutoriales de video confusos</div>
+                <div class="col-span-4 sm:col-span-4 text-center font-bold text-emerald-700 flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[16px]">check_circle</span> Lista interactiva y avance
+                </div>
+              </div>
             </div>
           </div>
         </div>

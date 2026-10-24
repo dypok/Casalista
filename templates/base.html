@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
   <title>{% block title %}CasaLista — Control & Presupuesto del Hogar{% endblock %}</title>
   
   <!-- Google Fonts: Manrope & Hanken Grotesk -->
@@ -105,20 +105,60 @@
 
   <style>
     @layer base {
-      html, body {
+      html {
         width: 100%;
         margin: 0;
         padding: 0;
         background-color: #faf8ff;
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
       }
       body {
-        overscroll-behavior-y: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #faf8ff;
         -webkit-tap-highlight-color: transparent;
+        overflow-x: hidden;
       }
       .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
       .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+      
+      /* Espaciados calculados para evitar que header fijo o bottom nav tapen contenido */
+      .pt-header {
+        padding-top: calc(4.75rem + env(safe-area-inset-top, 0px));
+      }
+      .pb-nav {
+        padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
+      }
+      .pb-float-bar {
+        padding-bottom: calc(8.5rem + env(safe-area-inset-bottom, 0px));
+      }
+      
+      /* Scroll horizontal fluido para móviles */
+      .touch-scroll-x {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+        overscroll-behavior-x: contain;
+      }
     }
-    ::-webkit-scrollbar { display: none; }
+    
+    /* Scrollbar sutil y funcional para evitar la sensación de congelamiento */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(117, 118, 130, 0.25);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(117, 118, 130, 0.45);
+    }
   </style>
   {% block extra_head %}{% endblock %}
 </head>

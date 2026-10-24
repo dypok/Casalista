@@ -6,7 +6,7 @@
 {% set header_subtitle = "Catálogo" %}
 {% include "components/header.html" %}
 
-<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-20 pb-24 px-margin bg-surface">
+<main class="flex-1 flex flex-col relative w-full max-w-4xl mx-auto pt-header pb-nav px-margin bg-surface">
   <div class="flex flex-col w-full pb-6">
     
     <!-- Header Intro & Search -->
@@ -45,7 +45,7 @@
         <span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">FILTRAR POR COMPLEJIDAD</span>
         <span class="font-label-sm text-label-sm text-secondary font-semibold">{{ categories|length }} categorías</span>
       </div>
-      <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+      <div class="flex items-center gap-2 touch-scroll-x pb-2 -mx-margin px-margin sm:mx-0 sm:px-0">
         <a href="/explorar{% if search_query %}?q={{ search_query }}{% endif %}" class="flex-shrink-0 px-3.5 py-1.5 rounded-lg font-label-md text-label-md font-semibold transition-all shadow-sm {% if active_filter == 'todas' or not active_filter %}bg-primary-container text-on-primary{% else %}bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container{% endif %}">
           Todas
         </a>
